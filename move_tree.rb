@@ -12,19 +12,15 @@ class MoveTree
   end
 
   def attach_children(node)
-    depth = node.depth
-    until depth == max_depth
-      depth += 1
-      relative_moves.each do |move|
-        new_x = node.x + move[0]
-        new_y = node.y + move[1]
-        next_location = [new_x,new_y]
-        if on_the_board?(next_location)
-          new_node = Square.new(new_x,new_y,depth,[])
-          node.children << new_node
-          @num_of_nodes += 1
-          attach_children(new_node)
-        end
+    self.moves.each do |move|
+      new_x = node.x + move[0]
+      new_y = node.y + move[1]
+      new_depth = node.depth + 1
+      if on_the_board?([new_x,new_y])
+        new_node = Square.new(new_x,new_y,new_depth,[])
+        node.children << new_node
+        @num_of_nodes += 1
+        attach_children(new_node) if new_node.depth < max_depth
       end
     end
   end
@@ -33,7 +29,7 @@ class MoveTree
     puts "This tree has #{num_of_nodes} nodes and a max depth of #{max_depth}."
   end
 
-  def relative_moves
+  def self.moves
     [[-2,-1],[-2,1],[-1,-2],[-1,2],[1,-2],[1,2],[2,-1],[2,1]]
   end
 
