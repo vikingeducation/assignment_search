@@ -1,6 +1,7 @@
-require_relative 'square_struct'
+require_relative 'square'
 
 class MoveTree
+  include Moves
 
   attr_reader :tree, :max_depth, :num_of_nodes
 
@@ -27,13 +28,5 @@ class MoveTree
 
   def inspect
     puts "This tree has #{num_of_nodes} nodes and a max depth of #{max_depth}."
-  end
-
-  def self.moves
-    [[-2,-1],[-2,1],[-1,-2],[-1,2],[1,-2],[1,2],[2,-1],[2,1]]
-  end
-
-  def on_the_board?(coordinates)
-    coordinates.all? { |coord| (0..7).include? coord }
   end
 end
