@@ -1,6 +1,6 @@
-class MoveTree
+require_relative 'square_struct'
 
-  Square = Struct.new(:x,:y,:depth,:children)
+class MoveTree
 
   attr_reader :tree, :max_depth, :num_of_nodes
 
