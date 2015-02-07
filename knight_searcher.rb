@@ -19,6 +19,7 @@ class KnightSearcher
     end
     puts "#{target_coords} was found in #{node.depth} moves."
     print_results(node)
+    return node.depth
   end
 
   def dfs_for(target_coords)
@@ -30,6 +31,7 @@ class KnightSearcher
     end
     puts "#{target_coords} was found in #{node.depth} moves."
     print_results(node)
+    return node.depth
   end
 
   def print_results(node)
