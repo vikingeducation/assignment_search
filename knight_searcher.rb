@@ -21,6 +21,17 @@ class KnightSearcher
     print_results(node)
   end
 
+  def dfs_for(target_coords)
+    search_stack = []
+    node = tree.root
+    until [node.x,node.y] == target_coords
+      search_stack += node.children
+      node = search_stack.pop
+    end
+    puts "#{target_coords} was found in #{node.depth} moves."
+    print_results(node)
+  end
+
   def print_results(node)
     moves_to_print = []
     until node.nil?
