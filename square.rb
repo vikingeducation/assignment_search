@@ -1,1 +1,1 @@
-Square = Struct.new(:x,:y,:depth,:children)
+Square = Struct.new(:x,:y,:depth,:parent,:children)
