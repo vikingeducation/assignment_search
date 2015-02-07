@@ -8,6 +8,16 @@ class KnightSearcher
     @tree = tree
   end
 
+  def bfs_for(target_coords)
+    search(target_coords) { |queue| queue.shift }
+  end
+
+  def dfs_for(target_coords)
+    search(target_coords) { |stack| stack.pop }
+  end
+
+  private
+
   def search(target_coords)
     to_be_searched = []
     node = tree.root
@@ -18,14 +28,6 @@ class KnightSearcher
     puts "#{target_coords} was found in #{node.depth} moves."
     print_results(node)
     return node.depth
-  end
-
-  def bfs_for(target_coords)
-    search(target_coords) { |queue| queue.shift }
-  end
-
-  def dfs_for(target_coords)
-    search(target_coords) { |stack| stack.pop }
   end
 
   def print_results(node)
