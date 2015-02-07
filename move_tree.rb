@@ -1,8 +1,6 @@
 require_relative 'square'
-require_relative 'moves'
 
 class MoveTree
-  include Moves
 
   attr_reader :root, :max_depth, :num_of_nodes
 
@@ -14,7 +12,7 @@ class MoveTree
   end
 
   def attach_children(node)
-    self.moves.each do |move|
+    moves.each do |move|
       new_x = node.x + move[0]
       new_y = node.y + move[1]
       new_depth = node.depth + 1
@@ -29,5 +27,15 @@ class MoveTree
 
   def inspect
     puts "This tree has #{num_of_nodes} nodes and a max depth of #{max_depth}."
+  end
+
+  private
+
+  def moves
+    [[-2,-1],[-2,1],[-1,-2],[-1,2],[1,-2],[1,2],[2,-1],[2,1]]
+  end
+
+  def on_the_board?(coordinates)
+    coordinates.all? { |coord| (0..7).include? coord }
   end
 end

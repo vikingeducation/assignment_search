@@ -1,8 +1,6 @@
 require_relative 'move_tree'
-require_relative 'moves'
 
 class KnightSearcher
-  include Moves
 
   attr_reader :tree
 
