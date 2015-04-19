@@ -12,11 +12,20 @@ class KnightSearcher
 
     while !node_queue.empty?
       current_node = node_queue.shift
-      puts "#{current_node.x}, #{current_node.y}"
-      return "#{target_coords} found at depth #{current_node.depth}!" if [current_node.x, current_node.y] == target_coords
+      if [current_node.x, current_node.y] == target_coords
+        puts "Path taken:"
+        return node_trace(current_node)
+      end
       current_node.children.each do |child|
         node_queue << child
       end
+    end
+  end
+
+  def node_trace(node)
+    while !node.nil?
+      puts "#{node.x}, #{node.y}"
+      node = node.parent
     end
   end
 
@@ -26,18 +35,13 @@ class KnightSearcher
 
     while !node_stack.empty?
       current_node = node_stack.pop
-      puts "#{current_node.x}, #{current_node.y}"
-      return "#{target_coords} found at depth #{current_node.depth}!" if [current_node.x, current_node.y] == target_coords
+      if [current_node.x, current_node.y] == target_coords
+        puts "Path taken:"
+        return node_trace(current_node)
+      end
       current_node.children.each do |child|
         node_stack << child
       end
     end
   end
 end
-
-tree = MoveTree.new([3,3], 2)
-tree.inspect
-
-searcher = KnightSearcher.new(tree)
-puts "#{searcher.bfs_for([2,1])}"
-puts "#{searcher.dfs_for([2,1])}"
