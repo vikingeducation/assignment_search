@@ -20,6 +20,8 @@ class MoveTree
 		build_children(@head)
 	end
 
+	private 
+	
 	# Recursively builds children until it reaches the max_depth.
 	def build_children(node, parent = nil)
 		node.children = get_all_moves(node)
