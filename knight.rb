@@ -6,7 +6,7 @@ Square = Struct.new(:x, :y, :depth, :parent, :children)
 
 # I also want to set some constants for the board
 # size information.
-BOARD_SIZE = 5 
+BOARD_SIZE = 9 
 
 # Now to construct the MoveTree class
 class MoveTree
@@ -20,8 +20,13 @@ class MoveTree
 		build_children(@head)
 	end
 
+	def inspect
+		total_nodes = 1 + count_children(@head)
+		puts "Your tree has #{total_nodes} nodes with a maximum depth of #{@max_depth}"
+	end
+
 	private 
-	
+
 	# Recursively builds children until it reaches the max_depth.
 	def build_children(node, parent = nil)
 		node.children = get_all_moves(node)
@@ -62,28 +67,9 @@ class MoveTree
 		final
 	end
 
-	def inspect
-		total_nodes = 1 + count_children(@head)
-		max_depth = get_max_depth(@head, 0)
-		puts "Your tree has #{total_nodes} nodes with a maximum depth of #{max_depth}"
-	end
-
 	# Recursively gets the number of children of a node
 	def count_children(node)
 		return 0 if node.children.nil?
 		node.children.count + (node.children.map {|child| count_children(child)}).inject(&:+)
-	end
-
-	# Get the maxiumum depth of the tree
-	# QUESTION: Erik or Michael. I understand basically how this recursive method
-	# works, but don't get why the first `current_max_depth = node.depth+1` call doesn't
-	# supersede any other calls later on down the tree.
-	def get_max_depth(node, current_max_depth)
-		if node.children
-			current_max_depth = node.depth + 1
-			get_max_depth(node.children[0], current_max_depth)
-		else
-			return current_max_depth
-		end
 	end
 end
