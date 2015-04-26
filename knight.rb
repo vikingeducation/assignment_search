@@ -1,4 +1,5 @@
 # Knight's Travails Problem
+require_relative('knight_searcher.rb')
 
 # First thing is to create the Square struct
 Square = Struct.new(:x, :y, :depth, :parent, :children)
