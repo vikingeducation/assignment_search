@@ -1,6 +1,6 @@
 # Knight's Travails Problem
 
-# First thing is to create the square struct
+# First thing is to create the Square struct
 Square = Struct.new(:x, :y, :depth, :children)
 
 # I also want to set some constants for the board
@@ -59,12 +59,24 @@ class MoveTree
 	end
 
 	def inspect
-		count_children(@head)
+		total_nodes = 1 + count_children(@head)
+		max_depth = get_max_depth(@head, 0)
+		puts "Your tree has #{total_nodes} nodes with a maximum depth of #{max_depth}"
 	end
 
 	# Recursively gets the number of children of a node
 	def count_children(node)
 		return 0 if node.children.nil?
-		node.children.count + (node.children.each {|child| count_children(child)})
+		node.children.count + (node.children.map {|child| count_children(child)}).inject(&:+)
+	end
+
+	# Get the maxiumum depth of the tree
+	def get_max_depth(node, current_max_depth)
+		if node.children
+			current_max_depth = node.depth + 1
+			get_max_depth(node.children[0], current_max_depth)
+		else
+			return current_max_depth
+		end
 	end
 end
