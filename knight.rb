@@ -1,9 +1,8 @@
 Square = Struct.new(:x,:y,:depth, :children)
 
-class MoveTree 
+class MoveTree
 
   def initialize(init_x = 0, init_y = 0, max_depth = 1)    #board top left corner
-
     @max_depth = max_depth
     @depth = 0
     @head = Square(init_x, init_y, depth, [])
