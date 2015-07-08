@@ -1,8 +1,14 @@
 
 
-    [0,0]
+    [0,0]				(0,0,0, [square[1,2,1[]],])
 [1,2]   [2,1]  -turn 1
     [4,2] [3,2] [0,0]-turn 2
 
 
     parent_struct.children = [struct[1,2], struct, struct]
+
+    # square.x       # 8 options 1,2, 2,1 -1,-2, -2,-1, 1,-2, 2,-1, -1,2, -2,1
+    # square.y
+
+    #a knight moves 2 sq in one direction and then 1 l/r
+    #board 8x8
