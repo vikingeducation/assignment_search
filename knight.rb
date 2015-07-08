@@ -7,22 +7,28 @@ class KnightSearcher
   end
 
   def bfs_for(move)
-    breadth_first(move, @tree.root, [])
-  end
+    queue = []
+    parent = {}
+    queue << @tree.root
+    move_order = []
 
-  def breadth_first(move, parent, move_order)
-    parent.children.each do |child|
-      if move_found(child, move)
-        move_order << [child.x, child.y]
-        return move_order
+    while queue.any?
+      current = queue.shift
+      return path(parent,@tree.root, current) if move_found(current, move)
+      current.children.each do |child|
+        parent[child] = current
+        queue << child
       end
     end
+  end
 
-    move_order << [parent.x, parent.y]
-
-    parent.children.each do |child|
-      breadth_first(move, child, move_order) unless child.children.empty?
+  def path(parent, start, endpoint)
+    result = [endpoint]
+    until result[-1] == start
+      result << parent[result[-1]]
     end
+    result = result.reverse
+    p result.map{|str| [str.x, str.y]}
   end
 
   def move_found(child, move)
@@ -31,7 +37,8 @@ class KnightSearcher
 
 end
 
-t = MoveTree.new([4,4],2)
+t = MoveTree.new([4,4],5)
 k = KnightSearcher.new(t)
 
-puts k.bfs_for([1,1])
+puts k.bfs_for([0,0])
+
