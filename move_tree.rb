@@ -63,18 +63,6 @@ class MoveTree
     puts "Your tree has #{@root.children.length} and a max depth of #{@max_depth}"
   end
 
-
-
-
-
-
-
-
-  
-
-
-
-
 end
 
 
@@ -85,43 +73,97 @@ class KnightSearcher
     # print "our tree #{@tree.root.children}"
   end
 
+  # def bfs_for(target_coords)
+  #   # node = @tree.root
+  #   queue = []
+  #   queue << @tree.root
+
+  #   until queue.empty?
+  #     node = queue.shift
+  #     puts "node corrds x = #{node.x} and y= #{node.y}"
+  #     if node.x == target_coords[0] && node.y == target_coords[1]
+
+  #       return node.depth
+  #     else
+  #       node.children.each do |child|
+  #         queue << child
+  #       end
+  #     end
+  #   end
+  #   print "queue #{queue}\n\n\n"
+  #   print "node depth is #{node.depth}"
+  # end
+
+
   def bfs_for(target_coords)
-    # node = @tree.root
-    queue = []
-    queue << @tree.root
+
+    queue = [[@tree.root]]
 
     until queue.empty?
-      node = queue.shift
-      puts "node corrds x = #{node.x} and y= #{node.y}"
-      if node.x == target_coords[0] && node.y == target_coords[1]
 
-        return node.depth
+      path = queue.shift
+
+      node = path[-1]
+
+      if node.x == target_coords[0] && node.y == target_coords[1]
+        puts "#{node.depth} Moves:"
+        path.each {|n| puts "[#{n.x}, #{n.y}]"}
+        return
       else
         node.children.each do |child|
-          queue << child
+          new_path = path.dup
+          new_path << child
+          queue << new_path
         end
       end
+
     end
-    print "queue #{queue}\n\n\n"
-    print "node depth is #{node.depth}"
+
   end
 
+
+
+  # def dfs_for(target_coords)
+  #   stack = []
+  #   stack << @tree.root
+
+  #   until stack.empty?
+  #     node = stack.pop
+  #     puts "node corrds x = #{node.x} and y= #{node.y}"
+  #     if node.x == target_coords[0] && node.y == target_coords[1]
+  #       return node.depth
+  #     else
+  #       node.children.each do |child|
+  #         stack<<child
+  #       end
+  #     end
+  #   end
+  #   print "node depth is #{node.depth}"
+
+  # end
+
   def dfs_for(target_coords)
-    stack = []
-    stack << @tree.root
+
+    stack = [[@tree.root]]
 
     until stack.empty?
-      node = stack.pop
-      puts "node corrds x = #{node.x} and y= #{node.y}"
+
+      path = stack.pop
+      node = path[-1]
+
       if node.x == target_coords[0] && node.y == target_coords[1]
-        return node.depth
+        puts "#{node.depth} Moves:"
+        path.each {|n| puts "[#{n.x}, #{n.y}]"}
+        return
       else
         node.children.each do |child|
-          stack<<child
+          new_path = path.dup
+          new_path << child
+          stack << new_path
         end
       end
+
     end
-    print "node depth is #{node.depth}"
 
   end
 
