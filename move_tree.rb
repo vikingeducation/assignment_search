@@ -29,11 +29,11 @@ class MoveTree
 
   def generate_children(parent)
     get_moves(parent.x,parent.y).each do |move|
-      #unless @played_moves.count([move[0], move[1]]) >= 0
+      unless @played_moves.count([move[0], move[1]]) >= 10
         parent.children << Square.new(move[0],move[1], @current_depth, [])
         @nodes += 1
         @played_moves << [move[0], move[1]]
-      #end
+      end
     end
   end
 

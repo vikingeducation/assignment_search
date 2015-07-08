@@ -1,4 +1,5 @@
 require_relative './move_tree.rb'
+require 'benchmark'
 
 class KnightSearcher
 
@@ -10,16 +11,48 @@ class KnightSearcher
     queue = []
     parent = {}
     queue << @tree.root
-    move_order = []
 
     while queue.any?
       current = queue.shift
-      return path(parent,@tree.root, current) if move_found(current, move)
+      if move_found(current, move)
+        result = path(parent,@tree.root, current)
+        break
+      end
       current.children.each do |child|
         parent[child] = current
         queue << child
       end
     end
+
+    result ? print_sequence(result) : "Error, no move sequence found."
+  end
+
+  def dfs_for(move)
+    queue = []
+    parent = {}
+    queue << @tree.root
+
+    while queue.any?
+      current = queue.pop
+      if move_found(current, move)
+        result = path(parent,@tree.root, current)
+        break
+      end
+      current.children.each do |child|
+        parent[child] = current
+        queue << child
+      end
+    end
+
+    result ? print_sequence(result) : raise("Didn't find solution.")
+  end
+
+  def print_sequence(result)
+    p "#{result.length - 1} moves to destination."
+    result.each do |move|
+      p move
+    end
+    return result.length
   end
 
   def path(parent, start, endpoint)
@@ -28,7 +61,7 @@ class KnightSearcher
       result << parent[result[-1]]
     end
     result = result.reverse
-    p result.map{|str| [str.x, str.y]}
+    result.map{|str| [str.x, str.y]}
   end
 
   def move_found(child, move)
@@ -37,8 +70,36 @@ class KnightSearcher
 
 end
 
-t = MoveTree.new([7,7],8)
+t = MoveTree.new([0,0],8)
 k = KnightSearcher.new(t)
 
-puts k.bfs_for([0,0])
+puts "BFS"
+dfs_avg = 0
+bfs_avg = 0
+bfs_time = Benchmark.measure {
+  result = 0
+  (0..7).each do |x|
+    (0..7).each do |y|
+      result += k.bfs_for([x,y])
+    end
+  end
+  bfs_avg = result / 64.0
+}
+puts "\nDFS"
+dfs_time = Benchmark.measure {
+  result = 0
+  (0..7).each do |x|
+    (0..7).each do |y|
+      result += k.dfs_for([x,y])
+    end
+  end
+  dfs_avg = result / 64.0
+}
 
+puts "Average BFS time"
+puts bfs_time
+puts "Average steps (BFS): #{bfs_avg}"
+
+puts "Average DFS time"
+puts dfs_time
+puts "Average steps (DFS): #{dfs_avg}"
