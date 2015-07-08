@@ -37,7 +37,7 @@ class KnightSearcher
 
 end
 
-t = MoveTree.new([4,4],5)
+t = MoveTree.new([7,7],8)
 k = KnightSearcher.new(t)
 
 puts k.bfs_for([0,0])
