@@ -26,13 +26,6 @@ class MoveTree
     end
   end
 
-  def create_board #creates 8x8 board
-    board = Array.new{8}
-    board.each do |index|
-      board[index] = Array.new(8)
-    end
-  end
-
   def potential_moves(origin, level, parent)
     moves = [[1,2], [1,-2], [-1,2], [-1,-2], [2,1], [2,-1], [-2,-1], [-2,1]]
     squares = []
@@ -55,6 +48,13 @@ class MoveTree
     x = coord[0]
     y = coord[1]
     (0..7).include?(x) && (0..7).include?(y)
+  end
+
+  def create_board #creates 8x8 board
+    board = Array.new{8}
+    board.each do |index|
+      board[index] = Array.new(8)
+    end
   end
 
 end
