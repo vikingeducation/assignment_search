@@ -1,10 +1,13 @@
+require 'pry'
+
 Square = Struct.new(:x,:y,:depth, :children)
 
 class MoveTree
-    attr_reader :head, :children
+  attr_reader :head, :children, :count_of_nodes
   def initialize(init_x = 0, init_y = 0, max_depth = 1)    #board top left corner
     @max_depth = max_depth
     depth = 0
+    @count_of_nodes = 1
     @head = Square.new(init_x, init_y, depth, [])
     construct_nodes(@head, depth)
 
@@ -47,41 +50,50 @@ class MoveTree
   def create_children(valid_moves, parent, depth)
     valid_moves.each do |move|
       parent.children << Square.new(move[0], move[1], depth, [])
+      @count_of_nodes += 1
     end
     parent.children #[sq1, sq2]
   end
 
-  # def get_children(current_branch)
-  #   if current_branch.children == []
-  #     puts 0
-  #     return 0
-  #   else
-  #     puts current_branch.children.length
-      
-  #   end
-  # end
+  def inspect_nodes
+    @count_of_nodes
+  end
+end
 
-  def inspect_nodes(node, total=@head.children.length+1)
 
-    # total_nodes = 1 + @head.children.length
+class KnightSearcher
 
-    if node.children == []
-        total += 0
-    else
-      node.children.each do |current_branch|
-        total += current_branch.children.length
-        inspect_nodes(current_branch,total)
-      end
-    end
-
-    puts total
-    total 
-
-    # print "The total nodes are #{total_nodes}"
-
+  def initialize(tree)
+    @tree_input = tree
+    @head = tree.head
   end
 
-
+  def bfs_for(target_coords)
+    x = target_coords[0]
+    y = target_coords[1]
+    moves = []
+    if [@head.x, @head.y] == target_coords
+      moves << @head.x, @head.y
+    end
+    else
+      @head.children.each
+    end
+  end
 
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
