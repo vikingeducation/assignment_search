@@ -3,40 +3,33 @@ Square = Struct.new(:x,:y,:depth, :children)
 
 class MoveTree
 
-  attr_accessor :children, :root
+  attr_accessor :root
 
   def initialize(beginning_cord, max_depth)
 
     @root = Square.new(beginning_cord[0], beginning_cord[1], 0, [])
     @max_depth = max_depth
+    @num_nodes = 1
     build_tree(@root)
 
   end
 
-  def insert_child(root, x, y)
-    root.children << Square.new(x, y, root.depth+1, [])
-  end
-
   def build_tree(root)
+
     unless root.depth >= @max_depth
-      moves = gen_possible_move(root)
+      
+      gen_possible_move(root).each do |move|
 
-      moves.each do |move|
-        # print "x=#{move[0]} and y = #{move[1]}"
-        if is_valid_move?(move)
-          # print "adding x= #{move[0]} and y = #{move[1]}"
-          insert_child(root, move[0], move[1])
-
-        end
+        insert_child(root, move[0], move[1]) if is_valid_move?(move)
 
       end
 
-    
       root.children.each do |child|
 
         build_tree(child)
 
       end
+
     end
 
   end
@@ -52,15 +45,19 @@ class MoveTree
      [x+2, y-1],
      [x-2, y+1],
      [x+2, y+1]]
-
   end
 
   def is_valid_move?(move)
     (0..7).include?(move[0]) && (0..7).include?(move[1])
   end
 
+  def insert_child(root, x, y)
+    root.children << Square.new(x, y, root.depth+1, [])
+    @num_nodes += 1
+  end
+
   def inspect
-    puts "Your tree has #{@root.children.length} and a max depth of #{@max_depth}"
+    puts "Your tree has #{@num_nodes} nodes and a max depth of #{@max_depth}"
   end
 
 end
@@ -70,9 +67,10 @@ class KnightSearcher
 
   def initialize(tree)
     @tree = tree
-    # print "our tree #{@tree.root.children}"
   end
 
+  # This one is only able to output how many moves
+  #######
   # def bfs_for(target_coords)
   #   # node = @tree.root
   #   queue = []
@@ -93,6 +91,7 @@ class KnightSearcher
   #   print "queue #{queue}\n\n\n"
   #   print "node depth is #{node.depth}"
   # end
+  #######
 
 
   def bfs_for(target_coords)
@@ -122,7 +121,8 @@ class KnightSearcher
   end
 
 
-
+  # This one is only able to output how many moves
+  #########
   # def dfs_for(target_coords)
   #   stack = []
   #   stack << @tree.root
@@ -139,8 +139,8 @@ class KnightSearcher
   #     end
   #   end
   #   print "node depth is #{node.depth}"
-
   # end
+  ##########
 
   def dfs_for(target_coords)
 
