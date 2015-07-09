@@ -11,7 +11,6 @@ class MoveTree
     @parent_pointer = nil
     @head = Square.new(init_x, init_y, depth, @parent_pointer, [])
     construct_nodes(@head, depth)
-
   end
 
   def construct_nodes(parent, depth = 1)
