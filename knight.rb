@@ -1,6 +1,6 @@
 require 'pry'
 
-Square = Struct.new(:x,:y,:depth, :children)
+Square = Struct.new(:x,:y,:depth,:parent_pointer,:children)
 
 class MoveTree
   attr_reader :head, :children, :count_of_nodes
@@ -8,16 +8,16 @@ class MoveTree
     @max_depth = max_depth
     depth = 0
     @count_of_nodes = 1
-    @head = Square.new(init_x, init_y, depth, [])
+    @parent_pointer = nil
+    @head = Square.new(init_x, init_y, depth, @parent_pointer, [])
     construct_nodes(@head, depth)
 
   end
 
-  def construct_nodes(parent, depth)
+  def construct_nodes(parent, depth = 1)
     if depth < @max_depth
       valid_moves = create_moves(parent)
       new_parent_array = create_children(valid_moves, parent, depth)
-      #recursion
       new_parent_array.each do |new_parent|
         construct_nodes(new_parent, depth+1)
       end
@@ -28,12 +28,10 @@ class MoveTree
     moves_arr = []
     [-2,-1,1,2].each do |x|
       [-2,-1,1,2].each do |y|
-        if (x.abs + y.abs) == 3
-          moves_arr << [square.x+x, square.y+y]
-        end
+         moves_arr << [square.x+x, square.y+y] if (x.abs + y.abs) == 3
       end
     end
-      validate_legal_moves(moves_arr)
+    validate_legal_moves(moves_arr)
   end
 
   def validate_legal_moves(moves)
@@ -49,7 +47,7 @@ class MoveTree
 
   def create_children(valid_moves, parent, depth)
     valid_moves.each do |move|
-      parent.children << Square.new(move[0], move[1], depth, [])
+      parent.children << Square.new(move[0], move[1], depth, parent, [])
       @count_of_nodes += 1
     end
     parent.children #[sq1, sq2]
@@ -62,24 +60,43 @@ end
 
 
 class KnightSearcher
-
+  attr_reader :moves, :head, :queue
   def initialize(tree)
     @tree_input = tree
     @head = tree.head
   end
 
   def bfs_for(target_coords)
-    x = target_coords[0]
-    y = target_coords[1]
-    moves = []
-    if [@head.x, @head.y] == target_coords
-      moves << @head.x, @head.y
+    queue = [@head]
+    result = []
+    until queue.empty?
+      # puts queue.length
+      test = queue.shift
+      if [test.x,test.y] == target_coords
+        result << target_coords
+      else
+        test.children.each {|child| queue << child}
+      end
     end
-    else
-      @head.children.each
-    end
+    puts "#{result} #{test.depth}"
   end
 
+  def dfs_for(target_coords)
+    stack = [@head]
+    result = nil
+    until stack.empty?
+      # puts stack.length
+      test = stack.pop
+      if [test.x,test.y] == target_coords
+        result = test
+      else
+        test.children.each {|child| stack << child}
+      end
+    end
+    #puts result
+    puts "#{result.x}, #{result.y} found at depth #{result.depth}"
+    puts result.parent_pointer
+  end
 end
 
 
