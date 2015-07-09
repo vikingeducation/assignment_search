@@ -7,28 +7,40 @@ class KnightSearcher
     @tree=tree
     @max_depth=@tree.max_depth
     #bfs_for(3,4)
-    dfs_for(1,2)
+    dfs_for(4,2)
   end
 
+  # def build_tree(square, d=1)
+
+  #   arr_parents = square.children
+  #   d += 1
+  #   arr_parents.each do |child|
+  #     build_children!(child, d)
+  #     build_tree(child,d) unless d >= @max_depth
+  #   end
+  # end
 
   def dfs_for(target_x,target_y,kid=@tree.root,parent=[@tree.root],d=1)
-
+   d+=1
     kid.children.each do |child|
       parent<<child 
-      d+=1
+      
       if child.x == target_x && child.y == target_y
         
         puts "Target found [#{child.x},#{child.y}] on depth #{child.depth}"
         parent.uniq.each do |node|
           puts "Parent depth is #{node.depth} with coords [#{node.x},#{node.y}]"
         end
+        parent.pop
         return
       end
 
       dfs_for(target_x,target_y,child,parent,d) unless d >= @max_depth
-      parent.pop
+      parent.pop 
     end
+
     puts "Didn't find anything"
+    #puts "#{parent}"
   end
     
 
