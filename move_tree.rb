@@ -37,8 +37,7 @@ class MoveTree
   end
 
 
-  def legal?(square)
-    
+  def legal?(square)    
     on_board?(square) && is_not_grandparent?(square)
   end
 
@@ -48,6 +47,7 @@ class MoveTree
 
 
   def is_not_grandparent?(square)
+
     square.parent.parent.nil? ||
     (square.x != square.parent.parent.x && square.y != square.parent.parent.y) 
 
@@ -59,12 +59,6 @@ class MoveTree
   end
 end
 
-
-# t = Time.now
-
-# tree = MoveTree.new([4,4],6)
-
-# puts Time.now - t
 
 
 
