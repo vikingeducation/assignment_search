@@ -51,26 +51,37 @@ class MoveTree
     parent.children #[sq1, sq2]
   end
 
-  def get_children(current_branch)
-    if current_branch.children == []
-      break
+  # def get_children(current_branch)
+  #   if current_branch.children == []
+  #     puts 0
+  #     return 0
+  #   else
+  #     puts current_branch.children.length
+      
+  #   end
+  # end
+
+  def inspect_nodes(node, total=@head.children.length+1)
+
+    # total_nodes = 1 + @head.children.length
+
+    if node.children == []
+        total += 0
     else
-      current_branch.children.length
+      node.children.each do |current_branch|
+        total += current_branch.children.length
+        inspect_nodes(current_branch,total)
+      end
     end
+
+    puts total
+    total 
+
+    # print "The total nodes are #{total_nodes}"
+
   end
 
-  def inspect(depth)
-      if depth == 1
-        @head.children.length
-      else
-        while i < depth
-          @head.children.each do |i|
-            get_children()
-            # @head.children[i].children.length
-          end
-      end
-      1 + get_children(@head)
-    # print @head.inspect
-    # depth.times do
-  end
+
+
+end
 

@@ -21,3 +21,16 @@
 
 First turn
 #<struct Square x=0, y=0, depth=0, children=[#<struct Square x=1, y=2, depth=1, children=[]>, #<struct Square x=2, y=1, depth=1, children=[]>]> 
+
+
+                @head
+    child 1                child 2
+c1 c2 c3 c4 c5 c6    c1 c2 c3 c4 c5 c6
+1 2
+
+
+@head.children.lenght
+
+@head.children.each do |child|
+    @current_branch.children.lenght
+    end
