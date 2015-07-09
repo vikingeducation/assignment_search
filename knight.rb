@@ -200,6 +200,21 @@ class King
 
 end
 
+def render(knight, king)
+  system "clear"
+  print "Knight's Position: #{knight}\n"
+  print "King's Position: #{king}\n"
+  board = Array.new(8){Array.new(8){"[ ]"}}
+  board[knight[0]][knight[1]] = "[K]"
+  board[king[0]][king[1]] = "[Y]"
+  board.each_with_index do |row, ri|
+    row.each_with_index do |col,ci|
+      print board[ri][ci]
+    end
+    print "\n"
+  end
+end
+
 t = MoveTree.new([4,4],8)
 kn = KnightSearcher.new(t)
 
@@ -209,6 +224,7 @@ counter = 1
 
 kn.move_knight_to_position(kn.bfs_for(k.position))
 until kn.position == k.position
+  render(kn.position, k.position)
   puts "The knights position is: #{[kn.position[0], kn.position[1]]}"
   k.update_knight_pos(kn.position)
   k.move
