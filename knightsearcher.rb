@@ -6,33 +6,25 @@ class KnightSearcher
     @tree = tree
   end
 
-  def bfs_for (final_dest) #incomplete
-    counter = 0
-    current_node = @tree.root
-
-    until search == final_dest
-      answer = []
-      counter += 1
-      queue = tunneler(current_node, counter)
-      queue.each do |child|
-        if child.x == final_dest[0] && child.y == final_dest[1]
-          answer << [child.x,child.y]
-          p answer
-        end
-          queue.shift
-          queue  << child.children
-       end
-
+  def bfs_for (goal) #incomplete
+    origin = @tree.root
+    queue = []
+    current_node = [origin.x, origin.y]
+    until [current_node.x, current_node.y] == goal
+      current_node.children.each do |child|
+        queue += queue_children(child)
+      end
+      current_node = queue.shift
     end
   end
 
 
-  def tunneler(parent, level)
-    queue = []
+  def queue_children(parent)
+    append_queue = []
     parent.children.each do |child|
-       queue << child
+       append_queue << child
     end
-    queue
+    append_queue
   end
 
 end

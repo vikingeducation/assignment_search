@@ -1,4 +1,4 @@
-Square = Struct.new(:x, :y, :depth, :children) #children = array of squares
+Square = Struct.new(:x, :y, :depth, :children, :parent) #children = array of squares
 
 class MoveTree
   attr_reader :squares, :root
@@ -20,7 +20,7 @@ class MoveTree
 
   def create_tree(level, parent)
     return if level > @max_depth
-    parent.children = potential_moves([parent.x, parent.y], level)
+    parent.children = potential_moves([parent.x, parent.y], level, parent)
     parent.children.each do |child|
       create_tree(level+1, child)
     end
@@ -33,17 +33,16 @@ class MoveTree
     end
   end
 
-  def potential_moves(origin, level)
+  def potential_moves(origin, level, parent)
     moves = [[1,2], [1,-2], [-1,2], [-1,-2], [2,1], [2,-1], [-2,-1], [-2,1]]
     squares = []
     moves.each do |move|
       temp = [origin[0] + move[0], origin[1]+move[1]]
       if valid_coord(temp)
         @nodes += 1
-        squares << Square.new(temp[0],temp[1], level)
+        squares << Square.new(temp[0],temp[1], level, parent)
       end
     end
-    #p squares
     squares
   end
 
