@@ -1,92 +1,103 @@
-Square = Struct.new(:x, :y, :depth, :children)
+Square = Struct.new(:x, :y, :depth, :children, :parent)
 
 class KnightSearcher
 
   def initialize(tree)
 
-    @tree=tree
+    @tree = tree
     @max_depth=@tree.max_depth
-    #bfs_for(3,4)
-    dfs_for(4,2)
+
   end
 
-  # def build_tree(square, d=1)
+  def dfs_for(target_x,target_y)
+    stack = [@tree.root]
+    moves = []
+    current_square = stack[0]
 
-  #   arr_parents = square.children
-  #   d += 1
-  #   arr_parents.each do |child|
-  #     build_children!(child, d)
-  #     build_tree(child,d) unless d >= @max_depth
-  #   end
-  # end
-
-  def dfs_for(target_x,target_y,kid=@tree.root,parent=[@tree.root],d=1)
-   d+=1
-    kid.children.each do |child|
-      parent<<child 
-      
-      if child.x == target_x && child.y == target_y
-        
-        puts "Target found [#{child.x},#{child.y}] on depth #{child.depth}"
-        parent.uniq.each do |node|
-          puts "Parent depth is #{node.depth} with coords [#{node.x},#{node.y}]"
-        end
-        parent.pop
-        return
+    until stack.empty?
+      current_square.children.each do |child|
+        stack << child
       end
-
-      dfs_for(target_x,target_y,child,parent,d) unless d >= @max_depth
-      parent.pop 
+      current_square = stack.pop
+      if target_x == current_square.x && target_y == current_square.y
+        puts "Target found [#{current_square.x},#{current_square.y}] on depth #{current_square.depth}"
+        moves << current_square
+        break
+      end
     end
 
-    puts "Didn't find anything"
-    #puts "#{parent}"
-  end
-    
+    unless moves.empty?
+      current_square = moves[0]
+      until current_square.parent.nil?
+        current_square = current_square.parent
+        moves.unshift(current_square)
+      end
+    else
+      puts "Sorry, we were not able to find this square :("
+    end
 
-  
+    moves.each_with_index do |node, index|
+      puts "#{index+1}. Parent depth is #{node.depth} with coords [#{node.x},#{node.y}]"
+    end
+  end
+
 
   def bfs_for(target_x,target_y)
-    moves=[]
-    moves<<[@tree.root.x,@tree.root.y, @tree.root]
-    #[[x,y,Obj] [x,y,Obj] []]
-     parents=[]
-     parents<<@tree.root
-    loop do
 
-      t=moves.shift[2]
-      #puts "t.children is #{t}"
-      #puts "#{t.depth} depth : [#{t.x},#{t.y}]"
-      parents<<t
-      t.children.each do |kid|
-          if target_x==kid.x && target_y==kid.y
-            
-            puts "#{kid.depth}"
-            puts "Target found [#{kid.x},#{kid.y}] on depth #{kid.depth}"
+    queue = [@tree.root]
+    moves = []
 
-            parents.uniq.each do |node|
-              puts "Parent depth is #{node.depth} with coords [#{node.x},#{node.y}]"
-            end
-             return 
-          end
-        moves << [kid.x,kid.y, kid]
-        parents.pop if parents.size>2 && parents[-2].depth == parents[-1].depth
+    until queue.empty?
+      current_square = queue.shift
+      queue += current_square.children
+      if target_x == current_square.x && target_y == current_square.y
+        puts "Target found [#{current_square.x},#{current_square.y}] on depth #{current_square.depth}"
+        moves << current_square
+        break
       end
-      break if moves.empty?
     end
-    
+
+    unless moves.empty?
+      current_square = moves[0]
+      until current_square.parent.nil?
+        current_square = current_square.parent
+        moves.unshift(current_square)
+      end
+    else
+      puts "Sorry, we were not able to find this square :("
+    end
+
+    moves.each_with_index do |node, index|
+      puts "#{index+1}. Parent depth is #{node.depth} with coords [#{node.x},#{node.y}]"
+    end
+  end
+
+  def benchmark
+
+    t0 = Time.now
+
+    10000.times { bfs_for(1,1) }
+
+    t1 = Time.now
+
+    10000.times { dfs_for(1,1) }
+
+    t2 = Time.now
+
+    puts "It took #{t1 - t0} to search broadly 10,000 times for the moves to [1,1]"
+    puts "It took #{t2 - t1} to search deeply 10,000 times for the moves to [1,1]"
+
   end
 
 end
 
 
-
 class MoveTree
   attr_reader :root, :max_depth
-  def initialize(initial_x, initial_y, max_depth = 2)
+  def initialize(initial_x, initial_y, max_depth = 5, board_size = 5)
 
     @max_depth = max_depth
-    @board_size = 5
+    @board_size = board_size
     @move_combinations = [[-2, -1],
                           [-1, -2],
                           [1, -2],
@@ -95,12 +106,11 @@ class MoveTree
                           [1, 2],
                           [-1, 2],
                           [-2, 1]]
-    @root = Square.new(initial_x, initial_y, 0, [])
+    @root = Square.new(initial_x, initial_y, 0, [], nil)
+    @total_squares = 1
 
-    build_children!(@root,1)
+    build_children(@root)
     build_tree(@root)
-    #print_tree(@root)
-    #count_children(@root)
   end
 
 
@@ -109,77 +119,61 @@ class MoveTree
     arr_parents = square.children
     d += 1
     arr_parents.each do |child|
-      build_children!(child, d)
+      build_children(child)
       build_tree(child,d) unless d >= @max_depth
     end
   end
 
 
   def print_arr(arr)
-    arr.each do |kid|
-      puts "[#{kid.x},#{kid.y}]"
+    arr.each do |child|
+      puts "Coordinates are: [#{child.x},#{child.y}] and depth is #{child.depth}"
     end
   end
 
 
-  def build_children!(parent, depth)
-    #puts "--------------Depth #{depth}---------------------"
+  def build_children(parent)
+    new_depth = parent.depth + 1
+
     @move_combinations.each do |move|
-      new_x =parent.x + move[0]
+      new_x = parent.x + move[0]
       new_y = parent.y + move[1]
-      if new_x <= @board_size &&
-        new_y <= @board_size &&
-        new_x > 0 &&
-        new_y > 0
-        parent.children << Square.new(new_x, new_y, depth, [])  
-        #puts "[#{new_x}, #{new_y}, depth is #{depth}]"
+      if new_x <= @board_size && new_y <= @board_size &&
+        new_x > 0 && new_y > 0
+        parent.children << Square.new(new_x, new_y, new_depth, [], parent)
+        @total_squares += 1
       end
-
     end
-    #puts "-----------------------------------"
   end
 
-  def print_tree (square,d=0)
-    queue=[]
-    queue<<square
-   
+  def print_tree
+    queue = []
+    queue << @root
+
     loop do
+      current_square = queue.shift
+      puts "Level #{current_square.depth} depth : [#{current_square.x},#{current_square.y}]"
 
-      t=queue.shift
-      puts "#{t.depth} depth : [#{t.x},#{t.y}]"
-      
-      t.children.each do |kid|
-        queue << kid 
-
+      current_square.children.each do |child|
+        queue << child
       end
       break if queue.empty?
-
     end
-    
   end
 
-    
-  
+  def count_total_children
 
-  def count_children(square,d=0,memo=0)
-    arr_parents=square.children
-
-    arr_parents.each do |child|
-        memo+=child.children.length
-        d+=1
-        count_children(child,d,memo) unless d > @max_depth
-    end
-
-    puts memo
-
+    @total_squares
 
   end
 
 
 end
 
-tree=MoveTree.new(3,3,3)
-KnightSearcher.new(tree)
+tree=MoveTree.new(3,3)
+k = KnightSearcher.new(tree)
+k.benchmark
+
 
 
 
