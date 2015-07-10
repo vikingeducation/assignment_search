@@ -10,16 +10,6 @@ class KnightSearcher
     dfs_for(4,2)
   end
 
-  # def build_tree(square, d=1)
-
-  #   arr_parents = square.children
-  #   d += 1
-  #   arr_parents.each do |child|
-  #     build_children!(child, d)
-  #     build_tree(child,d) unless d >= @max_depth
-  #   end
-  # end
-
   def dfs_for(target_x,target_y,kid=@tree.root,parent=[@tree.root],d=1)
    d+=1
     kid.children.each do |child|
@@ -40,7 +30,7 @@ class KnightSearcher
     end
 
     puts "Didn't find anything"
-    #puts "#{parent}"
+    
   end
     
 
@@ -49,14 +39,12 @@ class KnightSearcher
   def bfs_for(target_x,target_y)
     moves=[]
     moves<<[@tree.root.x,@tree.root.y, @tree.root]
-    #[[x,y,Obj] [x,y,Obj] []]
-     parents=[]
-     parents<<@tree.root
-    loop do
+    
+    parents=[]
+    parents<<@tree.root
+    until moves.empty?
 
       t=moves.shift[2]
-      #puts "t.children is #{t}"
-      #puts "#{t.depth} depth : [#{t.x},#{t.y}]"
       parents<<t
       t.children.each do |kid|
           if target_x==kid.x && target_y==kid.y
@@ -67,12 +55,12 @@ class KnightSearcher
             parents.uniq.each do |node|
               puts "Parent depth is #{node.depth} with coords [#{node.x},#{node.y}]"
             end
-             return 
+            return 
           end
         moves << [kid.x,kid.y, kid]
         parents.pop if parents.size>2 && parents[-2].depth == parents[-1].depth
       end
-      break if moves.empty?
+      
     end
     
   end
@@ -83,6 +71,7 @@ end
 
 class MoveTree
   attr_reader :root, :max_depth
+
   def initialize(initial_x, initial_y, max_depth = 2)
 
     @max_depth = max_depth
@@ -127,10 +116,10 @@ class MoveTree
     @move_combinations.each do |move|
       new_x =parent.x + move[0]
       new_y = parent.y + move[1]
-      if new_x <= @board_size &&
-        new_y <= @board_size &&
-        new_x > 0 &&
-        new_y > 0
+      if  new_x <= @board_size &&
+          new_y <= @board_size &&
+          new_x > 0 &&
+          new_y > 0
         parent.children << Square.new(new_x, new_y, depth, [])  
         #puts "[#{new_x}, #{new_y}, depth is #{depth}]"
       end
@@ -150,7 +139,6 @@ class MoveTree
       
       t.children.each do |kid|
         queue << kid 
-
       end
       break if queue.empty?
 
@@ -170,9 +158,7 @@ class MoveTree
         count_children(child,d,memo) unless d > @max_depth
     end
 
-    puts memo
-
-
+    memo
   end
 
 
