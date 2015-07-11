@@ -1,0 +1,74 @@
+# QUEUE (BFS)
+<< [0]
+<< []
+<< [1,1,1,1,1,1,1,1]
+<< [1,1,1,1,1,1,1]
+<< [1,1,1,1,1,1,1,2,2,2,2,2,2]
+<< [1,1,1,1,1,1,2,2,2,2,2,2]
+<< [1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,]
+
+# Put the initial node into our queue and start checking every node in the queue.
+# For the first node of the queue, return if it matches our search criteria. If not, add each of its children to the end of the queue.
+# Continue dequeuing nodes and checking them until the target is located or the queue empties (failure).
+# Record inside each node what the distance is from the original node
+
+
+# STACK (DFS)
+[1,1,1,1,1,1] >>
+[1,1,1,1,1,2,2,2,2,2,2] >>
+[1,1,1,1,1,2,2,2,2,2,2,3,3,3,3,3,3,3] >>
+[1,1,1,1,1,2,2,2,2,2,2,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,] >>
+
+
+
+--------------
+
+
+Tree
+    [0,0]
+[1,2]   [2,1]  -turn 1
+    [4,2] [3,2] [0,0]-turn 2
+
+@head = (0,0,0, [square[1,2,1[]],])
+
+
+    parent_struct.children = [struct[1,2], struct, struct]
+
+
+    # 8 options 1,2, 2,1 -1,-2, -2,-1, 1,-2, 2,-1, -1,2, -2,1
+
+    for 4,4
+    5,6 6,5 3,2 2,3 5,2 6,3 3,6 2,5
+    [[2, 3], [3, 2], [5, 6], [6, 5]]
+
+    #a knight moves 2 sq in one direction and then 1 l/r
+    #board 8x8
+
+First turn
+#<struct Square x=0, y=0, depth=0, children=[#<struct Square x=1, y=2, depth=1, children=[]>, #<struct Square x=2, y=1, depth=1, children=[]>]>
+
+
+    # total_nodes = 1 + @head.children.length
+     # binding.pry
+    # if node.children == []
+    #     total += 0
+    # else
+    #   node.children.each do |current_branch|
+    #     total += current_branch.children.length
+    #     inspect_nodes(current_branch,total)
+    #   end
+    # end
+    # puts total
+    # total
+    # print "The total nodes are #{total_nodes}"
+
+
+  # def get_children(current_branch)
+  #   if current_branch.children == []
+  #     puts 0
+  #     return 0
+  #   else
+  #     puts current_branch.children.length
+  #   end
+  # end
+
