@@ -78,18 +78,17 @@ class KnightSearcher
       end
     end
     puts "#{result} found at depth #{test.depth}"
+    find_parents(result)
   end
 
   def dfs_for(target_coords)
     stack = [@head]
     result = nil
-    path = nil
     until stack.empty?
       # puts stack.length
       test = stack.pop
       if [test.x,test.y] == target_coords
         result = test
-        path = find_parents(stack, result) unless result.nil? || result.depth == 0
       else
         test.children.each {|child| stack << child}
       end
@@ -103,10 +102,10 @@ class KnightSearcher
     path = []
     while current_node
       path << current_node
-      current_node = current_node.parent
+      current_node = current_node.parent_pointer
     end
     path.reverse!
-    path.each {|a| puts [a.x, a.y]}
+    path.each {|a| p [a.x, a.y]}
   end
 
 end
