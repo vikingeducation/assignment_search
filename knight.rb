@@ -67,36 +67,50 @@ class KnightSearcher
 
   def bfs_for(target_coords)
     queue = [@head]
-    result = []
+    result = nil
     until queue.empty?
       # puts queue.length
       test = queue.shift
       if [test.x,test.y] == target_coords
-        result << target_coords
+        result = test
       else
         test.children.each {|child| queue << child}
       end
     end
-    puts "#{result} #{test.depth}"
+    puts "#{result} found at depth #{test.depth}"
   end
 
   def dfs_for(target_coords)
     stack = [@head]
     result = nil
+    path = nil
     until stack.empty?
       # puts stack.length
       test = stack.pop
       if [test.x,test.y] == target_coords
         result = test
+        path = find_parents(stack, result) unless result.nil? || result.depth == 0
       else
         test.children.each {|child| stack << child}
       end
     end
-    #puts result
     puts "#{result.x}, #{result.y} found at depth #{result.depth}"
-    puts result.parent_pointer
+    find_parents(result)
   end
+
+  def find_parents(result)
+    current_node = result
+    path = []
+    while current_node
+      path << current_node
+      current_node = current_node.parent
+    end
+    path.reverse!
+    path.each {|a| puts [a.x, a.y]}
+  end
+
 end
+
 
 
 
