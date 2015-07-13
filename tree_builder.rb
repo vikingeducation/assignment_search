@@ -2,7 +2,7 @@ Square = Struct.new(:x, :y, :depth, :children) #children = array of squares
 
 class MoveTree
   attr_reader :squares, :root
-  #attr_writer :children
+  attr_accessor :children
 
   def initialize(coord = [0,0], max_depth = 1) #constructs a tree
     @squares = []
@@ -12,6 +12,7 @@ class MoveTree
     @root = create_root
     @max_depth = max_depth
     create_tree(1, @root) #loop
+
   end
 
   def create_root # no children yet
@@ -21,13 +22,12 @@ class MoveTree
 
   def create_tree(level, parent)
     return if level > @max_depth
-    parent.children = potential_moves([parent.x, parent.y], level)
+    parent.children =  potential_moves([parent.x, parent.y], level)
+  
     parent.children.each do |child|
       create_tree(level+1, child)
-      # child.children = potential_moves([child.x, child.y], level)
-      # Square.new(child.x, child.y, level, potential_moves(child[0], child[1], level))
     end
-      # parent.children.each {|c| queue << c} # ARRAY, queue
+
   end
 
   def create_board #creates 8x8 board
@@ -47,12 +47,13 @@ class MoveTree
         squares << Square.new(temp[0],temp[1], level)
       end
     end
-    p squares
+    
     squares
   end
 
   def inspect
     puts" Your tree has #{@nodes} nodes and a maximum depth of #{@max_depth}"
+    p @root.children
   end
 
 
