@@ -5,14 +5,33 @@ class MoveTree
   def initialize(start, max_depth)
     @root = Square.new(start[0], start[1], 0, [])
     @max_depth = max_depth
+    @node_count = 1
+    build_tree
+  end
+
+
+  def inspect
+    puts "Tree has #{@node_count} nodes at max depth of #{@max_depth}"
   end
 
 
   def build_tree
-    moves = get_valid_moves_from(@root.x, @root.y)
-    moves.each do |move|
-      child = Square.new(move[0], move[1], 1, [])
-      @root.children << child
+    queue = [@root]
+
+    until queue.empty?
+
+      current_node = queue.shift
+      moves = get_valid_moves_from(current_node.x, current_node.y)
+      depth = current_node.depth + 1
+
+      moves.each do |move|
+        child = Square.new(move[0], move[1], depth, [])
+        
+        current_node.children << child
+        @node_count += 1
+        queue << child unless depth == @max_depth
+      end
+
     end    
   end
   
