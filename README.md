@@ -24,8 +24,8 @@ Loop Start
 Check current node for match
 -- If match, return
 -- If no match, mark as searched
--- Add child to stack, unless its been searched
--- If no child, remove node from stack
+--- Add child to stack, unless its been searched
+--- If no child, remove node from stack
 Loop End
 
 
