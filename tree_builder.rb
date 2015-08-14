@@ -1,14 +1,20 @@
 require 'pry'
 
-Square = Struct.new(:x, :y, :depth, :parent_coords, :children)
+Square = Struct.new(:coords, :depth, :parent_coords, :children)
 
 class MoveTree
 
+  attr_accessor :root
+
   def initialize(start, max_depth)
-    @root = Square.new(start[0], start[1], 0, [], [])
+    start_time = Time.now
+
+    @root = Square.new(start, 0, [], [])
     @max_depth = max_depth
     @node_count = 1
     build_tree
+
+    puts "Runtime: #{(Time.now - start_time)}" 
   end
 
 
@@ -23,28 +29,31 @@ class MoveTree
     until queue.empty?
 
       current_node = queue.shift
-      moves = get_valid_moves_from(current_node.x, current_node.y, current_node.parent_coords)
+      moves = get_valid_moves_from(current_node.coords, current_node.parent_coords)
       
-      childs_parent_coords = current_node.parent_coords + [[current_node.x, current_node.y]]
+      childs_parent_coords = current_node.parent_coords + [current_node.coords]
       childs_depth = current_node.depth + 1
 
       moves.each do |move|
-        child = Square.new(move[0], move[1], childs_depth, childs_parent_coords, [])
+        child = Square.new(move, childs_depth, childs_parent_coords, [])
         current_node.children << child
         @node_count += 1
 
         queue << child unless childs_depth == @max_depth
       end
 
-    end    
+    end
+   
   end
   
 
-  def get_valid_moves_from(x, y, parent_coords)
+  def get_valid_moves_from(coords, parent_coords)
 
+    x = coords[0]
+    y = coords[1]
     valid_moves = []
     legal_moves = [ [x+1, y-2], [x+2, y-1], [x+2, y+1], [x+1, y+2],
-                    [x-1, y+2], [x-2, y+1], [x-2, y-1], [x-1, y-2] ]
+                   [x-1, y+2], [x-2, y+1], [x-2, y-1], [x-1, y-2] ]
     
     legal_moves.each do |move|
       if (1..8).include?(move[0]) && 
@@ -55,6 +64,59 @@ class MoveTree
     end
 
     valid_moves
+
+  end
+  
+end
+
+
+class KnightSearcher
+
+  def initialize(move_tree)
+    @move_tree = move_tree
+  end
+
+
+  def bfs_for(coords)
+    queue = [@move_tree.root]
+
+    until queue.empty?
+
+      current_node = queue.shift
+
+      if current_node.coords == coords
+        puts "#{current_node.parent_coords.length} Moves:"
+        print current_node.parent_coords
+        print "\n"
+        print current_node.coords
+        break
+      end
+
+      queue += current_node.children
+
+    end
+    
+  end
+
+
+  def dfs_for(coords)
+    stack = [@move_tree.root]
+
+    until stack.empty?
+
+      current_node = stack.pop
+
+      if current_node.coords == coords
+        puts "#{current_node.parent_coords.length} Moves:"
+        print current_node.parent_coords
+        print "\n"
+        print current_node.coords
+        break
+      end
+
+      stack += current_node.children
+      
+    end
 
   end
   
