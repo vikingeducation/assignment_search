@@ -1,5 +1,3 @@
-require 'pry'
-
 Square = Struct.new(:coords, :depth, :parent_coords, :children)
 
 class MoveTree
@@ -7,18 +5,14 @@ class MoveTree
   attr_accessor :root
 
   def initialize(start, max_depth)
-    start_time = Time.now
-
     @root = Square.new(start, 0, [], [])
     @max_depth = max_depth
     @node_count = 1
     build_tree
-
-    puts "Runtime: #{(Time.now - start_time)}" 
   end
 
 
-  def inspect
+  def tree_inspect
     puts "Tree has #{@node_count} nodes at max depth of #{@max_depth}"
   end
 
@@ -43,7 +37,6 @@ class MoveTree
       end
 
     end
-   
   end
   
 
@@ -64,59 +57,6 @@ class MoveTree
     end
 
     valid_moves
-
-  end
-  
-end
-
-
-class KnightSearcher
-
-  def initialize(move_tree)
-    @move_tree = move_tree
-  end
-
-
-  def bfs_for(coords)
-    queue = [@move_tree.root]
-
-    until queue.empty?
-
-      current_node = queue.shift
-
-      if current_node.coords == coords
-        puts "#{current_node.parent_coords.length} Moves:"
-        print current_node.parent_coords
-        print "\n"
-        print current_node.coords
-        break
-      end
-
-      queue += current_node.children
-
-    end
-    
-  end
-
-
-  def dfs_for(coords)
-    stack = [@move_tree.root]
-
-    until stack.empty?
-
-      current_node = stack.pop
-
-      if current_node.coords == coords
-        puts "#{current_node.parent_coords.length} Moves:"
-        print current_node.parent_coords
-        print "\n"
-        print current_node.coords
-        break
-      end
-
-      stack += current_node.children
-      
-    end
 
   end
   
