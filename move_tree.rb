@@ -10,7 +10,12 @@ class MoveTree
     @board_size = board_size
     @max_depth = max_depth
     @head = Square.new(start_coords[0], start_coords[1], 0)
+    @node_count = 1
     get_moves(@head)
+  end
+
+  def inspect
+    puts "Your tree has #{@node_count} nodes and a max depth of #{@max_depth}."
   end
 
   private
@@ -20,6 +25,7 @@ class MoveTree
       node.children = []
       moves = get_potential_moves(node)
       moves.each do |move|
+        @node_count += 1
         child = Square.new(move[0], move[1], node.depth + 1)
         node.children << child
         get_moves(child)
@@ -48,4 +54,7 @@ class MoveTree
   end
 end
 
-# tree = MoveTree.new([3,3], 1)
+tree = MoveTree.new([3,3], 1)
+tree.inspect
+new_tree = MoveTree.new([2,2], 3)
+new_tree.inspect
