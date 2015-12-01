@@ -34,4 +34,4 @@ by Sia Karamalegos
 2. Searching the same tree using BFS.
 
   1. Put the root node in the queue.
-  2. Check the first node in the queue. If it matches, return it.  If not, add it's children to the queue. Keep repeating this step until a match is found or no nodes left in queue.
+  2. Check the first node in the queue. If it matches, return it.  If not, add its children to the queue. Keep repeating this step until a match is found or no nodes left in queue.
