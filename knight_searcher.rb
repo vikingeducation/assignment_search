@@ -43,6 +43,50 @@ class KnightSearcher
     end
   end
 
+  def dfs_for(target_coords)
+    # Put the root node on the stack.
+    stack = [@tree.head]
+
+    # In practice, did not find a case where keeping track helped.
+    visited = {}
+    count = 0
+
+    # Check the top node on the stack. If it matches, return it.  If not, peek at the children and put the 'worst' child on the stack first followed by the other child. Keep repeating this step until a match is found or no nodes left in stack.
+    loop do
+      current_node_coords = [stack.last.x, stack.last.y]
+
+      # Creates a hash of visited nodes based on depth
+      if visited[stack.last.depth].nil?
+        visited[stack.last.depth] = [current_node_coords]
+      else
+        visited[stack.last.depth] += current_node_coords
+      end
+      count += 1
+
+      if current_node_coords == target_coords
+        output_results(stack.last, count)
+        break
+      elsif stack.last.children.nil?
+        stack.pop
+      else
+        last = stack.pop
+        last.children.each do |child|
+          # Push child onto stack unless the node has already been visited at a lower depth
+          unless visited.any?{|depth, coords| depth <= child.depth && coords.include?([child.x, child.y])}
+            # binding.pry
+            stack << child
+          end
+        end
+      end
+
+      # Check if no nodes left
+      if stack.empty?
+        puts "Reached end of stack with no matches"
+        break
+      end
+    end
+  end
+
   private
 
   def output_results(node, count)
@@ -52,7 +96,16 @@ class KnightSearcher
   end
 end
 
-knight_tree = MoveTree.new([2,2], 5)
+knight_tree = MoveTree.new([2,2], 5, 8)
 knight_tree.inspect
 searcher = KnightSearcher.new(knight_tree)
-searcher.bfs_for([4,4])
+searcher.bfs_for([7,4])
+searcher.dfs_for([7,4])
+
+# Max depth of 10 gives 22B nodes with board size of 8.
+tree = MoveTree.new([0,0], 10, 8)
+tree.inspect
+KnightSearcher.new(tree).bfs_for([1,2])
+KnightSearcher.new(tree).dfs_for([1,2])
+KnightSearcher.new(tree).bfs_for([6,0])
+KnightSearcher.new(tree).dfs_for([6,0])
