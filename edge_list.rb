@@ -1,5 +1,5 @@
 
-Square = Struct.new(:id, :x, :y, :distance, :predecessor)
+SquareGraph = Struct.new(:id, :x, :y, :distance, :predecessor)
 
 class EdgeList
   attr_reader :board_size, :squares, :edge_list
@@ -22,7 +22,7 @@ class EdgeList
 
     board_size.times do |x|
       board_size.times do |y|
-        nodes << Square.new(id, x, y)
+        nodes << SquareGraph.new(id, x, y)
         id += 1
       end
     end
