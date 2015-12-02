@@ -14,8 +14,9 @@ class MoveTree
     get_moves(@head)
   end
 
-  def inspect
-    puts "Your tree has #{@node_count} nodes and a max depth of #{@max_depth}."
+  def inspect(render = true)
+    puts("Your tree has #{@node_count} nodes and a max depth of #{@max_depth}.") if render
+    {nodes: @node_count}
   end
 
   private

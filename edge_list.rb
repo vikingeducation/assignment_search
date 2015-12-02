@@ -14,6 +14,10 @@ class EdgeList
     @squares.find{|square| [square.x, square.y] == coords }
   end
 
+  def inspect
+    {nodes: @squares.size, edges: @edge_list.size}
+  end
+
   private
 
   def get_squares(board_size)

@@ -2,9 +2,11 @@ require_relative 'edge_list'
 
 class GraphSearcher
 
-  def initialize(edge_list)
+  def initialize(edge_list, render_list_stats = true)
     @edge_list = edge_list
-    puts "#{@edge_list.squares.size} nodes and #{@edge_list.edge_list.size} edges"
+    if render_list_stats
+      puts "#{@edge_list.squares.size} nodes and #{@edge_list.edge_list.size} edges"
+    end
   end
 
   # Breadth-First Search
@@ -21,8 +23,7 @@ class GraphSearcher
 
       # Check the first node in the queue. If it matches, return it.  If not, add its children to the queue.
       if [current_node.x, current_node.y] == end_coords
-        output_results(queue[0], count, 'BFS', render_output)
-        break
+        return output_results(queue[0], count, 'BFS', render_output)
       else
         edges = @edge_list.edge_list.select{|pair| pair[0] == current_node}
         edges.each do |edge|
@@ -58,8 +59,7 @@ class GraphSearcher
 
       # Check the top node on the stack. If it matches, return it.  If not, put children on the stack.
       if [current_node.x, current_node.y] == end_coords
-        output_results(current_node, count, 'DFS', render_output)
-        break
+        return output_results(current_node, count, 'DFS', render_output)
       else
         edges = @edge_list.edge_list.select{|pair| pair[0] == current_node}
         edges.each do |edge|
@@ -110,7 +110,7 @@ end
 # a.print_adj_list
 
 # TODO: Make it so the edge list can be cleared of depth and ancestors
-GraphSearcher.new(EdgeList.new(8)).bfs_for([0,0], [1,2])
-GraphSearcher.new(EdgeList.new(8)).bfs_for([0,0], [6,0])
-GraphSearcher.new(EdgeList.new(8)).dfs_for([0,0], [1,2])
-GraphSearcher.new(EdgeList.new(8)).dfs_for([0,0], [6,0])
+# GraphSearcher.new(EdgeList.new(8)).bfs_for([0,0], [1,2])
+# GraphSearcher.new(EdgeList.new(8)).bfs_for([0,0], [6,0])
+# GraphSearcher.new(EdgeList.new(8)).dfs_for([0,0], [1,2])
+# GraphSearcher.new(EdgeList.new(8)).dfs_for([0,0], [6,0])
