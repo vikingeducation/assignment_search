@@ -15,6 +15,8 @@ The files for the original instructions include *move_tree.rb* and *knight_searc
 
 The files for the graph version of the board and knight's moves are  primarily *edge_list.rb* and *graph_searcher.rb*.  Run `ruby graph_searcher.rb` to see the results using this method.  The depth is currently unlimited and still runs quite fast.
 
+To see an analysis of the tree vs graph creation as well as each type of search, run `ruby benchmark.rb`.
+
 ## BFS vs DFS Questions
 
 1. What data structure is used to implement DFS?

@@ -230,5 +230,5 @@ class Benchmark
   end
 end
 
-b = Benchmark.new(false)
+b = Benchmark.new
 b.run
