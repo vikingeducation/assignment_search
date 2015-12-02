@@ -7,8 +7,9 @@ class GraphSearcher
     puts "#{@edge_list.squares.size} nodes and #{@edge_list.edge_list.size} edges"
   end
 
-  # Breadth-First tree search
+  # Breadth-First Search
   def bfs_for(start_coords, end_coords)
+    # Put the root node in the queue
     start_node = @edge_list.find_square(start_coords)
     start_node.distance = 0
     queue = [start_node]
@@ -18,6 +19,7 @@ class GraphSearcher
       current_node = queue[0]
       count += 1
 
+      # Check the first node in the queue. If it matches, return it.  If not, add its children to the queue.
       if [current_node.x, current_node.y] == end_coords
         output_results(queue[0], count, 'BFS')
         break
@@ -42,6 +44,7 @@ class GraphSearcher
     end
   end
 
+  # Depth-First Search
   def dfs_for(start_coords, end_coords)
     # Put the root node on the stack.
     start_node = @edge_list.find_square(start_coords)
@@ -49,12 +52,11 @@ class GraphSearcher
     stack = [start_node]
     count = 0
 
-    # Check the top node on the stack. If it matches, return it.  If not, put children on the stack. Keep repeating this step until a match is found or no nodes left in stack.
     loop do
       current_node = stack.pop
       count += 1
-      # binding.pry
 
+      # Check the top node on the stack. If it matches, return it.  If not, put children on the stack.
       if [current_node.x, current_node.y] == end_coords
         output_results(current_node, count, 'DFS')
         break
@@ -62,7 +64,7 @@ class GraphSearcher
         edges = @edge_list.edge_list.select{|pair| pair[0] == current_node}
         edges.each do |edge|
           neighbor = edge[1]
-          # binding.pry
+
           # Skip neighbor if it has been visited at a lower depth
           next unless neighbor.distance.nil? || neighbor.distance > current_node.distance
 
