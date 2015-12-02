@@ -3,7 +3,7 @@ require_relative 'edge_list'
 require 'pry'
 
 class AdjacencyList
-  attr_reader :adjacency_list
+  attr_reader :adjacency_list, :edge_list
 
   def initialize(edge_list)
     # TODO: unmake instance variables if not needed
@@ -60,9 +60,9 @@ class AdjacencyList
   end
 end
 
-e = EdgeList.new(5)
-puts "#{e.squares.size} nodes and #{e.edge_list.size} edges"
-a = AdjacencyList.new(e)
-# puts "#{a.adjacency_list}"
-a.print_adj_list
+# e = EdgeList.new(5)
+# puts "#{e.squares.size} nodes and #{e.edge_list.size} edges"
+# a = AdjacencyList.new(e)
+# # puts "#{a.adjacency_list}"
+# a.print_adj_list
 

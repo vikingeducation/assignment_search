@@ -1,5 +1,5 @@
 
-Square = Struct.new(:id, :x, :y)
+Square = Struct.new(:id, :x, :y, :distance, :predecessor)
 
 class EdgeList
   attr_reader :board_size, :squares, :edge_list
@@ -8,6 +8,10 @@ class EdgeList
     @board_size = board_size
     @squares = get_squares(board_size)
     @edge_list = get_edge_list(@squares)
+  end
+
+  def find_square(coords)
+    @squares.find{|square| [square.x, square.y] == coords }
   end
 
   private
@@ -36,10 +40,6 @@ class EdgeList
     edges
   end
 
-  def find_square(coords)
-    @squares.find{|square| [square.x, square.y] == coords }
-  end
-
   def get_children(square)
     moves = [
       [square.x + 1, square.y + 2],
@@ -61,7 +61,7 @@ class EdgeList
   end
 end
 
-# a = EdgeList.new(5)
+# a = EdgeList.new(3)
 # # a.print_adj_list
 # puts "#{a.squares.size} nodes and #{a.edge_list.size} edges"
 # puts "#{a.edge_list}"

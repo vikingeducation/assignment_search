@@ -96,16 +96,16 @@ class KnightSearcher
   end
 end
 
-knight_tree = MoveTree.new([2,2], 5, 8)
-knight_tree.inspect
-searcher = KnightSearcher.new(knight_tree)
-searcher.bfs_for([7,4])
-searcher.dfs_for([7,4])
+# knight_tree = MoveTree.new([2,2], 5, 8)
+# knight_tree.inspect
+# searcher = KnightSearcher.new(knight_tree)
+# searcher.bfs_for([7,4])
+# searcher.dfs_for([7,4])
 
-# Max depth of 10 gives 22B nodes with board size of 8.
-tree = MoveTree.new([0,0], 10, 8)
+# Max depth of 10 gives 22B nodes with board size of 8, but only need a max depth of 4 for BFS for these scenarios.
+tree = MoveTree.new([0,0], 4, 8)
 tree.inspect
 KnightSearcher.new(tree).bfs_for([1,2])
-KnightSearcher.new(tree).dfs_for([1,2])
+# KnightSearcher.new(tree).dfs_for([1,2])
 KnightSearcher.new(tree).bfs_for([6,0])
-KnightSearcher.new(tree).dfs_for([6,0])
+# KnightSearcher.new(tree).dfs_for([6,0])
