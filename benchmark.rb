@@ -56,7 +56,7 @@ class Benchmark
     results = []
 
     scenarios.each do |scenario|
-      2.times do
+      5.times do
         start_time = Time.now
         result = MoveTree.new([0,0], scenario[0], scenario[1]).inspect(false)
         result[:scenario] = scenario
@@ -86,10 +86,25 @@ class Benchmark
   end
 
   def get_scenarios
-    [
-      [[0,0], [1,2]],
-      [[0,0], [6,0]]
-    ]
+    starts = []
+    stops = []
+    scenarios = []
+
+    max = @board_size - 1
+    (0..max).each do |r|
+      (0..max).each do |c|
+        starts << [r, c]
+        stops << [r, c]
+      end
+    end
+
+    stops.shuffle!
+    starts.each_with_index do |coord, index|
+      unless coord == stops[index]
+        scenarios << [coord, stops[index]]
+      end
+    end
+    scenarios
   end
 
   def run_knight_searcher(scenarios)
@@ -108,7 +123,7 @@ class Benchmark
 
       # Run DFS
       start_time = Time.now
-      result = KnightSearcher.new(tree).bfs_for(stop_coords, false)
+      result = KnightSearcher.new(tree).dfs_for(stop_coords, false)
       result[:runtime] = Time.now - start_time
       results << result
     end
@@ -119,25 +134,65 @@ class Benchmark
   def run_graph_searcher(scenarios)
     results = []
 
+    scenarios.each do |scenario|
+      start_coords = scenario[0]
+      stop_coords = scenario[1]
+      e1 = EdgeList.new(@board_size)
+      e2 = EdgeList.new(@board_size)
 
-    results << GraphSearcher.new(EdgeList.new(@board_size), false).bfs_for([0,0], [1,2], false)
-    results << GraphSearcher.new(EdgeList.new(@board_size), false).bfs_for([0,0], [6,0], false)
-    results << GraphSearcher.new(EdgeList.new(@board_size), false).dfs_for([0,0], [1,2], false)
-    results << GraphSearcher.new(EdgeList.new(@board_size), false).dfs_for([0,0], [6,0], false)
-    # binding.pry
+      # BFS
+      start_time = Time.now
+      result = GraphSearcher.new(e1, false).bfs_for(start_coords, stop_coords, false)
+      result[:runtime] = Time.now - start_time
+      results << result
+
+      # DFS
+      start_time = Time.now
+      result = GraphSearcher.new(e2, false).dfs_for(start_coords, stop_coords, false)
+      result[:runtime] = Time.now - start_time
+      results << result
+    end
+
     results
   end
 
   def render_results(tree_results, graph_results)
-    puts tree_results
-    puts graph_results
+    puts Rainbow("Search stats using Tree data type\n(with max_depth of #{@max_depth})").green
+    search_results_analyzer(tree_results)
+
+    puts Rainbow("Search stats using Graph data type\n(note that max_depth is not implemented)").magenta
+    search_results_analyzer(graph_results)
+  end
+
+  def search_results_analyzer(results)
+    by_search = results.group_by{|r| r[:type]}
+    by_search.each do |search_type, type_result|
+      puts " #{search_type} averages:"
+      sum_moves = 0
+      sum_steps = 0
+      sum_time = 0
+      count = 0
+      type_result.each do |result|
+        sum_moves += result[:moves]
+        sum_steps += result[:steps]
+        sum_time += result[:runtime]
+        count += 1
+      end
+      render_search_subset(sum_moves/count, sum_steps/count, (sum_time/count).round(5))
+    end
+  end
+
+  def render_search_subset(avg_moves, avg_steps, avg_runtime)
+    puts "   moves = #{avg_moves}"
+    puts "   steps = #{avg_steps}"
+    puts "   runtime = #{avg_runtime}"
   end
 
   def render_data_type_results(scenarios, results)
     by_scenario = results.group_by{|r| r[:scenario]}
 
     by_scenario.each do |scenario, s_results|
-      puts "[Max depth, Board size] = #{scenario}"
+      puts Rainbow(" Max depth, Board size = #{scenario}").ljust(50).black.bg(:white)
       by_type = s_results.group_by{|r| r[:type]}
       by_type.each do |type, t_results|
         sum_nodes = 0
@@ -150,12 +205,12 @@ class Benchmark
           sum_time += r[:runtime]
           count += 1
         end
-        render_type_results(type, sum_nodes, sum_edges, sum_time, count)
+        render_data_subset(type, sum_nodes, sum_edges, sum_time, count)
       end
     end
   end
 
-  def render_type_results(type, sum_nodes, sum_edges, sum_time, count)
+  def render_data_subset(type, sum_nodes, sum_edges, sum_time, count)
     string = "  #{type} averages:\n    nodes = #{sum_nodes/count},  edges = #{sum_edges/count}, runtime = #{(sum_time/count).round(5)}"
     if type == 'tree'
       puts Rainbow(string).green
