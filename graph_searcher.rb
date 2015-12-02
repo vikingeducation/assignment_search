@@ -8,7 +8,7 @@ class GraphSearcher
   end
 
   # Breadth-First Search
-  def bfs_for(start_coords, end_coords)
+  def bfs_for(start_coords, end_coords, render_output = true)
     # Put the root node in the queue
     start_node = @edge_list.find_square(start_coords)
     start_node.distance = 0
@@ -21,7 +21,7 @@ class GraphSearcher
 
       # Check the first node in the queue. If it matches, return it.  If not, add its children to the queue.
       if [current_node.x, current_node.y] == end_coords
-        output_results(queue[0], count, 'BFS')
+        output_results(queue[0], count, 'BFS', render_output)
         break
       else
         edges = @edge_list.edge_list.select{|pair| pair[0] == current_node}
@@ -45,7 +45,7 @@ class GraphSearcher
   end
 
   # Depth-First Search
-  def dfs_for(start_coords, end_coords)
+  def dfs_for(start_coords, end_coords, render_output = true)
     # Put the root node on the stack.
     start_node = @edge_list.find_square(start_coords)
     start_node.distance = 0
@@ -58,7 +58,7 @@ class GraphSearcher
 
       # Check the top node on the stack. If it matches, return it.  If not, put children on the stack.
       if [current_node.x, current_node.y] == end_coords
-        output_results(current_node, count, 'DFS')
+        output_results(current_node, count, 'DFS', render_output)
         break
       else
         edges = @edge_list.edge_list.select{|pair| pair[0] == current_node}
@@ -84,7 +84,7 @@ class GraphSearcher
 
   private
 
-  def output_results(end_node, count, type)
+  def output_results(end_node, count, type, render_output)
     moves = [end_node]
 
     loop do
@@ -96,8 +96,12 @@ class GraphSearcher
       end
     end
 
-    puts "#{type} success in #{moves.size - 1} moves and #{count} steps:"
-    moves.each{ |move| puts "[#{move.x}, #{move.y}]"}
+    if render_output
+      puts "#{type} success in #{moves.size - 1} moves and #{count} steps:"
+      moves.each{ |move| puts "[#{move.x}, #{move.y}]"}
+    else
+      {type: type, moves: (moves.size - 1), steps: count}
+    end
   end
 end
 

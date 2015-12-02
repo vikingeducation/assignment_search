@@ -9,7 +9,7 @@ class KnightSearcher
 # Ensure that squares in the same search aren't hit twice by recording and checking for the depth attribute to prevent cycles.
 
   # Breadth-First tree search
-  def bfs_for(target_coords)
+  def bfs_for(target_coords, render_output = true)
     # Put the root node in the queue.
     queue = [@tree.head]
 
@@ -24,7 +24,7 @@ class KnightSearcher
       count += 1
 
       if current_node_coords == target_coords
-        output_results(queue[0], count, 'BFS')
+        output_results(queue[0], count, 'BFS', render_output)
         break
       elsif queue[0].children.nil?
         queue.delete_at(0)
@@ -43,7 +43,7 @@ class KnightSearcher
     end
   end
 
-  def dfs_for(target_coords)
+  def dfs_for(target_coords, render_output = true)
     # Put the root node on the stack.
     stack = [@tree.head]
 
@@ -64,7 +64,7 @@ class KnightSearcher
       count += 1
 
       if current_node_coords == target_coords
-        output_results(stack.last, count, 'DFS')
+        output_results(stack.last, count, 'DFS', render_output)
         break
       elsif stack.last.children.nil?
         stack.pop
@@ -89,10 +89,14 @@ class KnightSearcher
 
   private
 
-  def output_results(node, count, type)
-    puts "#{type} success!  In #{node.ancestors.size} moves with #{count} steps:"
+  def output_results(node, count, type, render_output)
     node.ancestors.each{ |move| puts move.to_s }
-    puts "[#{node.x}, #{node.y}]"
+    if render_output
+      puts "#{type} success!  In #{node.ancestors.size} moves with #{count} steps:"
+      puts "[#{node.x}, #{node.y}]"
+    else
+      {type: type, moves: node.ancestors.size, steps: count}
+    end
   end
 end
 
