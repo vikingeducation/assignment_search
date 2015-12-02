@@ -24,7 +24,7 @@ class KnightSearcher
       count += 1
 
       if current_node_coords == target_coords
-        output_results(queue[0], count)
+        output_results(queue[0], count, 'BFS')
         break
       elsif queue[0].children.nil?
         queue.delete_at(0)
@@ -64,7 +64,7 @@ class KnightSearcher
       count += 1
 
       if current_node_coords == target_coords
-        output_results(stack.last, count)
+        output_results(stack.last, count, 'DFS')
         break
       elsif stack.last.children.nil?
         stack.pop
@@ -89,8 +89,8 @@ class KnightSearcher
 
   private
 
-  def output_results(node, count)
-    puts "Success!  In #{node.ancestors.size} moves with #{count} steps:"
+  def output_results(node, count, type)
+    puts "#{type} success!  In #{node.ancestors.size} moves with #{count} steps:"
     node.ancestors.each{ |move| puts move.to_s }
     puts "[#{node.x}, #{node.y}]"
   end
@@ -103,9 +103,10 @@ end
 # searcher.dfs_for([7,4])
 
 # Max depth of 10 gives 22B nodes with board size of 8, but only need a max depth of 4 for BFS for these scenarios.
-tree = MoveTree.new([0,0], 4, 8)
+tree = MoveTree.new([0,0], 5, 8)
 tree.inspect
 KnightSearcher.new(tree).bfs_for([1,2])
-# KnightSearcher.new(tree).dfs_for([1,2])
 KnightSearcher.new(tree).bfs_for([6,0])
-# KnightSearcher.new(tree).dfs_for([6,0])
+
+KnightSearcher.new(tree).dfs_for([1,2])
+KnightSearcher.new(tree).dfs_for([6,0])

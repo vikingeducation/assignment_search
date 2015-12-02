@@ -5,8 +5,17 @@ Marco?  Polo!
 
 by Sia Karamalegos
 
-## BFS vs DFS
+## What's Here?
 
+The assignment was to find the set of Knight's moves to get from one chess board coordinate to another using both Breadth-First Search and Depth-First Search. The instructions stated to create a 'move tree' of all possible moves for a knight with a certain max depth of moves then to run a 'knight searcher' to get the answer.
+
+I found that the move tree was trying to represent what is actually a graph in tree form which created a lot of excess computations. By re-designing the data representation of the chess board and knight moves as a graph, I was able to significantly decrease the search time.
+
+The files for the original instructions include *move_tree.rb* and *knight_searcher.rb*. Run `ruby knight_searcher.rb` to see the results using this method. The depth is currently limited at 5. Increasing the depth increases time exponentially. A depth of 9 gives 3.7 million nodes for the move tree.
+
+The files for the graph version of the board and knight's moves are  primarily *edge_list.rb* and *graph_searcher.rb*.  Run `ruby graph_searcher.rb` to see the results using this method.  The depth is currently unlimited and still runs quite fast.
+
+## BFS vs DFS Questions
 
 1. What data structure is used to implement DFS?
 
