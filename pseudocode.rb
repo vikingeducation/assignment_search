@@ -3,7 +3,7 @@
 
 def dfs_search(stack, item)
   return item if stack.pop.value == item
-  return if stack.pop.has_nochildren
+  return if stack is empty
   if children.exist?
     check children vs item
       put worst child in stack
