@@ -65,3 +65,27 @@ PSEUDOCODE!
     - Assign each node's depth to equal the current nodes depth plus 1.
     - Add them to the queue.
   - Repeat
+
+
+  KNIGHT'S TRAVAILS PSEUDOCODE:
+
+    x x x x x x x x 
+    x x x x x x x x 
+    x x x x x x x x 
+    x x x x x x x x 
+    x x x x x x x x 
+    x x x x x x x x 
+    x x x x x x x x 
+
+  start square: pair of coordinates
+  end square: pair of coordinates
+  board = 8x8
+
+  building the tree:
+  - start square is root node
+  - each child node is a possible move within the board
+  - each move is a node, with :data being (:x,:y, :depth, :children, :parent)
+  - don't make a node's children one of its parents (helps with redundancy)
+  - final output: print all of the nodes' coordinates (using parent), total number of nodes
+  - max depth: start with 10
+
