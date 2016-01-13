@@ -20,22 +20,42 @@ end
 def bfs_search(queue, item)
   root = @tree.root
   queue.add(root)
+  current_node = queue.pop
+  until current_node == item || current_node.nil?
+    queue.add(current_node.left_child)
+    queue.add(current_node.add_child)
     current_node = queue.pop
-    until current_node == item || current_node.nil?
-      queue.add(current_node.left_child)
-      queue.add(current_node.add_child)
-      current_node = queue.pop
-    end
-    return current_node
+  end
+  return current_node
 end
 
 
 # Searching a graph (represented however you feel most comfortable -- Edge List, Adjacency List or Adjacency Matrix) using DFS.
 
-  def dfs_
+  def dfs_adj_list(stack, item)
+    @checked_edges = []
+    @current_node = start
+    return stack.pop if stack.pop == item
+    return if @checked_edges.include?(all edges connected to stack.pop)
+    if non_checked_edges.exist?
+      put each node an unchecked edge connects to on the stack, worst to best
+      as you pop each new node from the stack, add that edge to checked_edges
+      @current_node = stack.pop
+      dfs_adj_list(stack, item)
+    end
+  end
 
 # Searching the same graph using BFS.
 
-  def bfs_adj_list
-
+  def bfs_adj_list(queue, item)
+    @checked_edges = []
+    @current_node = start
+    queue.add(@current_node)
+    until current_node == item || current_node.nil?
+      @current_node.linked_list.each do |next_node|
+        queue.add(next_node)
+      end
+      current_node = queue.pop
+    end
+    return @current_node
   end
