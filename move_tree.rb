@@ -22,16 +22,16 @@ class MoveTree
     y = current_node.y
     possible_moves = [[x+2,y+1],[x+2,y-1],[x-2,y+1],[x-2,y-1],[x+1,y+2],[x+1,y-2],[x-1,y+2],[x-1,y-2]]
 
+    #Take out moves that are out of bounds from possible_moves
     possible_moves.reject! do |move|
       move[0] < 0 || move[0] > 7 || move[1] < 0 || move[1] > 7
     end
 
+    #Produce a possible_moves array with each element being a Move.new + a child of the current_node
     possible_moves.map! do |move|
       @nodes += 1
       Move.new(move[0],move[1],current_node.depth+1,nil,current_node)
     end
-
-    #Above loop produces a possible_moves array with each element being a Move.new + a child of the current_node
 
     current_node.children = possible_moves
 
