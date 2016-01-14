@@ -1,5 +1,5 @@
 require 'benchmark'
-require './movetree.rb'
+require './move_tree.rb'
 
 class KnightSearcher
 	def initialize(tree)
