@@ -2,6 +2,8 @@
 
 class Stack
 
+  attr_reader :data
+
   def initialize(data =[])
     @data = data
     @cursor = data.length

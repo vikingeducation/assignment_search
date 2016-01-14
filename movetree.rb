@@ -11,19 +11,20 @@ class MoveTree
     def initialize (initial_square)
         @initial_square = initial_square
         @data_queue = Queue.new
+        @stack = Stack.new
         @move_finder = ValidKnightMoves.new
     end
 
     def BFS
         @data_queue.enqueue( Move.new( @initial_square ) )
         counter = 0
-        until @data_queue.empty? && counter < 12
-            print @data_queue.data.length
+        until @data_queue.empty?
+            #print "#{@data_queue.data.length} queue data-length \n"
             current_move = @data_queue.dequeue
             @move_finder.square = current_move.square 
             legal_moves = @move_finder.run
-            searchable_moves = legal_moves & current_move.ancestors
-            print searchable_moves.length
+            searchable_moves = legal_moves.select{|sqr| !current_move.ancestors.include? sqr }
+            #print "#{searchable_moves.length} searchable-length \n"
             searchable_moves.each do | search_move_square |
                 new_move = Move.new( search_move_square, current_move )
                 @data_queue.enqueue( new_move )
@@ -34,7 +35,32 @@ class MoveTree
             end
             counter += 1
         end
-        print @data_queue.data
+        #print @data_queue.data
+        puts @save_move
+    end
+
+
+    def DFS
+        @stack.push( Move.new( @initial_square ) )
+        counter = 0
+        until @stack.empty?
+            #print "#{@data_queue.data.length} queue data-length \n"
+            current_move = @stack.pop
+            @move_finder.square = current_move.square 
+            legal_moves = @move_finder.run
+            searchable_moves = legal_moves.select{|sqr| !current_move.ancestors.include? sqr }
+            #print "#{searchable_moves.length} searchable-length \n"
+            searchable_moves.each do | search_move_square |
+                new_move = Move.new( search_move_square, current_move )
+                @stack.push( new_move )
+                if new_move.depth == 63
+                    @save_move = new_move
+                    break
+                end
+            end
+            counter += 1
+        end
+        #print @data_queue.data
         puts @save_move
     end
 end
