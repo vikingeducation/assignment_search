@@ -1,6 +1,7 @@
 Move = Struct.new(:x, :y, :depth, :children, :parent)
 
 class MoveTree
+  attr_reader :root
   DELTA = [[2,1], [1,2], [-1,2], [-2,1], [-2,-1], [-1,-2], [1,-2], [2,-1]]
 
   def initialize(coords, max_depth)
@@ -17,7 +18,7 @@ class MoveTree
       new_pos = [current_move.x + step[0], current_move.y + step[1]]
       #puts new_pos.inspect
       #puts valid_coord?(new_pos)
-      if valid_coord?(new_pos) 
+      if valid_coord?(new_pos)
         new_move = Move.new(new_pos[0], new_pos[1], current_move.depth + 1, [], current_move)
         current_move.children << new_move
         @node_counter += 1
@@ -36,5 +37,5 @@ class MoveTree
   end
 end
 
-tree = MoveTree.new([3,3], 2)
-tree.inspect
+# tree = MoveTree.new([3,3], 2)
+# tree.inspect
