@@ -1,3 +1,4 @@
+require 'benchmark'
 require './movetree.rb'
 
 class KnightSearcher
@@ -12,7 +13,7 @@ class KnightSearcher
       if [move.x, move.y] == target_coords
         return show_path(move)
       end
-      move.children.each { |child| queue << child}
+      move.children.each { |child| queue << child }
     end
     puts "Couldn't find it."
 	end
@@ -39,12 +40,13 @@ class KnightSearcher
 
 end
 
-tree = MoveTree.new([3,3], 5)
+tree = MoveTree.new([3,3], 8)
 tree.build_tree
 
 searcher = KnightSearcher.new(tree)
-searcher.bfs_for([0,7])
+searcher.bfs_for([5,1])
 searcher.dfs_for([5,1])
+
 # >> 3 Moves:
 # >> [0,7]
 # >> [2,6]
@@ -56,3 +58,18 @@ searcher.dfs_for([5,1])
 # >> [1,3]
 # >> [2,5]
 # >> [3,3]
+
+# n = 1000
+# Benchmark.bm(7) do |x|
+#   x.report("bfs_for") do
+#     n.times { searcher.bfs_for([0,7]) }
+#   end
+#   x.report("dfs_for") do
+#     n.times { searcher.dfs_for([0,7]) }
+#   end
+# end
+
+#               user     system      total        real
+# bfs_for   0.422000   0.000000   0.422000 (  0.410982)
+# dfs_for   0.047000   0.000000   0.047000 (  0.050565)
+
