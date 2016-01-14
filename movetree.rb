@@ -12,69 +12,64 @@ class MoveTree
         @initial_square = initial_square
         @data_queue = Queue.new
         @stack = Stack.new
-        @move_finder = ValidKnightMoves4x4.new
+        @move_finder = ValidKnightMoves5x5.new
     end
 
     def BFS
         @data_queue.enqueue( Move.new( @initial_square ) )
-        counter = 0
         until @data_queue.empty?
-            #print "#{@data_queue.data.length} queue data-length \n"
             current_move = @data_queue.dequeue
             @move_finder.square = current_move.square 
             legal_moves = @move_finder.run
             searchable_moves = legal_moves.select{|sqr| !current_move.ancestors.include? sqr }
-            #print "#{searchable_moves.length} searchable-length \n"
             searchable_moves.each do | search_move_square |
                 new_move = Move.new( search_move_square, current_move )
-                puts new_move.depth
                 @data_queue.enqueue( new_move )
-                if new_move.depth == 63
+                if new_move.depth == 24
                     @save_move = new_move
-                    break
+                    print new_move.ancestors
+                    return @save_move.ancestors
                 end
             end
-            counter += 1
         end
-        #print @data_queue.data
-        puts @save_move
     end
 
 
     def DFS
         @stack.push( Move.new( @initial_square ) )
-        counter = 0
         until @stack.empty?
-            #print "#{@stack.data.length} queue data-length \n"
             current_move = @stack.pop
             @move_finder.square = current_move.square 
             legal_moves = @move_finder.run
             searchable_moves = legal_moves.select{|sqr| !current_move.ancestors.include? sqr }
-            # print "#{searchable_moves.length} searchable-length \n"
             searchable_moves.each do | search_move_square |
                 new_move = Move.new( search_move_square, current_move )
-                puts new_move.depth
                 @stack.push( new_move )
-                if new_move.depth == 25
-                    print new_move.ancestors
-                    print searchable_moves
-                end
-                if new_move.depth == 25
+                if new_move.depth == 24
                     @save_move = new_move
-                    puts
+                    print new_move.ancestors
                     return @save_move.ancestors
                 end
             end
-            counter += 1
         end
-        #print @data_queue.data
-        puts @save_move
     end
 end
 
 mt = MoveTree.new("c3")
-#print "#{mt.DFS} solution"
+puts "BFS"
+start = Time.now
+mt.BFS
+stop = Time.now
+puts
+puts "Computation time for BFS is: #{stop - start}"
+puts 
+
+puts "DFS"
+stop = Time.now
 mt.DFS
+start = Time.now
+puts
+puts "Computation time for BFS is: #{stop - start}"
 
 
 

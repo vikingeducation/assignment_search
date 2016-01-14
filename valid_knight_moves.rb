@@ -33,7 +33,7 @@ class ValidKnightMoves
 end
 
 
-class ValidKnightMoves4x4
+class ValidKnightMoves5x5
     COLUMN_HASH = {a: 1, b: 2, c: 3, d: 4, e: 5}
     REVERSE_COLUMN_HASH = {1=> "a", 2=> "b", 3=> "c", 4=> "d", 5=> "e"}
     POSSIBLE_MOVE = [[-2, -1], [-2, 1],[2, -1], [2, 1], [1, -2], [1, 2], [-1, 2], [-1, -2]]

@@ -5,6 +5,16 @@ Marco?  Polo!
 
 Jeff and John
 
+----------
+
+For Knight's tour, with the constraint that you cannot revisit previous squares, there are no sol'ns for 4x4.  The are many sol'ns for 8x8 but in general they take too long for brute force methods, either DFS or BFS.
+
+For the situations where the solutions are tractable, (eg, 5x5), the DFS is faster.  On my computer, almost 100x.
+
+5.4sec for BFS, .08 sec for DFS.
+
+-------
+
 1. DFS data structure - A stack
 
 2. BFS - Queue
@@ -118,26 +128,3 @@ Move@f8  ancestors = ["f4", "g6", "h7"]
 def depth 
     ancestors.length
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

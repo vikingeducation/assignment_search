@@ -9,8 +9,7 @@ class Move
   def initialize(square, prior_move = nil)
     @square = square
     if prior_move.nil?
-      # @ancestors = [square]
-      @ancestors = []
+      @ancestors = [square]
       @depth = 0
     else
       new_move_ancestors = prior_move.ancestors.dup
