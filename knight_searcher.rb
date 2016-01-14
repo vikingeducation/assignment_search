@@ -1,5 +1,6 @@
 require_relative 'move_tree'
 require_relative 'queue'
+require_relative 'stack'
 
 class KnightSearcher
 
@@ -8,7 +9,7 @@ class KnightSearcher
   end
 
   def bfs_for(coord)
-    
+
     queue = Queue.new
     queue.enqueue(@tree.root)
 
@@ -54,9 +55,28 @@ class KnightSearcher
 
   def dfs_for(coord)
 
+    stack = Stack.new
+    stack.push(@tree.root)
+
+    loop do
+      current_node = stack.pop
+      if solution?(current_node, coord)
+        depth = current_node.depth
+        path_list = fill_path_list(current_node)
+        print_solution(depth,path_list)
+        break
+      elsif !current_node.children.nil?
+        current_node.children.each do |child|
+          stack.push(child)
+        end
+      else
+        stack.empty? ? break : next
+      end
+    end
   end
 end
 
 knight_tree = MoveTree.new([3,3],2)
 searcher = KnightSearcher.new( knight_tree )
 searcher.bfs_for([1,3])
+searcher.dfs_for([1,3])
