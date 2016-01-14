@@ -9,10 +9,13 @@ class Move
   def initialize(square, prior_move = nil)
     @square = square
     if prior_move.nil?
-      @ancestors = []
+      # @ancestors = [square]
+      @ancestors = [square]
       @depth = 0
     else
-      @ancestors = prior_move.ancestors << prior_move.square
+      new_move_ancestors = prior_move.ancestors.dup
+      new_move_ancestors << square
+      @ancestors = new_move_ancestors
       @depth = prior_move.depth + 1
     end
   end
@@ -24,3 +27,8 @@ end
 # print x.run
 # x.square = "h1"
 # print x.run
+
+x = ValidKnightMoves4x4.new("b3")
+print x.run
+x.square = "d1"
+print x.run

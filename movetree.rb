@@ -12,7 +12,7 @@ class MoveTree
         @initial_square = initial_square
         @data_queue = Queue.new
         @stack = Stack.new
-        @move_finder = ValidKnightMoves.new
+        @move_finder = ValidKnightMoves4x4.new
     end
 
     def BFS
@@ -50,14 +50,19 @@ class MoveTree
             @move_finder.square = current_move.square 
             legal_moves = @move_finder.run
             searchable_moves = legal_moves.select{|sqr| !current_move.ancestors.include? sqr }
-            #print "#{searchable_moves.length} searchable-length \n"
+            # print "#{searchable_moves.length} searchable-length \n"
             searchable_moves.each do | search_move_square |
                 new_move = Move.new( search_move_square, current_move )
                 puts new_move.depth
                 @stack.push( new_move )
-                if new_move.depth == 63
+                if new_move.depth == 15
+                    print new_move.ancestors
+                    print searchable_moves
+                end
+                if new_move.depth == 16
                     @save_move = new_move
-                    break
+                    puts
+                    return @save_move.ancestors
                 end
             end
             counter += 1
@@ -67,8 +72,8 @@ class MoveTree
     end
 end
 
-mt = MoveTree.new("d4")
-mt.DFS
+mt = MoveTree.new("c2")
+print mt.DFS
 
 
 
