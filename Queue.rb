@@ -1,5 +1,7 @@
 
 class Queue
+  attr_reader  :data
+
   def initialize (data = [])
     @data = data
     @e_cursor = 0

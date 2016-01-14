@@ -74,27 +74,27 @@ Pseudocode
 
 both BFS and DFS 
 label squares a1 thru h8 
-create move struct w members - row, col, ancestors
+create move struct w members - square, ancestors
 need function to find all N moves away from given square
 
 BFS
-pick arbitrary initial square and add to stack
-while stack !empty
+pick arbitrary initial square and add to queue
+while queue !empty
     get neighbors (available moves) from known square
     check for square among ancestors
     create new move objects for each remaining move
         add new move objects to current move children
         populate depth
         assign current move as new move parent
-    push move objects onto stack
+    enqueue move objects onto queue
     break if depth == 63
 print save_move.ancestors
 
 otherwise no sol'n
 
 DFS
-pick arbitrary initial square and add to queue
-while queue !empty
+pick arbitrary initial square and add to stack
+while stack !empty
     get neighbors (available moves) from known square
     check for square among ancestors
     create new move objects for each remaining move
