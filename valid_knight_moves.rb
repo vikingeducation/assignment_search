@@ -34,8 +34,8 @@ end
 
 
 class ValidKnightMoves4x4
-    COLUMN_HASH = {a: 1, b: 2, c: 3, d: 4}
-    REVERSE_COLUMN_HASH = {1=> "a", 2=> "b", 3=> "c", 4=> "d"}
+    COLUMN_HASH = {a: 1, b: 2, c: 3, d: 4, e: 5}
+    REVERSE_COLUMN_HASH = {1=> "a", 2=> "b", 3=> "c", 4=> "d", 5=> "e"}
     POSSIBLE_MOVE = [[-2, -1], [-2, 1],[2, -1], [2, 1], [1, -2], [1, 2], [-1, 2], [-1, -2]]
 
     attr_accessor :square
@@ -54,8 +54,8 @@ class ValidKnightMoves4x4
       POSSIBLE_MOVE.each do |move|
         possible_column = column_num + move[0]
         possible_rank  = rank_num + move[1]
-        unless possible_rank > 4 || possible_rank < 1 || 
-          possible_column > 4 || possible_column < 1
+        unless possible_rank > 5 || possible_rank < 1 || 
+          possible_column > 5 || possible_column < 1
 
           valid_square = REVERSE_COLUMN_HASH[possible_column] + possible_rank.to_s
           @valid_moves.push(valid_square)

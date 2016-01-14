@@ -55,11 +55,11 @@ class MoveTree
                 new_move = Move.new( search_move_square, current_move )
                 puts new_move.depth
                 @stack.push( new_move )
-                if new_move.depth == 15
+                if new_move.depth == 25
                     print new_move.ancestors
                     print searchable_moves
                 end
-                if new_move.depth == 16
+                if new_move.depth == 25
                     @save_move = new_move
                     puts
                     return @save_move.ancestors
@@ -72,8 +72,9 @@ class MoveTree
     end
 end
 
-mt = MoveTree.new("c2")
-print mt.DFS
+mt = MoveTree.new("c3")
+#print "#{mt.DFS} solution"
+mt.DFS
 
 
 

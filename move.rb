@@ -10,7 +10,7 @@ class Move
     @square = square
     if prior_move.nil?
       # @ancestors = [square]
-      @ancestors = [square]
+      @ancestors = []
       @depth = 0
     else
       new_move_ancestors = prior_move.ancestors.dup
@@ -28,7 +28,7 @@ end
 # x.square = "h1"
 # print x.run
 
-x = ValidKnightMoves4x4.new("b3")
-print x.run
-x.square = "d1"
-print x.run
+# x = ValidKnightMoves4x4.new("b3")
+# print x.run
+# x.square = "d1"
+# print x.run
