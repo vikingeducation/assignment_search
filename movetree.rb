@@ -27,6 +27,7 @@ class MoveTree
             #print "#{searchable_moves.length} searchable-length \n"
             searchable_moves.each do | search_move_square |
                 new_move = Move.new( search_move_square, current_move )
+                puts new_move.depth
                 @data_queue.enqueue( new_move )
                 if new_move.depth == 63
                     @save_move = new_move
@@ -44,7 +45,7 @@ class MoveTree
         @stack.push( Move.new( @initial_square ) )
         counter = 0
         until @stack.empty?
-            #print "#{@data_queue.data.length} queue data-length \n"
+            #print "#{@stack.data.length} queue data-length \n"
             current_move = @stack.pop
             @move_finder.square = current_move.square 
             legal_moves = @move_finder.run
@@ -52,6 +53,7 @@ class MoveTree
             #print "#{searchable_moves.length} searchable-length \n"
             searchable_moves.each do | search_move_square |
                 new_move = Move.new( search_move_square, current_move )
+                puts new_move.depth
                 @stack.push( new_move )
                 if new_move.depth == 63
                     @save_move = new_move
@@ -65,8 +67,8 @@ class MoveTree
     end
 end
 
-mt = MoveTree.new("d3")
-mt.BFS
+mt = MoveTree.new("d4")
+mt.DFS
 
 
 
