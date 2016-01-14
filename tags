@@ -4,3 +4,15 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
+KnightSearcher	/Users/kitlangton/Viking/Unit5/assignment_knights_travails/knightsearcher.rb	/^class KnightSearcher$/;"	c
+MoveTree	/Users/kitlangton/Viking/Unit5/assignment_knights_travails/movetree.rb	/^class MoveTree$/;"	c
+bfs_for	/Users/kitlangton/Viking/Unit5/assignment_knights_travails/knightsearcher.rb	/^	def bfs_for(target_coords)$/;"	f	class:KnightSearcher
+build_tree	/Users/kitlangton/Viking/Unit5/assignment_knights_travails/movetree.rb	/^  def build_tree$/;"	f	class:MoveTree
+dfs_for	/Users/kitlangton/Viking/Unit5/assignment_knights_travails/knightsearcher.rb	/^	def dfs_for(target_coords)$/;"	f	class:KnightSearcher
+initialize	/Users/kitlangton/Viking/Unit5/assignment_knights_travails/knightsearcher.rb	/^	def initialize(tree)$/;"	f	class:KnightSearcher
+initialize	/Users/kitlangton/Viking/Unit5/assignment_knights_travails/movetree.rb	/^	def initialize(coord_pair, max_depth = 1)$/;"	f	class:MoveTree
+inspect	/Users/kitlangton/Viking/Unit5/assignment_knights_travails/movetree.rb	/^	def inspect$/;"	f	class:MoveTree.possible_moves
+make_children	/Users/kitlangton/Viking/Unit5/assignment_knights_travails/movetree.rb	/^  def make_children(move)$/;"	f	class:MoveTree
+off_board?	/Users/kitlangton/Viking/Unit5/assignment_knights_travails/movetree.rb	/^  def off_board?(x, y)$/;"	f	class:MoveTree.possible_moves
+possible_moves	/Users/kitlangton/Viking/Unit5/assignment_knights_travails/movetree.rb	/^  def possible_moves(move)$/;"	f	class:MoveTree
+show_path	/Users/kitlangton/Viking/Unit5/assignment_knights_travails/knightsearcher.rb	/^  def show_path(move)$/;"	f	class:KnightSearcher
