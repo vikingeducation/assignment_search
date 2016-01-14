@@ -20,7 +20,14 @@ class MoveTree
   def add_move(current_node)
     x = current_node.x
     y = current_node.y
-    possible_moves = [[x+2,y+1],[x+2,y-1],[x-2,y+1],[x-2,y-1],[x+1,y+2],[x+1,y-2],[x-1,y+2],[x-1,y-2]]
+    possible_moves = [  [x+2,y+1],
+                        [x+2,y-1],
+                        [x-2,y+1],
+                        [x-2,y-1],
+                        [x+1,y+2],
+                        [x+1,y-2],
+                        [x-1,y+2],
+                        [x-1,y-2] ]
 
     #Take out moves that are out of bounds from possible_moves
     possible_moves.reject! do |move|
@@ -34,7 +41,6 @@ class MoveTree
     end
 
     current_node.children = possible_moves
-
 
     unless current_node.depth+1 == @max_depth
       current_node.children.each do |move|

@@ -33,26 +33,6 @@ class KnightSearcher
     end
   end
 
-  def fill_path_list(current_node)
-    path_list = []
-    until current_node == nil
-      path_list << [current_node.x,current_node.y]
-      current_node = current_node.parent
-    end
-    path_list
-  end
-
-  def solution?(current_node, target_coord)
-    [current_node.x,current_node.y] == target_coord
-  end
-
-  def print_solution(depth,path_list)
-    puts "#{depth} moves:\n"
-    path_list.reverse_each do |path_coord|
-      p path_coord
-    end
-  end
-
   def dfs_for(coord)
 
     stack = Stack.new
@@ -72,6 +52,26 @@ class KnightSearcher
       else
         stack.empty? ? break : next
       end
+    end
+  end
+
+  def fill_path_list(current_node)
+    path_list = []
+    until current_node == nil
+      path_list << [current_node.x,current_node.y]
+      current_node = current_node.parent
+    end
+    path_list
+  end
+
+  def solution?(current_node, target_coord)
+    [current_node.x,current_node.y] == target_coord
+  end
+
+  def print_solution(depth,path_list)
+    puts "#{depth} moves:\n"
+    path_list.reverse_each do |path_coord|
+      p path_coord
     end
   end
 end
