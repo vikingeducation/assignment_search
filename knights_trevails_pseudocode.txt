@@ -1,0 +1,55 @@
+Warmup 2: Knight's Travails Pseudocode
+
+This is another tricky conceptual problem so, as usual, start from the top and think your way through it. Turn the specific pseudocode from the previous warmup into something you can use to represent the problem in full.
+
+1. How will you represent a particular move?
+- Through a struct that contains the current square and the destination square.
+- HOW DID THE EDGE LIST DO IT - JUST A LIST OF EVERY POSSIBLE EDGE, YES NODES WERE REPEATED
+
+2. Will you repeat nodes?
+- Hopefully we won't have to, I don't see why you would have to.
+
+3. How will you display the final output after searching?
+- Through a sequence of moves, like an edge list?
+
+4. How will you prevent your tree from continuing on infinitely?
+- I plan to use a adjacency matrix, does this suffer from this cycle issue?
+****************************************************************
+
+Brainstormin'
+
+Initial setup
+
+****************************************************************
+DEFINITES!!!
+1. A GRAPH WITHOUT DIRECTION
+
+****************************************************************
+
+1. You must have a board right.
+2. From any point on the board you should be able to get to any other point on the board.
+3. IGNORE NODES FOR NOW
+4. Let's draw your favorite, a board
+  12345678
+1 xxxxxxxx
+2 xxxxxxxx
+3 xxxxxxxx
+4 xxxxxxxx
+5 xxxxxxxx
+6 xxxxxxxx
+7 xxxxxxxx
+8 xxxxxxxx
+
+5. Pretty much we want to know if at any place on the board, how it can get to another point at the board.
+e.g. [1,1] to [8,8]
+
+6.
+[1,1] can goto [3,2] or [2,3]
+[2,3] can goto etc etc
+
+*** Interesting [8,8] can be reached by [6,7] or [7,6]
+
+               [1][3]      [1][1]
+                    \     /      \
+                    [3][2]        [2][3]
+                    /
