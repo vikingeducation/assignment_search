@@ -27,6 +27,7 @@ class MoveTree
   def initialize(starting_position, max_depth)
     @max_depth = max_depth
     @starting_position = starting_position
+    @number_of_nodes = 1
     @root_node = Move.new(starting_position[0], starting_position[1], 0, [], nil)
     create_children(@root_node)
   end
@@ -49,36 +50,54 @@ class MoveTree
 
   def add_child_top_left(node)
     node.children << Move.new(node.x-1, node.y+2, node.depth+1, [], node)
+    @number_of_nodes += 1
   end
 
   def add_child_top_right(node)
     node.children << Move.new(node.x+1, node.y+2, node.depth+1, [], node)
+    @number_of_nodes += 1
   end
 
   def add_child_right_top(node)
     node.children << Move.new(node.x+2, node.y+1, node.depth+1, [], node)
+    @number_of_nodes += 1
   end
 
   def add_child_right_bottom(node)
     node.children << Move.new(node.x+2, node.y-1, node.depth+1, [], node)
+    @number_of_nodes += 1
   end
 
   def add_child_bottom_right(node)
     node.children << Move.new(node.x+1, node.y-2, node.depth+1, [], node)
+    @number_of_nodes += 1
   end
 
   def add_child_bottom_left(node)
     node.children << Move.new(node.x-1, node.y-2, node.depth+1, [], node)
+    @number_of_nodes += 1
   end
 
   def add_child_left_bottom(node)
     node.children << Move.new(node.x-2, node.y-1, node.depth+1, [], node)
+    @number_of_nodes += 1
   end
 
   def add_child_left_top(node)
     node.children << Move.new(node.x-2, node.y+1, node.depth+1, [], node)
+    @number_of_nodes += 1
+  end
+
+=begin
+Write a simple inspect method for the MoveTree class so you can output the key aspects of your tree in a way which makes sense, for instance its total number of nodes and max depth. Note: Please don't overthink this. There is a dead-simple way to do it which doesn't involve writing any new processes.
+knight_tree.inspect
+#=> Your tree has 9 Move nodes and a maximum depth of 1.
+=end
+
+  def inspect
+    puts "Your tree has #{@number_of_nodes} Move nodes and a maximum depth of #{@max_depth}"
   end
 
 end
 
-# MoveTree.new([0,0],1)
+MoveTree.new([0,0],7).inspect

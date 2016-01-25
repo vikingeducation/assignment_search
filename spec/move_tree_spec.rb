@@ -4,6 +4,7 @@ describe MoveTree do
 
   let(:mid){MoveTree.new([4,4], 1)}
   let(:mid_two){MoveTree.new([4,4], 2)}
+  let(:mid_struct){Move.new(4,4,0,[],nil)}
   let(:bottom_left){MoveTree.new([0,0], 1)}
   let(:top_left){MoveTree.new([0,7], 1)}
   let(:top_right){MoveTree.new([7,7], 1)}
@@ -174,5 +175,122 @@ describe MoveTree do
     it "sets the depth of grandchildren to 2" do
       expect(mid_two.root_node.children[0].children[0].depth).to eq(2)
     end
+
+    it "sets the parent of a child to the root" do
+      expect(mid.root_node.children[0].parent).to eq(mid.root_node)
+    end
   end
+
+  context "knight is at position [4,4]" do
+
+    describe "#add_child_top_left" do
+      it "sets the childs x to it's parent's x - 1" do
+        mid.add_child_top_left(mid_struct)
+        expect(mid_struct.children[0].x).to eq(3)
+      end
+
+      it "sets the childs y to it's parent's y + 2" do
+        mid.add_child_top_left(mid_struct)
+        expect(mid_struct.children[0].y).to eq(6)
+      end
+    end
+
+    describe "#add_child_top_right" do
+      it "sets the childs x to it's parent's x + 1" do
+        mid.add_child_top_right(mid_struct)
+        expect(mid_struct.children[0].x).to eq(5)
+      end
+
+      it "sets the childs y to it's parent's y + 2" do
+        mid.add_child_top_right(mid_struct)
+        expect(mid_struct.children[0].y).to eq(6)
+      end
+    end
+
+    describe "#add_child_right_top" do
+      it "sets the childs x to it's parent's x + 2" do
+        mid.add_child_right_top(mid_struct)
+        expect(mid_struct.children[0].x).to eq(6)
+      end
+
+      it "sets the childs y to it's parent's y + 1" do
+        mid.add_child_right_top(mid_struct)
+        expect(mid_struct.children[0].y).to eq(5)
+      end
+    end
+
+    describe "#add_child_right_bottom" do
+      it "sets the childs x to it's parent's x + 2" do
+        mid.add_child_right_bottom(mid_struct)
+        expect(mid_struct.children[0].x).to eq(6)
+      end
+
+      it "sets the childs y to it's parent's y - 1" do
+        mid.add_child_right_bottom(mid_struct)
+        expect(mid_struct.children[0].y).to eq(3)
+      end
+    end
+
+    describe "#add_child_bottom_right" do
+      it "sets the childs x to it's parent's x + 1" do
+        mid.add_child_bottom_right(mid_struct)
+        expect(mid_struct.children[0].x).to eq(5)
+      end
+
+      it "sets the childs y to it's parent's y - 2" do
+        mid.add_child_bottom_right(mid_struct)
+        expect(mid_struct.children[0].y).to eq(2)
+      end
+    end
+
+    describe "#add_child_bottom_right" do
+      it "sets the childs x to it's parent's x + 1" do
+        mid.add_child_bottom_right(mid_struct)
+        expect(mid_struct.children[0].x).to eq(5)
+      end
+
+      it "sets the childs y to it's parent's y - 2" do
+        mid.add_child_bottom_right(mid_struct)
+        expect(mid_struct.children[0].y).to eq(2)
+      end
+    end
+
+    describe "#add_child_bottom_left" do
+      it "sets the childs x to it's parent's x - 1" do
+        mid.add_child_bottom_left(mid_struct)
+        expect(mid_struct.children[0].x).to eq(3)
+      end
+
+      it "sets the childs y to it's parent's y - 2" do
+        mid.add_child_bottom_left(mid_struct)
+        expect(mid_struct.children[0].y).to eq(2)
+      end
+    end
+
+    describe "#add_child_left_bottom" do
+      it "sets the childs x to it's parent's x - 2" do
+        mid.add_child_left_bottom(mid_struct)
+        expect(mid_struct.children[0].x).to eq(2)
+      end
+
+      it "sets the childs y to it's parent's y - 1" do
+        mid.add_child_left_bottom(mid_struct)
+        expect(mid_struct.children[0].y).to eq(3)
+      end
+    end
+
+    describe "#add_child_left_top" do
+      it "sets the childs x to it's parent's x - 2" do
+        mid.add_child_left_top(mid_struct)
+        expect(mid_struct.children[0].x).to eq(2)
+      end
+
+      it "sets the childs y to it's parent's y + 1" do
+        mid.add_child_left_top(mid_struct)
+        expect(mid_struct.children[0].y).to eq(5)
+      end
+    end
+
+  end
+
 end
