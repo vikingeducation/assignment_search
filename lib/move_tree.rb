@@ -100,4 +100,4 @@ knight_tree.inspect
 
 end
 
-MoveTree.new([0,0],7).inspect
+# MoveTree.new([0,0],7).inspect
