@@ -46,12 +46,15 @@ class KnightSearcher
     if queue.empty?
       puts "Sequence does not exist in that tree, increase the depth and try again!"
     else
+=begin
       moves = sequence_of_moves(queue[0])
       puts "#{queue[0].depth} Moves:"
       moves.each do |move|
         print move
         puts ""
       end
+=end
+    nil
     end
   end
 
@@ -117,17 +120,41 @@ class KnightSearcher
     if stack.empty?
       puts "Sequence does not exist in that tree, increase the depth and try again!"
     else
+=begin
       moves = sequence_of_moves(stack[-1])
       puts "#{stack[-1].depth} Moves:"
       moves.each do |move|
         print move
         puts ""
       end
+=end
+    nil
     end
   end
 
 end
 
 searcher = KnightSearcher.new( MoveTree.new([0,0],7) )
-searcher.bfs_for([6,6])
-searcher.dfs_for([6,6])
+
+=begin
+  Part IV: Benchmarking
+
+  1. Create a simple benchmarking exercise which runs a series of similar searches using each method thousands of times. 
+
+  2. Which is faster?
+  Depends on the aim.
+
+  3. What is the difference in the depth of solutions returned?
+  # BFS returns smaller depths!
+=end
+
+time_before_bfs = Time.now
+  1000.times { searcher.bfs_for([5,5]) }
+time_after_bfs = Time.now
+
+time_before_dfs = Time.now
+  1000.times { searcher.dfs_for([5,5]) }
+time_after_dfs = Time.now
+
+puts "BFS: #{time_after_bfs - time_before_bfs}"
+puts "DFS: #{time_after_dfs - time_before_dfs}"
