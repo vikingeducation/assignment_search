@@ -293,4 +293,10 @@ describe MoveTree do
 
   end
 
+  describe "#inspect" do
+    it "puts the the stdout the correct number of nodes and depth" do
+      expect { bottom_left.inspect }.to output("Your tree has 3 Move nodes and a maximum depth of 1\n").to_stdout
+    end
+  end
+
 end
