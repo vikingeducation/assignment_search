@@ -65,7 +65,69 @@ class KnightSearcher
     end
     moves_array
   end
+
+=begin
+  Part III: Depth-First Search
+
+  With BFS behind you, DFS shouldn't be much different.
+
+  1. Add a dfs_for method to the KnightSearcher class which also takes target_coords. (DONE)
+
+  2. This time it should kick off a depth-first search for the target coordinates. (DONE)
+
+  See the DFS lesson for implementation tips.
+
+  3. Do not use Recursion. (DONE)
+
+  4. Start iteratively, and only then refactor it to a recursive one if you wanted to. (DONE)
+
+  5. Upon locating the target square, the method should output the sequence of moves used to get there as well as the final depth required. (DONE)
+
+  6. Test it out on different values and compare with BFS. Are they always equal? (DONE)
+
+  # Note: your results may vary depending on your
+  #       child selection mechanism
+  KnightSearcher.new(MoveTree.new([0,0], 20)).dfs_for([1,2])
+  1 Move:
+  [0,0]
+  [1,2]
+
+  KnightSearcher.new(MoveTree.new([0,0], 20)).dfs_for([6,0])
+  4 Moves:
+  [0,0]
+  [2,1]
+  [4,0]
+  [5,2]
+  [6,0]
+=end
+
+  def dfs_for(target_input)
+    target_x = target_input[0]
+    target_y = target_input[1]
+    stack = []
+    stack << @knight_tree.root_node
+
+    until stack.empty? || ( stack[-1].x == target_x && stack[-1].y == target_y )
+      current_move = stack.pop
+      current_move.children.each do |child|
+        stack << child
+      end
+    end
+
+    if stack.empty?
+      puts "Sequence does not exist in that tree, increase the depth and try again!"
+    else
+      moves = sequence_of_moves(stack[-1])
+      puts "#{stack[-1].depth} Moves:"
+      moves.each do |move|
+        print move
+        puts ""
+      end
+    end
+  end
+
 end
 
 searcher = KnightSearcher.new( MoveTree.new([0,0],7) )
 searcher.bfs_for([6,6])
+searcher.dfs_for([6,6])
