@@ -43,18 +43,19 @@ class KnightSearcher
       end
       queue.shift
     end
+    output_results_for_bfs(queue)
+  end
+
+  def output_results_for_bfs(queue)
     if queue.empty?
       puts "Sequence does not exist in that tree, increase the depth and try again!"
     else
-=begin
       moves = sequence_of_moves(queue[0])
       puts "#{queue[0].depth} Moves:"
       moves.each do |move|
         print move
         puts ""
       end
-=end
-    nil
     end
   end
 
@@ -116,25 +117,26 @@ class KnightSearcher
         stack << child
       end
     end
+    output_results_for_dfs(stack)
+  end
 
+  def output_results_for_dfs(stack)
     if stack.empty?
       puts "Sequence does not exist in that tree, increase the depth and try again!"
     else
-=begin
       moves = sequence_of_moves(stack[-1])
       puts "#{stack[-1].depth} Moves:"
       moves.each do |move|
         print move
         puts ""
       end
-=end
-    nil
     end
   end
 
 end
 
 searcher = KnightSearcher.new( MoveTree.new([0,0],7) )
+searcher.dfs_for([3,4])
 
 =begin
   Part IV: Benchmarking
@@ -146,15 +148,15 @@ searcher = KnightSearcher.new( MoveTree.new([0,0],7) )
 
   3. What is the difference in the depth of solutions returned?
   # BFS returns smaller depths!
+
+  time_before_bfs = Time.now
+    1000.times { searcher.bfs_for([5,5]) }
+  time_after_bfs = Time.now
+
+  time_before_dfs = Time.now
+    1000.times { searcher.dfs_for([5,5]) }
+  time_after_dfs = Time.now
+
+  puts "BFS: #{time_after_bfs - time_before_bfs}"
+  puts "DFS: #{time_after_dfs - time_before_dfs}"
 =end
-
-time_before_bfs = Time.now
-  1000.times { searcher.bfs_for([5,5]) }
-time_after_bfs = Time.now
-
-time_before_dfs = Time.now
-  1000.times { searcher.dfs_for([5,5]) }
-time_after_dfs = Time.now
-
-puts "BFS: #{time_after_bfs - time_before_bfs}"
-puts "DFS: #{time_after_dfs - time_before_dfs}"
