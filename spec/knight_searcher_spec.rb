@@ -74,4 +74,18 @@ describe KnightSearcher do
 
   end
 
+  describe "#output_results_for_dfs" do
+
+    it "outputs a standard message if answer can't be found" do
+      expect { ks_bot_left.output_results_for_dfs([]) }.to output("Sequence does not exist in that tree, increase the depth and try again!\n").to_stdout
+    end
+
+    it "calls the #sequece_of_moves method if the queue isn't empty" do
+      allow(ks_bot_left).to receive(:sequence_of_moves).and_return([1,1])
+      expect(ks_bot_left).to receive(:sequence_of_moves)
+      ks_bot_left.output_results_for_dfs([(MoveTree.new([0,0], 1)).root_node])
+    end
+
+  end
+
 end
