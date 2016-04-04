@@ -72,6 +72,14 @@ searching a graph (Adjacency List) using BFS :
 
 
 
+Warmup 2: Knight's Travails Pseudocode
+
+map all pairs of all coordinates of a board ( 8x8 )
+start position
+end position
+
+- start with start position
+- 
 
 
 
