@@ -1,25 +1,23 @@
 Move = Struct.new(:x, :y, :depth, :children, :parent)
 
 class MoveTree
-  attr_accessor :root
-  attr_reader :coordinate, :pair, :max_depth
+
+  attr_reader :root
 
   POSSIBLE_MOVES = [[-1,2],[-1,-2],[1,2],[1,-2],[2,1],[2,-1],[-2,1],[-2,-1]]
 
-  def initialize( pair, max_depth)
+  def initialize( pair, max_depth = 1)
     @max_depth = max_depth
-    @pair = pair
     @root = Move.new(pair[0], pair[1], 0, [], nil)
     @count = 1
+    @board_size = 8
     create_tree
   end
 
   def create_tree
-    stack = []
-    stack << @root
+    stack = [@root]
 
-    until stack.empty?
-      current_node = stack.pop
+    while current_node = stack.pop
       current_node.children = create_children(current_node)
 
       current_node.children.each do |child|
@@ -31,16 +29,20 @@ class MoveTree
 
   def create_children(current_node)
     depth = current_node.depth + 1
-    pair_x, pair_y = current_node.x, current_node.y
+    x, y = current_node.x, current_node.y
     children = []
 
     POSSIBLE_MOVES.each do |move_x, move_y|
-      if (pair_x-move_x).between?(1,8) && (pair_y-move_y).between?(1,8)
-        children << Move.new(pair_x-move_x, pair_y-move_y, depth, [], current_node)
-        @count += 1
-      end
+      new_x = x + move_x
+      new_y = y + move_y
+      children << Move.new(new_x, new_y, depth, [], current_node) unless off_board?(new_x, new_y)
+      @count += 1
     end
     children
+  end
+
+  def off_board?(x, y)
+    x < 1 || y < 1 || x > @board_size || y > @board_size
   end
 
 
@@ -49,5 +51,5 @@ class MoveTree
   end
 end
 
-tree = MoveTree.new([4,4], 2)
-tree.inspect
+#tree = MoveTree.new([4,4], 2)
+#tree.inspect
