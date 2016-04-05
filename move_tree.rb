@@ -6,11 +6,11 @@ class MoveTree
 
   POSSIBLE_MOVES = [[-1,2],[-1,-2],[1,2],[1,-2],[2,1],[2,-1],[-2,1],[-2,-1]]
 
-  def initialize( pair, max_depth = 1)
+  def initialize( pair, max_depth = 1, board_size = 8)
     @max_depth = max_depth
     @root = Move.new(pair[0], pair[1], 0, [], nil)
     @count = 1
-    @board_size = 8
+    @board_size = board_size
     create_tree
   end
 
