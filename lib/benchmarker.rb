@@ -50,7 +50,7 @@ class Benchmarker
 	end
 
 	def search(n, type)
-		max = searcher.tree.depth
+		max = searcher.move_tree.depth
 		moves = []
 		before = Time.now
 		(n**2).times do |i|
@@ -97,7 +97,7 @@ class Benchmarker
 			n.times do |i|
 				bfs_moves, dfs_moves = results[:bfs][:moves][i], results[:dfs][:moves][i]
 				examples << {
-					:move => "#{searcher.tree.start}->#{bfs_moves.last}",
+					:move => "#{searcher.move_tree.start}->#{bfs_moves.last}",
 					:bfs => {
 						:num_moves => bfs_moves.length - 1,
 						:moves => bfs_moves
@@ -117,3 +117,4 @@ class Benchmarker
 			bfs.length == dfs.length ? bfs.length : 0
 		end
 end
+

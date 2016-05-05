@@ -2,7 +2,7 @@ require_relative 'square.rb'
 
 class MoveTree
 	attr_accessor :start, :depth
-	attr_reader :tree
+	attr_reader :tree # root
 
 	def initialize(start=nil, depth=nil)
 		@start = start || [0, 0]
@@ -44,6 +44,8 @@ class MoveTree
 			node
 		end
 
+		# does 2 things!!!
+
 		def adjacent_moves(x, y)
 			[
 				[x + 1, y + 2],
@@ -70,3 +72,4 @@ class MoveTree
 			].all? {|i| i == true}
 		end
 end
+

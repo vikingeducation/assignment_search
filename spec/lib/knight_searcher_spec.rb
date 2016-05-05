@@ -22,8 +22,8 @@ describe KnightSearcher do
 	describe '#tree' do
 		it 'is an accessor' do
 			expect do
-				s.tree
-				s.tree = t
+				s.move_tree
+				s.move_tree = t
 			end.to_not raise_error
 		end
 	end
@@ -68,3 +68,4 @@ describe KnightSearcher do
 		end
 	end
 end
+

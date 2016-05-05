@@ -7,15 +7,15 @@ Marco?  Polo!
 
 1. What data structure is used to implement DFS?
 
-	A graph or tree.
+	Stack
 
 1. What data structure is typically used to implement BFS?
 
-	A graph or tree.
+	Queue
 
 1. Which one can be done recursively? (the clue should be the data structure)
 
-	A DFS and BFS can both be done recursively. It is possible to treat each first node as the beginning of a new recursive block, performing the same operations on it's children.
+	A DFS. It is possible to treat each first node as the beginning of a new recursive block, performing the same operations on it's children.
 
 1. Which one would you use to print a list of all the nodes in a tree, starting with depth 1, then depth 2, then depth 3 etc.?
 

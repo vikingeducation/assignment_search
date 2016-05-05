@@ -19,3 +19,4 @@ describe Square do
 		expect {s.children}.to_not raise_error
 	end
 end
+

@@ -1,12 +1,12 @@
 class KnightSearcher
-	attr_accessor :tree
+	attr_accessor :move_tree
 
 	def initialize(tree=nil)
-		@tree = tree
+		@move_tree = tree
 	end
 
 	def bfs_for(x, y)
-		queue = [@tree.tree]
+		queue = [@move_tree.tree]
 		node, found = nil, false
 		begin
 			node = queue.pop
@@ -19,7 +19,7 @@ class KnightSearcher
 	end
 
 	def dfs_for(x, y)
-		stack = [@tree.tree]
+		stack = [@move_tree.tree]
 		node, found = nil, false
 		begin
 			node = stack.pop
@@ -53,3 +53,4 @@ class KnightSearcher
 			x == node.x && y == node.y
 		end
 end
+

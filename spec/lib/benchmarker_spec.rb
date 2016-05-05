@@ -45,7 +45,7 @@ describe Benchmarker do
 	context 'MoveTree is large' do
 		before do
 			t = MoveTree.new([0, 0], 7)
-			s.tree = t
+			s.move_tree = t
 			b.searcher = s
 		end
 
@@ -89,3 +89,4 @@ describe Benchmarker do
 		end
 	end
 end
+
