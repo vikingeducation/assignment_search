@@ -1,30 +1,71 @@
-Move = Struct.new(:y, :x, :depth, :children, :parent)
-
-class MoveTree
-
-  attr_accessor :start_y, :start_x, :board, :root
-
-  def initialize(start, depth)
-    @start_x, @start_y, @depth = start[0], start[1], depth
-    @board = Array.new(8) { Array.new(8) {"-"} }
-    @root = Move.new(start_y, start_x, 0, [], nil)
-    build_tree(@start_y, @start_x, depth)
-  end
-
-  def build_tree(y, x, depth)
-    1.upto(depth) do |depth|
-      move_up(y, x, depth, @root)
-      move_down(y,x)
-      move_left(y,x)
-      move_right(y,x)
-    end
-  end
-
-  def move_up(y, x, depth, parent)
-    y -= 2
-    x -= 1
-    if (y).between?(0,7) && (x).between?(0,7)
-      parent.children << Move.new(y, x, depth, nil, parent)
-    end
-  end
+Node = Struct.new(:x, :y, :parent, :depth, :children) do
+ def add_child
+   new_depth = self.depth + 1
+   # up and left
+   if (self.x - 1).between?(0,7) && (self.y - 2).between?(0,7)
+     x, y = (self.x - 1), (self.y - 2)
+     self.children << Node.new(x, y, self, new_depth, [])
+   end
+   # up and right
+   if (self.x + 1).between?(0, 7) && (self.y - 2).between?(0, 7)
+     x, y = (self.x + 1), (self.y - 2)
+     self.children << Node.new(x, y, self, new_depth, [])
+   end
+   # down and left
+   if (self.x - 1).between?(0, 7) && (self.y + 2).between?(0, 7)
+     x, y = (self.x - 1), (self.y + 2)
+     self.children << Node.new(x, y, self, new_depth, [])
+   end
+   # down and right
+   if (self.x + 1).between?(0, 7) && (self.y + 2).between?(0, 7)
+     x, y = (self.x + 1), (self.y + 2)
+     self.children << Node.new(x, y, self, new_depth, [])
+   end
+   # right and up
+   if (self.x + 2).between?(0, 7) && (self.y - 1).between?(0, 7)
+     x, y = (self.x + 2), (self.y - 1)
+     self.children << Node.new(x, y, self, new_depth, [])
+   end
+   # right and down
+   if (self.x + 2).between?(0, 7) && (self.y + 1).between?(0, 7)
+     x, y = (self.x + 2), (self.y + 1)
+     self.children << Node.new(x, y, self, new_depth, [])
+   end
+   # left and up
+   if (self.x - 2).between?(0, 7) && (self.y - 1).between?(0, 7)
+     x, y = (self.x - 2), (self.y - 1)
+     self.children << Node.new(x, y, self, new_depth, [])
+   end
+   # left and down
+   if (self.x - 2).between?(0, 7) && (self.y + 1).between?(0, 7)
+     x, y = (self.x - 2), (self.y + 1)
+     self.children << Node.new(x, y, self, new_depth, [])
+   end
+ end
 end
+
+class Knight
+
+  attr_reader :max_depth, :current, :depth
+
+  def initialize(start_coord, depth)
+  	x, y, @max_depth, @depth = start_coord[0], start_coord[1], depth, 0
+  	@root = Node.new(x, y, nil, @depth, [])
+  	@root.add_child
+  	add_children(@root.children, @depth)
+  end
+
+  def add_children(level, depth)
+  	depth += 1
+  	if depth < @max_depth
+  	  level.each do |node|
+  	  	node.add_child
+		    add_children(node.children, depth)
+  	  end
+  	end
+  end
+
+
+end
+
+test = Knight.new([2,1], 3)
