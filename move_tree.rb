@@ -47,16 +47,19 @@ end
 class MoveTree
 
   attr_reader :max_depth, :current, :depth
+  attr_accessor :counter
 
   def initialize(start_coord, depth)
   	x, y, @max_depth, @depth = start_coord[0], start_coord[1], depth, 0
   	@root = Node.new(x, y, nil, @depth, [])
   	@root.add_child
+    @counter = 1
   	add_children(@root.children, @depth)
   end
 
   def add_children(level, depth)
   	depth += 1
+    @counter += level.length
   	if depth < @max_depth
   	  level.each do |node|
   	  	node.add_child
@@ -65,6 +68,9 @@ class MoveTree
   	end
   end
 
+  def inspect
+    puts "Your tree has #{@counter} nodes and a maximum depth of #{@max_depth}"
+  end
 
 end
 
