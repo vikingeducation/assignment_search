@@ -46,7 +46,7 @@ end
 
 class MoveTree
 
-  attr_reader :max_depth, :current, :depth
+  attr_reader :max_depth, :current, :depth, :root
   attr_accessor :counter
 
   def initialize(start_coord, depth)
@@ -73,5 +73,3 @@ class MoveTree
   end
 
 end
-
-test = MoveTree.new([2,1], 3)
