@@ -44,7 +44,7 @@ Node = Struct.new(:x, :y, :parent, :depth, :children) do
  end
 end
 
-class Knight
+class MoveTree
 
   attr_reader :max_depth, :current, :depth
 
@@ -68,4 +68,4 @@ class Knight
 
 end
 
-test = Knight.new([2,1], 3)
+test = MoveTree.new([2,1], 3)
