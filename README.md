@@ -34,23 +34,43 @@ Searching the same tree using BFS.
 
 
 Searching a graph (represented however you feel most comfortable -- Edge List, Adjacency List or Adjacency Matrix) using DFS.
+
+
 dfs_search(root, target_node)
+
   mark root as visited
+  
   return target_node if target_node == root
+  
   push root on to the stack
+  
   while stack not empty
+  
     visit all unvistied neighbors of item on top of stack.
+    
     mark each one as visited and push to the stack
+    
     if no unvisited neighbors present, pop the stack
+    
   end
+  
 end
 
+
 Searching the same graph using BFS.
+
+
 bfs-search(root, target_node)
   mark root as visited
+  
   return target_node if target_node == root
+  
   loop do
+  
     enque/mark visited neighbors of root node to the Queue
+    
     update cur_working_node to top if queue and deque until Queue is empty
+    
   end
+  
 end
