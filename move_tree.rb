@@ -3,10 +3,12 @@ Move = Struct.new(:x, :y, :depth, :children, :parent)
 
 class MoveTree
   BOARD_SIZE = 8
+  attr_accessor :root
   def initialize(position, depth)
     x, y = position
     @root = Move.new(x, y, 0, [], nil)
-    insert_moves(@root, valid_moves(@root), depth)
+    root = @root
+    insert_moves(root, valid_moves(root), depth)
   end
 
   def valid_moves(root)
@@ -27,11 +29,33 @@ class MoveTree
   end
 
   def insert_moves(root, moves, depth)
-    puts "depth #{depth}"
+    return if root.depth >= depth
     moves.each do |move|
       insert(root, move)
+      insert_moves(move, valid_moves(move), depth)
     end
+  end
+
+  def height
+    node = @root
+    height = 0
+    while node != nil
+      node = node.children.first
+      height = node.depth if !node.nil?
+    end
+    height
+  end
+
+  def inspect_tree
+    node = @root
+    depth = 0
+    while node != nil
+      node = node.children.first
+      depth = node.depth if !node.nil?
+    end
+    puts "Your tree has maximum depth of #{depth}"
   end
 end
 
-p MoveTree.new([3, 3], 1)
+# p tree = MoveTree.new([3, 3], 2)
+# tree.inspect_tree

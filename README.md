@@ -20,24 +20,18 @@ Tree is unidirectional, usually there no pointer to the parent. Graph can have p
 
 Psuedo code:
 Searching a simple tree of nodes where each Node has an array of child nodes (some_node.children) using DFS.
-dfs_tree(root, node)
-  return if root == nil
-  compare root->data with node->data
-  root.children { |child| dfs_tree(child, node) }
-end
+
+1. Starting at the root, pick a child and examine it. Return if the solution is found.
+2. If no solution is found, pick a child of that child and examine it, returning if the solution is found.
+3. Continue until either the solution or a dead end is reached.
+4. If a dead end is reached, go back until we find a node/vertex with a child we haven't searched yet and perform DFS on that child.
 
 Searching the same tree using BFS.
-searchLevelorder(tree)
-for d = 1 to height(tree)
-   printGivenLevel(tree, d);
 
-searchGivenLevel(tree, level, node)
-if tree is NULL then return;
-if level is 1, then
-    compare tree->data with node->data
-else if level greater than 1, then
-    printGivenLevel(tree->left, level-1);
-    printGivenLevel(tree->right, level-1)
+1. Put the initial node into our queue and start checking every node in the queue.
+2. For the first node of the queue, return if it matches our search criteria. If not, add each of its children to the end of the queue.
+3. Continue dequeuing nodes and checking them until the target is located or the queue empties (failure).
+
 
 Searching a graph (represented however you feel most comfortable -- Edge List, Adjacency List or Adjacency Matrix) using DFS.
 dfs_search(root, target_node)
