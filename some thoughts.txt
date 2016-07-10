@@ -1,0 +1,55 @@
+In regards to a Knight's Trevails
+
+# This is just one way to represent a Move node
+# The `parent` attribute will come in handy later...
+some_move = Move.new(:x, :y, :depth, :children, :parent)
+
+
+The code above is what really gets me because the whole tree is going to be made of these things... Well that's my understanding of things
+
+class MoveTree
+
+  def initialize(starting_position, max_depth)
+    @max_depth = max_depth
+    @starting_position = starting_position
+  end
+
+  
+
+=begin
+  def create_children
+    children = []
+    depth_counter = 0
+    while depth_counter < @max_depth
+      children << 
+      depth_counter += 1
+    end
+    children
+  end
+=end
+
+end
+
+MoveTree.new([0,0],1)
+# We know if we list every possible move out there that we'll eventually find the right combination of moves but if we do breadth first, well actually we can still find it because considering the struct has the parent in it, we can look up the parent and see that parent's parent and that parent's parent and so forth until we have every set of directions. So as long as we find the actual move, we can trace it back, however we don't want a rediculously large number of loops set in the data...
+
+I think the max depth is the basic concept of stopping those infinitely large data sets because i'm sure it's possible to get from any place on the board to another in a set number of moves, so sure they'll be a fuck load of wasted moves in there buttttttt the answer will be there too...
+
+                                        (2, 1, 1, [an array of structs], previous struc)
+                                      /
+(0, 0, 0, [an array of structs], nil)
+                                      \
+                                        (1, 2, 1, [an array of structs], previous struct)
+
+[[0,1,2,3,4,5,6,7],
+ [0,1,2,3,4,5,6,7],
+ [0,1,2,3,4,5,6,7],
+ [0,1,2,3,4,5,6,7],
+ [0,1,2,3,4,5,6,7],
+ [0,1,2,3,4,5,6,7],
+ [0,1,2,3,4,5,6,7]]
+
+it doesn't really matter I don't think so as long as
+
+x is not < 1 or greater than > 8
+and y is not < 1 or greater than > 8
