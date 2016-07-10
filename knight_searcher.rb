@@ -16,17 +16,19 @@ class KnightSearcher
     @result = []
   end
 
-  def bfs_for(target_coords)
+  def bfs_for(target_coords, print = true)
     node = bfs(target_coords)
     until node.nil?
       @result.unshift(node)
       node = node.parent
     end
-    if !@result.empty?
-      puts "BFS in #{@result.size-1} Moves:"
-      @result.each { |node| puts "[#{node.x}, #{node.y}]"}
-    else
-      puts "BFS did not find the target_coords #{target_coords}"
+    if print == true
+      if !@result.empty?
+        puts "BFS in #{@result.size-1} Moves:"
+        @result.each { |node| puts "[#{node.x}, #{node.y}]"}
+      else
+        puts "BFS did not find the target_coords #{target_coords}"
+      end
     end
   end
 
@@ -44,17 +46,19 @@ class KnightSearcher
     nil
   end
 
-  def dfs_for(target_coords)
+  def dfs_for(target_coords, print = true)
     node = dfs(target_coords)
     until node.nil?
       @result.unshift(node)
       node = node.parent
     end
-    if !@result.empty?
-      puts "DFS in #{@result.size-1} Moves:"
-      @result.each { |node| puts "[#{node.x}, #{node.y}]"}
-    else
-      puts "DFS did not find the target_coords #{target_coords}"
+    if print == true
+      if !@result.empty?
+        puts "DFS in #{@result.size-1} Moves:"
+        @result.each { |node| puts "[#{node.x}, #{node.y}]"}
+      else
+        puts "DFS did not find the target_coords #{target_coords}"
+      end
     end
   end
 end
@@ -73,10 +77,10 @@ def dfs(target_coords)
   nil
 end
 
-knight_tree = MoveTree.new([3, 3], 4)
-searcher = KnightSearcher.new(knight_tree)
-searcher.bfs_for([1,3])
-searcher.dfs_for([1,3])
-KnightSearcher.new(MoveTree.new([0,0], 6)).dfs_for([6,0])
-KnightSearcher.new(MoveTree.new([0,0], 6)).bfs_for([6,0])
+# knight_tree = MoveTree.new([3, 3], 4)
+# searcher = KnightSearcher.new(knight_tree)
+# searcher.bfs_for([1,3])
+# searcher.dfs_for([1,3])
+# KnightSearcher.new(MoveTree.new([0,0], 6)).dfs_for([6,0])
+# KnightSearcher.new(MoveTree.new([0,0], 6)).bfs_for([6,0])
 
