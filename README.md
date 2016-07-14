@@ -26,8 +26,13 @@ when you reach a leaf, go back up to a node with a child that you have not check
 
 
 Searching the same tree using BFS.
+Start at the root, and check every child, and return if any of them if he one
+  you want.
+If not, repeat this process for each of those children's children.
 
 Searching a graph (represented however you feel most comfortable -- Edge List, Adjacency List or Adjacency Matrix) using DFS.
+(For adjacency list): Searching an edge?
+
 
 Searching the same graph using BFS.
 
