@@ -61,3 +61,11 @@ breadth_first_search(node)
   current = node
   until Queue.empty?
     until current.children.all? { |c| c.visited? }
+      current.childrean.each do |child|
+        child.visit
+        Queue.enqueue(child)
+      end
+    end
+    current = Queue.dequeue
+  end
+end
