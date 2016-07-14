@@ -29,12 +29,29 @@
 
 # Searching a graph (represented however you feel most comfortable -- Edge List, Adjacency List or Adjacency Matrix) using DFS.
 
+Adjacency list
 
+add all items from array to stack
+start pulling from stack
+until match or child is nil
+  compare current node with search term
+  if match return true and break
+  if no_match change current to child node 
+end
+ return false
+end
     
 
 
-
-
-
 # Searching the same graph using BFS.
+
+add all items from array to queue
+loop do 
+pull from queue and set current node
+  add  current node's child to queue if child
+  return true if match 
+  end
+return false
+
+
 
