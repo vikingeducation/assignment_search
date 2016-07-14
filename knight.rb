@@ -3,6 +3,7 @@ Move = Struct.new(:x, :y, :depth, :children, :parent)
 
 
 class MoveTree
+  attr_reader :starting_move
 
   POSSIBLE_MOVE =[[-2, 1],
                  [-1, 2],
@@ -14,9 +15,9 @@ class MoveTree
                  [ 2,-1]]
 
   def initialize(position, max_depth)
-
     @starting_move = Move.new(position[0], position[1], 0, [], nil)
     @max_depth = max_depth
+    move_tree
   end
 
   def valid_move?(x, y)
@@ -24,7 +25,7 @@ class MoveTree
   end
 
 
-  def move_tree                                   
+  def move_tree                                 
     depth = 0
     current = @starting_move
     queue = []
@@ -50,8 +51,7 @@ class MoveTree
 
 end
 
-k = MoveTree.new([2,2], 3)
-k.move_tree
+
  #           root
  # 1      c c c c c c
  # 2  c  c c c c cc c c c cc c cc 
