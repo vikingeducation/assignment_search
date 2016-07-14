@@ -6,7 +6,7 @@
 # =>  continue process until no more moves
 # =>  if no moves available, go to starting position's next child node (DFS)
 
-Move = Struct.new(:x, :y, :depth, :children, :parent)
+Move = Struct.new(:x, :y, :depth, :children, :parents)
 
 class MoveTree
 
@@ -16,29 +16,20 @@ class MoveTree
     @max_depth = depth
     @root = starting_point
     @directions = [[2,1], [2, -1], [-2, 1], [-2, -1], [1, 2], [1, -2], [-1, 2], [-1, -2]]
-    populate(starting_point)
-    @root.children.each {|child| print "#{child.x}, #{child.y}\n" }
   end
 
   def build_tree
-    =begin
     current_node = @root
     stack_arr = []
     stack_arr.push(current_node)
     until stack_arr.empty?
       populate(current_node)
-      until stack_arr
       current_node.children.each do |child|
           stack_arr.push(child)
       end
       stack_arr.shift
       current_node = stack_arr[0]
-
-    =end
-
-    until current_node.depth == @max_depth
-      return
-
+    end
 
   end
 
@@ -53,12 +44,19 @@ class MoveTree
   def find_next_move(current_node)
     possible_moves = []
     @directions.each do |direction|
-      if valid_move?(current_node, direction)
-        possible_moves << Move.new(current_node.x + direction[0], current_node.y + direction[1], current_node.depth + 1, nil, current_node)
+      if valid_move?(current_node, direction) && not_visited?(current_node, direction)
+        possible_moves << Move.new(current_node.x + direction[0], current_node.y + direction[1], current_node.depth + 1, nil, current_node.parents << current_node)
       end
     end
     possible_moves
   end
+
+  def not_visited?(current_node, direction)
+    current_node.parents.none? do |parent|
+      parent.x == current_node.x + direction[0] && parent.y == current_node.y + direction[1]
+    end
+  end
+
 
   def valid_move?(current_node, direction)
     current_node.x + direction[0] >= 0 && current_node.x + direction[0] < 5 && current_node.y + direction[1] >= 0 && current_node.y + direction[1] < 5
