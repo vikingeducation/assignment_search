@@ -27,10 +27,16 @@ class MoveTree
 
   def build_to_depth(move)
     # call build_trees, passing in a new move object created from each child's x, y pair 
-    (@max_depth - 1).times do |index|
-      build_trees(move)
-      move.children.each do |child|
-        build_trees(child)
+    if move == @starting_pos
+      build_trees(@starting_pos)
+    end
+    (@max_depth-1).times do |index|
+      if move.children == nil
+        build_trees(move)
+      else
+        move.children.each do |child|
+          build_trees(child)
+        end
       end
     end
   end
