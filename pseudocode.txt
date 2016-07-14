@@ -1,16 +1,25 @@
 1. Searching a simple tree of nodes where each Node has an array of child nodes (some_node.children) using DFS.
 
   Add root to the stack.
-  Pop off, and reocrd depth from root
-  Return if desired relut
+  Pop off, and record depth from root
+  Return if desired result
   Push children onto stack in order of worst to best children
 
 
 2. Searching the same tree using BFS.
   
   Enqueue initial node to queue
-  Dequeue every element in queue and return if you get desired element
-  Enqueue all the children
+  Dequeue one element in queue and return if you get desired element, otherwise enqueue all of that element's children
 
-Searching a graph (represented however you feel most comfortable -- Edge List, Adjacency List or Adjacency Matrix) using DFS.
-Searching the same graph using BFS.
+  
+
+
+3.  Searching a graph (represented however you feel most comfortable -- Edge List, Adjacency List or Adjacency Matrix) using DFS. (Adjacency Matrix)
+
+
+
+
+
+   
+
+Searching the same graph using BFS. (Adjacency List)
