@@ -61,11 +61,27 @@ breadth_first_search(node)
   current = node
   until Queue.empty?
     until current.children.all? { |c| c.visited? }
-      current.childrean.each do |child|
+      current.children.each do |child|
         child.visit
         Queue.enqueue(child)
       end
     end
     current = Queue.dequeue
+  end
+end
+
+3.) DFS Graph
+
+matrix.each do |i|
+  matrix[i].each do |j|
+    return j if val = j
+  end
+end
+
+4. BFS Graph
+
+matrix.first.each_index do |i|
+  matrix.each_row do |row|
+    return row[i] if val = row[i]
   end
 end
