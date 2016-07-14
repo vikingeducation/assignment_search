@@ -10,6 +10,11 @@ class KnightSearcher
   def bfs_for(array)
     found_move = find_move(array)
     move = found_move
+    if move
+      puts "Found the coordinate at depth level #{move.depth}."
+    else
+      raise "Couldn't find coordinate."
+    end
     while move.parent
       puts "[#{move.parent.x}, #{move.parent.y}]"
       move = move.parent
@@ -38,4 +43,4 @@ tree = MoveTree.new([2,2], 3)
 
 k = KnightSearcher.new(tree)
 
-k.bfs_for([6,4])
+k.bfs_for([3,7])
