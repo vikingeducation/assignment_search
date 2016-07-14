@@ -28,7 +28,7 @@ class KnightSearcher
     end
   end
 
-  
+
 
 end
 
@@ -38,4 +38,4 @@ tree = MoveTree.new([2,2], 3)
 
 k = KnightSearcher.new(tree)
 
-puts !!k.find_move([4,3])
+k.bfs_for([6,4])
