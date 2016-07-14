@@ -6,7 +6,7 @@ class MoveTree
 
   def initialize(starting)
     @starting_pos = Move.new(starting[0], starting[1])
-    @depth = depth
+    @max_depth = depth
   end
 
   def build_move(x, y)
@@ -14,9 +14,9 @@ class MoveTree
   end
 
   def build_trees(starting_pos)
-    @depth.times do 
+    @max_depth.times do
       moves = moves_array(starting_pos)
-      moves.map! do |move| 
+      moves.map! do |move|
         Move.new(move[0], move[1])
       end
       moves.each do |move|
@@ -25,11 +25,9 @@ class MoveTree
     end
   end
 
-  def add_move(move)
-    current_lvl = @starting_pos
-    loop do
-      
-    end
+  def add_move(move, origin)
+    parent.children << move
+    move.origin << parent
   end
 
   def moves_array(starting_pos)
