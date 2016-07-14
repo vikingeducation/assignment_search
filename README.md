@@ -42,3 +42,13 @@ if not
 add children of children to queue
 if not
 repeat until first target value is hit.
+
+3. starting at root, check if it's our target
+  if not, create children of all possible moves
+  do the same thing for each child
+
+4. start at root, check if it's our target
+  create children of all possible moves from root
+  check children to see if they're our target
+  if not, repeat
+
