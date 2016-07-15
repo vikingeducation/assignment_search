@@ -76,4 +76,3 @@ end
 
 
 t = MoveTree.new([2, 2], 4)
-
