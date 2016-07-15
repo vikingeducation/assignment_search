@@ -70,18 +70,3 @@ class MoveTree
     [x+1, y+2], [x+1, y-2], [x-1, y+2], [x-1, y-2]]
   end
 end
-
-## testing
-m = MoveTree.new([0,0],2)
-# m.build_tree_r(m.root)
-m.build_tree
-m.info
-puts m.root
-# k = KnightSearcher.new(m.root)
-# k.dfs_for(3,2)
-# k.bfs_for(3,2)
-# b = Benchmarker.new
-# print "DFS: "
-# b.benchmark { k.dfs_for(3,2) }
-# print "BFS: "
-# b.benchmark { k.bfs_for(3,2) }

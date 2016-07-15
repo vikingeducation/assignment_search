@@ -24,11 +24,3 @@ class Stack
   end
 
 end
-
-# s = Stack.new('hello')
-#
-# new_array = []
-# 5.times do
-# new_array << s.pop
-# end
-# p new_array.join

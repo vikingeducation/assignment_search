@@ -30,16 +30,3 @@ class Queue
 
 
 end
-
-# q = Queue.new
-# str = 'word'
-# str.split('').each do |letter|
-#   q.enqueue(letter)
-# end
-# puts "loaded queue is #{q.queue}"
-#
-# arr = []
-# str.length.times do |n|
-#   arr << q.dequeue
-# end
-# puts "unloaded queue is #{arr.join('')}"
