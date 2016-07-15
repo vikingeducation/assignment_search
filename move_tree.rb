@@ -1,5 +1,6 @@
 # knights_travails.rb
 require_relative 'knight_searcher'
+require_relative 'benchmarker'
 
 Move = Struct.new(:x, :y, :depth, :children, :parent)
 
@@ -65,3 +66,8 @@ end
 # k = KnightSearcher.new(m.root)
 # k.dfs_for(3,2)
 # k.bfs_for(3,2)
+# b = Benchmarker.new
+# print "DFS: "
+# b.benchmark { k.dfs_for(3,2) }
+# print "BFS: "
+# b.benchmark { k.bfs_for(3,2) }
