@@ -2,6 +2,8 @@
 require_relative 'move'
 
 class MoveTree
+  attr_reader :root
+  
   def initialize(start_coordinates, max_depth = 1)
     @start_x = start_coordinates[0]
     @start_y = start_coordinates[1]
