@@ -50,4 +50,4 @@ class MoveTree
 end
 
 t = MoveTree.new(1,2)
-p t.next_coordinates(0,0)
+p t.next_coordinates(1,0)
