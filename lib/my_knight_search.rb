@@ -22,7 +22,7 @@ class KnightSearcher
       ancestors << node
       node = node.parent
     end
-    ancestors.map! do |n|
+    ancestors.reverse!.map! do |n|
       n.nil? ? '*' : [n.coord.x, n.coord.y]
     end
   end
