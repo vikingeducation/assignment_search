@@ -25,26 +25,29 @@ class MoveTree
     end
   end
 
-  def build_to_depth(move)
-    # call build_trees, passing in a new move object created from each child's x, y pair 
+  def build_at_depth(move)
+    # call build_trees, passing in a new move object created from each child's x, y pair
     if move == @starting_pos
       build_trees(@starting_pos)
     end
-    (@max_depth-1).times do |index|
-      if move.children == nil
-        build_trees(move)
-      else
-        move.children.each do |child|
-          build_trees(child)
+    queue = [@starting_pos]
+    while node = queue.pop
+      (@max_depth-1).times do |index|
+        if node.children == nil
+          build_trees(move)
+        else
+          node.children.each do |child|
+            build_trees(child)
+          end
         end
       end
     end
   end
 
   def add_move(move, parent)
-    if parent.children 
+    if parent.children
       parent.children << move
-    else 
+    else
       parent.children = []
       parent.children << move
     end

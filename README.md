@@ -42,7 +42,7 @@ pop the queue and pass that back into search function
 
 --using an  adjacency list--
 check if 1st object is desired object
-start at the first object linked to the 'first' object 
+start at the first object linked to the 'first' object
 check if that is the desired object
 add some sort of unique identifier from that object to an array of previously-searched-from objects (to avoid loops)
 call search method recursively, passing the current object (instead of the original)
@@ -56,3 +56,5 @@ start at a node, return if that is the desired node
 otherwise, until child == nil, add a child to queue.
 return if that child is the desired node
 call search on next index object (recursively)
+
+Knight Psudeocode
