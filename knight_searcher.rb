@@ -18,10 +18,14 @@ class KnightSearcher
       end
       moves << [queue[0].x, queue[0].y]
       queue.shift
+      if queue.empty?
+        puts "Result not found"
+        return
+      end
     end
     moves << [queue[0].x, queue[0].y]
-    print_results(moves)
-    puts "Depth of result: #{queue[0].depth}"
+    print_results(moves, queue[0].depth)
+    [moves, queue[0].depth]
   end
 
 
@@ -40,31 +44,37 @@ class KnightSearcher
       end
       stack.pop
       if stack.empty? 
-        return "Result not found"
+        puts "Result not found"
+        return
       else
         until moves.include?([stack.last.x, stack.last.y]) == false 
           stack.pop
+          if stack.empty? 
+            puts "Result not found"
+            return
+          end
         end
       end
     end
     moves << [stack.last.x, stack.last.y]
-    print_results(moves)
-    puts "Depth of result: #{stack.last.depth}"
+    print_results(moves, stack.last.depth)
+    [moves, stack.last.depth]
     
   end
 
-  def print_results(moves)
+  def print_results(moves, depth)
     puts "#{moves.size} moves:"
     moves.each do |move|
       print "#{move}\n"
     end
+    puts "Depth of result: #{depth}"
     puts
   end
 
 
 end
 
-t = MoveTree.new([3, 3], 6)
+t = MoveTree.new([2, 2], 5)
 k = KnightSearcher.new(t)
 k.dfs_for([1,6])
 puts
