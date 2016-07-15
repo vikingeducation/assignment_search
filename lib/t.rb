@@ -1,7 +1,7 @@
 require './my_knight_search.rb'
 
-first = Coord.new(3, 3)
-last =  Coord.new(1, 3)
+first = Coord.new(0, 0)
+last =  Coord.new(7, 7)
 node = Node.new(first, nil, [])
 
 ks = KnightSearcher.new

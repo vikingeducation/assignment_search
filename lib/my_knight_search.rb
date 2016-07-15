@@ -16,6 +16,22 @@ class KnightSearcher
     print_parent_path(winner)
   end
 
+  def bfs_search(dest)
+    return "empty queue" if @queue.empty?
+    @current_node = @queue.pop
+    @seen_coords << @current_node.coord
+    return @current_node if @current_node.coord == dest
+    add_children(@current_node)
+    add_children_to_queue(@current_node)
+    bfs_search(dest)
+  end
+
+  def add_children_to_queue(node)
+    node.children.each do |c|
+      @queue.unshift(c) unless @seen_coords.include?(c.coord)
+    end
+  end
+
   def create_parent_path(node)
     ancestors = []
     until node.nil?
@@ -25,16 +41,6 @@ class KnightSearcher
     ancestors.reverse!.map! do |n|
       n.nil? ? '*' : [n.coord.x, n.coord.y]
     end
-  end
-
-  def bfs_search(dest)
-    return "empty queue" if @queue.empty?
-    @current_node = @queue.pop
-    return @current_node if @current_node.coord == dest 
-    @seen_coords << @current_node.coord
-    add_children(@current_node)
-    @current_node.children.each { |c| @queue.unshift(c) }
-    bfs_search(dest)
   end
 
   def add_children(node)
