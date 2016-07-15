@@ -35,7 +35,7 @@ class KnightSearcher
 		def output_moves(node)
 			puts "Moves: #{node.depth}"
 			nodes = []
-			while (node)
+			while node
 				x = node.x
 				y = node.y
 				nodes << "[#{x}, #{y}]"
