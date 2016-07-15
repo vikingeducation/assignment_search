@@ -1,6 +1,7 @@
 # knights_travails.rb
 require_relative 'knight_searcher'
 require_relative 'benchmarker'
+# require 'pry'
 
 Move = Struct.new(:x, :y, :depth, :children, :parent)
 
@@ -19,18 +20,29 @@ class MoveTree
   def initialize(coord, max_depth)
     @root = Move.new(coord[0], coord[1], 0, [], nil)
     @max_depth = max_depth
+    @num_nodes = 0
   end
 
   def info
     p "Your tree has #{@num_nodes} Move nodes and a maxium depth of #{@max_depth}"
   end
 
+# recursive function that mirrors depth-first building
+  def build_tree_r(move)
+    return if move.depth >= @max_depth
+    build_children(move)
+    move.children.each do |child|
+      build_tree_r(child)
+    end
+  end
+
+# using queues to mirror breadth-first building.
   def build_tree
     @num_nodes = 0
     current = @root
     queue = []
     queue.push(current)
-    while (current = queue.shift) && current.depth <= max_depth
+    while (current = queue.shift) && current.depth < max_depth
       build_children(current)
       current.children.each { |child| queue << child }
     end
@@ -44,7 +56,7 @@ class MoveTree
     possible_moves([move.x, move.y]).each do |coord|
       coord.each_slice(2) do |x,y|
         if valid_move?(x, y)
-          move.children << Move.new(x, y, (move.depth)+1, [], move)
+          move.children << Move.new(x, y, (move.depth) + 1, [], move)
           @num_nodes += 1
         end
       end
@@ -60,9 +72,11 @@ class MoveTree
 end
 
 ## testing
-# m = MoveTree.new([0,0],4)
-# m.build_tree
-# m.info
+m = MoveTree.new([0,0],2)
+# m.build_tree_r(m.root)
+m.build_tree
+m.info
+puts m.root
 # k = KnightSearcher.new(m.root)
 # k.dfs_for(3,2)
 # k.bfs_for(3,2)
