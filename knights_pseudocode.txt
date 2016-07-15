@@ -1,0 +1,11 @@
+each move  has a corordinate it has child move(array) and a parent move 
+
+
+make a board list that has all posbl moves
+
+each square has a array of children squares
+
+we're on a8   f1
+
+
+a8 f1
