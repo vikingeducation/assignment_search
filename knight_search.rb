@@ -1,7 +1,7 @@
 require_relative "movetree.rb"
 
 class KnightSearcher
-  attr_accessor :tree
+  attr_accessor :tree, :current_node
   def initialize(movetree)
     @tree = movetree
     @current_node = nil
@@ -22,6 +22,8 @@ class KnightSearcher
     @checked_values << node_value(@current_node)
     bfs_for(coords)
   end
+
+
 
   def parent_trace(node)
     ancestors = [node]
@@ -45,22 +47,7 @@ class KnightSearcher
 
 end
 
-m = MoveTree.new([3,3], 3)
+m = MoveTree.new([0,0], 3)
 m.start_generate
 k = KnightSearcher.new(m)
-puts k.parent_trace(k.bfs_for([1,3]))
-
-# def bfs_for(coords)
-#   children = []
-#   return @current_node if (@current_node.x == coords[0] && @current_node.y == coords[1])
-#   @current_node.children.each {|x| children << x}
-#   children.each do |child|
-#     break if (@current_node.x == coords[0] && @current_node.y == coords[1])
-#     @current_node = child
-#     bfs_for(coords)
-#   end
-#   @current_node = @current_node.parent
-#   puts "#{@current_node.x},#{@current_node.y}"
-
-
-# end
+k.bfs_for([3,6])
