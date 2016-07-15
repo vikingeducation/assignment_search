@@ -4,10 +4,10 @@ Move = Struct.new(:x, :y, :depth, :children, :parent)
 class MoveTree
   attr_reader :root
   def initialize(coords, max_depth)
-    @root = Move.new(coords[0], coords[1], 0, [], [])
+    @root = Move.new(coords[0], coords[1], 0, [], nil)
     @move_count = 1
     @max_depth = max_depth
-    @move_tree = add_moves #array of move structs
+    #@move_tree = add_moves #array of move structs
     
 
   end
@@ -47,11 +47,14 @@ class MoveTree
 
     [-2, 2].each do |delta2|
       [-1, 1].each do |delta1|
-        
+           
            puts "parent x:#{parent.x}, parent y: #{parent.y}" 
+
+        x_coord = parent.x + delta2 
+        y_coord = parent.y + delta1
+        puts "parent depth = #{parent.depth}"
         if x_coord.between?(0, 7) && y_coord.between?(0, 7)
-          x_coord = parent.x + delta2 
-          y_coord = parent.y + delta1
+          
           
 
           
@@ -60,10 +63,11 @@ class MoveTree
           parent.children << next_move
           @move_count += 1
         end
-
+        x_coord2 = parent.x + delta1
+        y_coord2 = parent.y + delta2 
+        puts "parent depth = #{parent.depth}"
         if x_coord2.between?(0, 7) && y_coord2.between?(0, 7)
-          x_coord2 = parent.x + delta1
-          y_coord2 = parent.y + delta2  
+           
 
           puts "x:#{x_coord2}, y: #{y_coord2}"
           next_move2 = Move.new(x_coord2, y_coord2, parent.depth + 1, [], parent)
