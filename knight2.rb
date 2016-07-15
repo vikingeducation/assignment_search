@@ -23,7 +23,7 @@ Move = Struct.new(:x, :y, :depth, :children, :parent)
 
 class MoveTree
 
-  attr_reader :coordinates, :depth, :root
+  attr_reader :coordinates, :depth, :root, :max_depth
   def initialize(coordinates, depth)
     starting_point = Move.new(coordinates[0], coordinates[1], 0, [], [])
     @max_depth = depth

@@ -19,13 +19,12 @@ class KnightSearcher
       moves << [queue[0].x, queue[0].y]
       queue.shift
       if queue.empty?
-        puts "Result not found"
-        return
+        return [moves.size, @t.max_depth]
       end
     end
     moves << [queue[0].x, queue[0].y]
-    print_results(moves, queue[0].depth)
-    [moves, queue[0].depth]
+    # print_results(moves, queue[0].depth)
+    [moves.size, queue[0].depth]
   end
 
 
@@ -44,21 +43,19 @@ class KnightSearcher
       end
       stack.pop
       if stack.empty? 
-        puts "Result not found"
-        return
+        return [moves.size, @t.max_depth]
       else
         until moves.include?([stack.last.x, stack.last.y]) == false 
           stack.pop
           if stack.empty? 
-            puts "Result not found"
-            return
+            return [moves.size, @t.max_depth]
           end
         end
       end
     end
     moves << [stack.last.x, stack.last.y]
-    print_results(moves, stack.last.depth)
-    [moves, stack.last.depth]
+    # print_results(moves, stack.last.depth)
+    [moves.size, stack.last.depth]
     
   end
 
@@ -71,11 +68,40 @@ class KnightSearcher
     puts
   end
 
+  def bfs_benchmark
+    results = []
+    1000.times do
+      results << bfs_for([rand(6), rand(6)])
+    end
+    total_moves = 0
+    total_depth = 0
+    results.each do |search|
+      total_moves += search[0]
+      total_depth += search[1]
+    end
+    puts "Average moves for BFS: #{total_moves/1000.00}"
+    puts "Average depth for BFS: #{total_depth/1000.00}"
+  end
+
+  def dfs_benchmark
+    results = []
+    1000.times do
+      results << dfs_for([rand(6), rand(6)])
+    end
+    total_moves = 0
+    total_depth = 0
+    results.each do |search|
+      total_moves += search[0]
+      total_depth += search[1]
+    end
+    puts "Average moves for DFS: #{total_moves/1000.00}"
+    puts "Average depth for DFS: #{total_depth/1000.00}"
+  end
+
 
 end
 
-t = MoveTree.new([2, 2], 5)
+t = MoveTree.new([3, 3], 5)
 k = KnightSearcher.new(t)
-k.dfs_for([1,6])
-puts
-k.bfs_for([1,6])
+puts k.dfs_benchmark
+puts k.bfs_benchmark
