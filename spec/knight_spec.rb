@@ -18,7 +18,6 @@ describe MoveTree do
 
   describe "#build_trees" do 
     it "builds a tree starting at starting position node" do 
-      tree.build_trees(tree.starting_pos)
       # puts tree.starting_pos.children
       expect(tree.starting_pos.children.length).to eq(8)
     end
