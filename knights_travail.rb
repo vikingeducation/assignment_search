@@ -1,39 +1,28 @@
-Move = Struct.new(:x, :y, :depth, :children, :parent)
+Move = Struct.new(:x, :y, :depth, :children, :parents)
 #Cell = Struct.new(:x, :y, :empty)
 
 class MoveTree
-  attr_reader :root
+  attr_reader :root, :tree
   def initialize(coords, max_depth)
-    @root = Move.new(coords[0], coords[1], 0, [], nil)
+    @root = Move.new(coords[0], coords[1], 0, [], [])
     @move_count = 1
     @max_depth = max_depth
-    #@move_tree = add_moves #array of move structs
-    
-
+     add_moves #array of move structs
   end
 
   def add_moves
-    #( x+1, y+2 )
-    #( x+2, y+1 )
-    #( x+2, y-1 )
-    #( x-1, y-2 )
-    #( x-2, y-1 )
-    #( x-2, y+1 )
-    #( x+1, y-2 )
-    #( x-1, y+2 )
-
-
     parent = @root
-
-    until parent.depth >= @max_depth && parent.depth >= @max_depth
+    depth = 0
+    get_children(parent)
+    until depth >= @max_depth - 1
       get_children(parent)
       parent.children.each do |child|
-        parent = child
-        get_children(parent)
+        get_children(child)
+        depth = child.depth
       end
     end
-    @root
-  end
+    parent
+    end
 
   def inspect
     puts "Your tree has #{@move_count} Move nodes and a maximum depth of #{@max_depth}."
@@ -47,53 +36,39 @@ class MoveTree
 
     [-2, 2].each do |delta2|
       [-1, 1].each do |delta1|
-           
-           puts "parent x:#{parent.x}, parent y: #{parent.y}" 
 
-        x_coord = parent.x + delta2 
+        x_coord = parent.x + delta2
         y_coord = parent.y + delta1
-        puts "parent depth = #{parent.depth}"
-        if x_coord.between?(0, 7) && y_coord.between?(0, 7)
-          
-          
 
-          
-          puts "x:#{x_coord}, y: #{y_coord}"
-          next_move = Move.new(x_coord, y_coord, parent.depth + 1, [], parent)
-          parent.children << next_move
-          @move_count += 1
-        end
+        get_move(x_coord, y_coord, parent)
+
         x_coord2 = parent.x + delta1
-        y_coord2 = parent.y + delta2 
-        puts "parent depth = #{parent.depth}"
-        if x_coord2.between?(0, 7) && y_coord2.between?(0, 7)
-           
+        y_coord2 = parent.y + delta2
 
-          puts "x:#{x_coord2}, y: #{y_coord2}"
-          next_move2 = Move.new(x_coord2, y_coord2, parent.depth + 1, [], parent)
-          parent.children << next_move2
-          @move_count += 1
-        end
-        
+        get_move(x_coord2, y_coord2, parent)
+
       end
     end
     parent
   end
+
+  def get_move(x, y, parent)
+    if x.between?(0, 7) && y.between?(0, 7)
+      unless parent.parents.any? { |ancestor| ancestor.x == x  && ancestor.y == y}
+        next_move = Move.new(x, y, parent.depth + 1, [], parent.parents + [parent])
+        parent.children << next_move
+        @move_count += 1
+      end
+    end
+  end
+
 end
 
 
-m = MoveTree.new([4, 4], 1)
-parent = m.root
-p m.get_children(parent)
-m.inspect
+#  m = MoveTree.new([4, 4], 1)
+# # # parent = m.root
+# # # m.get_children(parent)
+#  m.inspect
+# p m.root
 
-#x = 4, y = 4
-
-# 3, 6
-# 3, 2 yes
-# 5, 6
-# 5, 2
-# 2, 5
-# 2, 3 yes
-# 6, 5
-# 6, 3
+# p m.inspect

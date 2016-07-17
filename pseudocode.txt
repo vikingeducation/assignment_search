@@ -5,21 +5,12 @@
   Return if desired result
   Push children onto stack in order of worst to best children
 
-
 2. Searching the same tree using BFS.
-  
+
   Enqueue initial node to queue
   Dequeue one element in queue and return if you get desired element, otherwise enqueue all of that element's children
 
-  
-
-
 3.  Searching a graph (represented however you feel most comfortable -- Edge List, Adjacency List or Adjacency Matrix) using DFS. (Adjacency Matrix)
 
-
-
-
-
-   
 
 Searching the same graph using BFS. (Adjacency List)
