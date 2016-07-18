@@ -1,6 +1,12 @@
-Graham Turner
-Matthew Hinea
+Based on a project I worked on at Viking Code School. Build a data tree with MoveTree.new([starting_x, starting_y], z_moves_deep), where z_moves_deep is the length of the chain of moves you would like to represent and starting_x and starting_y assume a 7x7 board (0 to 6 by index). MoveTree's #move instance method checks your 'x, y' input against an array of potential moves from the current position, which starts at your starting point. When you succssfully move, any new potential moves are printed to the screen. Repeat to explore the game board as desired.
+KnightSearcher.new(tree) takes in a MoveTree object and allows the user to search for the path to any given position on the game board using a Breadth-First search (BFS) by calling #bfs_for on a KnightSearcher object and passing in x,y coordinates in the form of an array ([x, y]). 
 
+TODO: Add Depth-First search (DFS) and a benchmarking method. 
+
+Many thanks to Graham Turner for working on the initial stages of this project with me. 
+
+
+(answers to warmup questions follow)
 # assignment_search
 Marco?  Polo!
 
