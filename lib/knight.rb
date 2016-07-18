@@ -4,13 +4,16 @@ VECTORS = [[2, 1], [2, -1], [-2, 1], [-2, -1], [1, 2], [1, -2], [-1, 2], [-1, -2
 
 class MoveTree
 
-  attr_reader :starting_pos, :max_depth
+  attr_reader :starting_pos, :max_depth, :current_pos, :turns
 
   def initialize(starting = [3,3], max_depth = 6)
     @starting_pos = Move.new(starting[0], starting[1], 0)
     @max_depth = max_depth
+    @current_pos = @starting_pos
+    @turns = 0
     build_trees(@starting_pos)
     inspect
+    move_inspect
   end
 
   def build_move(x, y)
@@ -60,8 +63,31 @@ class MoveTree
   def inspect
     puts "This tree starts at [#{@starting_pos.x}, #{@starting_pos.y}]."
     puts "This tree is #{@max_depth} moves deep."
-    puts "At 0 moves, the potential moves are:"
-    moves_array(@starting_pos).each{|move| puts "[#{move.x}, #{move.y}]".center(10)}
+  end
+
+  def move_inspect
+    puts "At #{@turns} turns, the potential valid moves are:"
+    moves_array(@current_pos).each{|move| puts "[#{move.x}, #{move.y}]".center(10)}
     puts
+  end
+
+  def move(x,y) 
+    potential_moves = []
+    moves_array(@current_pos).each do |move| 
+      potential_moves << [move.x, move.y]
+    end
+    if potential_moves.include?([x, y])
+      @current_pos = scan(x, y, @current_pos)
+      @turns += 1
+    else 
+      puts "That is not a valid move."
+    end
+    move_inspect
+  end
+
+  def scan(x, y, current_pos)
+    current_pos.children.each do |child|
+       return child if child.x == x && child.y == y
+    end
   end
 end
