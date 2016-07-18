@@ -18,18 +18,23 @@ class KnightSearcher
     # etc
     queue = [@start]
     while node = queue.pop
-
       if match?(node, target_coords)
         puts "Found after #{node.depth} moves."
         puts "Move sequence (backwards from target):"
-        puts "[#{node.x}, #{node.y}]"
+        print_moves_history(node)
         return node 
       else
         node.children.each do |child|
           queue.unshift(child)
         end
       end 
+    end
+  end
 
+  def print_moves_history(node)
+    while node
+      puts "[#{node.x}, #{node.y}]"
+      node = node.parent
     end
   end
 
