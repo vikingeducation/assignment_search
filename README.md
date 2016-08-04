@@ -63,6 +63,11 @@ Then set the second child of the source to be the current node.
 record all its children path to the current node.
 Mark the children read.
 Loop until all the nodes read.
-Search the path according to the recorded path. 
+Search the path according to the recorded path.
+
+# Warm up 2
+
+## How will you represent a particular move? Will you repeat nodes? How will you display the final output after searching? How will you prevent your tree from continuing on infinitely?
+Each place on board is node. There is connection between two links when the knight can move between each other in one move. So all the place on board can be connected using that relationship. And since the knight can move to all the place on board without touching the same place. All the nodes represented here will also not be repeated. After searching, the path from one node to the other will be displayed. In order to prevent the tree from infinite loop. Already moved place will be marked read and can not touch again.
 
 [A data structures and algorithms Ruby challenge from the Viking Code School](http://www.vikingcodeschool.com)
