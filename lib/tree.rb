@@ -1,3 +1,4 @@
+require 'pry-byebug'
 Move = Struct.new(:x, :y, :depth, :children, :parent) do
   def initialize(*)
     super
@@ -17,10 +18,30 @@ MOVE_DIRECTION = [
 ]
 
 class MoveTree
-  def initialize cood, max_depth = 1
+  attr_accessor :root
+  def initialize cood, max_depth = 5
     @root = Move.new(cood[0], cood[1], 0)
     @current = @root
     @max_depth = max_depth
+    @counter = 1
+    populate_nodes
+  end
+
+  def populate_nodes
+    # binding.pry
+    queue = []
+    while @current.depth < @max_depth
+      child_nodes @current
+      @current.children.each do |child|
+        queue << child
+        @counter += 1
+      end
+      @current = queue.shift
+    end
+  end
+
+  def inspect
+    puts "Your tree has #{@counter} Move nodes and a maximun depth of #{@max_depth}"
   end
 
   def add_connect(parent_node, child_node)
@@ -34,6 +55,7 @@ class MoveTree
       new_node = Move.new(cood[0], cood[1], parent_node.depth + 1)
       add_connect(parent_node, new_node)
     end
+    parent_node
   end
 
   def child_coods parent_node
@@ -45,10 +67,6 @@ class MoveTree
       end
     end
     all_coods
-  end
-
-  def add_cood(cood)
-    new_node = Move.new(cood[0], cood[1], 1)
   end
 
   def in_bound? cood

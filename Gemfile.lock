@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    byebug (9.0.5)
     coderay (1.1.1)
     diff-lcs (1.2.5)
     ffi (1.9.14)
@@ -33,6 +34,9 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    pry-byebug (3.4.0)
+      byebug (~> 9.0)
+      pry (~> 0.10)
     rb-fsevent (0.9.7)
     rb-inotify (0.9.7)
       ffi (>= 0.5.0)
@@ -59,6 +63,7 @@ PLATFORMS
 
 DEPENDENCIES
   guard-rspec
+  pry-byebug
   rspec
 
 BUNDLED WITH
