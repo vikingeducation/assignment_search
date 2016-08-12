@@ -21,30 +21,35 @@ class Tree
 
 		# establish our current node
 		current_position = @start
-		# we then determine the possible moves from this position
+
 		moves = possible_moves( current_position )
 		@depth += 1
 
 
-		# for each possible move
-		moves.each do | coord |
 
 
-			if valid_move?( coord )
-			# we create a node who's parent is the current node
-				new_node = Move.new( coord[ 0 ], coord[ 1 ], @depth, [], current_position )
 
-				binding.pry
-				current_position.children << new_node
-				current_position = new_node
+			moves.each do | coord |
 
-			else
 
-				return
+				if valid_move?( coord )
 
-			end
+					new_node = Move.new( coord[ 0 ], coord[ 1 ], @depth, [], current_position )
 
-		end
+
+					current_position.children << new_node
+
+
+
+				else
+
+					return
+
+				end
+
+binding.pry
+
+			end #/.moves.each
 
 	end
 
