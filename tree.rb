@@ -19,24 +19,25 @@ class Tree
 
 	def create_moves
 
-		# establish our current node
+		# start with the root node set as current position
 		current_position = @start
 
-		moves = possible_moves( current_position )
+		# find all the possible moves for the current position
 		@depth += 1
 
+		moves = possible_moves( current_position )
+		#while the depth is less than what's set
 
-
-
-
+			# go through each possible move
 			moves.each do | coord |
 
-
+				# check if the move is valid
 				if valid_move?( coord )
 
+					# if it is, we make a new Node setting the coordinates as the parent of the current node
 					new_node = Move.new( coord[ 0 ], coord[ 1 ], @depth, [], current_position )
 
-
+					# we then add the new_node as a child of the current node
 					current_position.children << new_node
 
 
@@ -46,8 +47,6 @@ class Tree
 					return
 
 				end
-
-
 
 			end #/.moves.each
 
