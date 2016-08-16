@@ -5,29 +5,31 @@ Move = Struct.new( :x, :y, :depth, :children, :parent )
 
 class Tree
 
-	attr_reader :coords, :max_depth
+	attr_reader :coords, :max_depth, :start
 
 	def initialize( coords, max_depth )
 
 		@start = Move.new( coords[0], coords[1], 0, [], nil )
-		@max_depth = 3
-
-		@depth = 0
+		@max_depth = max_depth
 
 		create_moves( @start )
 
+binding.pry
 	end
 
 
 	def create_moves( node )
 
+		current_move = node
 
-		while @depth < @max_depth
+		queue = []
 
 
-		# start with the root node set as current position
+		until current_move.depth > @max_depth
+
+    # start with the root node set as current position
 		# find all the possible moves for the current position
-		@depth += 1
+
 
 		moves = possible_moves( node )
 		#while the depth is less than what's set
@@ -39,10 +41,12 @@ class Tree
 				if valid_move?( coord )
 
 					# if it is, we make a new Node setting the coordinates as the parent of the current node
-					new_node = Move.new( coord[ 0 ], coord[ 1 ], @depth, [], node )
+					new_node = Move.new( coord[ 0 ], coord[ 1 ], @depth += 1, [], node )
 
 					# we then add the new_node as a child of the current node
-					node.children << new_node
+					current_move.children << new_node
+					queue += current_move.children
+					current_move = queue.shift
 
 
 
@@ -54,13 +58,9 @@ class Tree
 
 			end #/.moves.each
 
-			node.children.each do  | n |
-
-				create_moves( n )
-
-			end
 
 		end #/.while loop
+
 
 	end
 
@@ -104,7 +104,5 @@ class Tree
 
 end
 
-tree = Tree.new( [3,3], 1 )
 
 
-tree.print_tree
