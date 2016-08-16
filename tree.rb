@@ -10,7 +10,6 @@ class Tree
 	def initialize( coords, max_depth )
 
 		@start = Move.new( coords[0], coords[1], 0, [], nil )
-
 		@max_depth = 1
 
 		@depth = 0
@@ -24,7 +23,6 @@ class Tree
 		current_position = @start
 
 		moves = possible_moves( current_position )
-
 		@depth += 1
 
 
@@ -40,6 +38,7 @@ class Tree
 
 
 					current_position.children << new_node
+
 
 
 				else
@@ -94,9 +93,5 @@ tree = Tree.new( [3,3], 1 )
 
 
 tree.create_moves
-
-
-print tree.inspect
-
 
 tree.print_tree
