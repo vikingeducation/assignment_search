@@ -14,52 +14,27 @@ class Tree
 
 		create_moves( @start )
 
-binding.pry
 	end
 
 
 	def create_moves( node )
 
-		current_move = node
-
-		queue = []
-
-
-		until current_move.depth > @max_depth
-
-    # start with the root node set as current position
-		# find all the possible moves for the current position
-
+		return if node.depth == @max_depth
 
 		moves = possible_moves( node )
-		#while the depth is less than what's set
-
-			# go through each possible move
-			moves.each do | coord |
-
-				# check if the move is valid
-				if valid_move?( coord )
-
-					# if it is, we make a new Node setting the coordinates as the parent of the current node
-					new_node = Move.new( coord[ 0 ], coord[ 1 ], @depth += 1, [], node )
-
-					# we then add the new_node as a child of the current node
-					current_move.children << new_node
-					queue += current_move.children
-					current_move = queue.shift
 
 
+		moves.each do | move |
 
-				else
+			node.children[ node.children.length ] = Move.new( move[ 0 ], move[ 1 ], node.depth + 1, [], node )
 
-					return
+		end
 
-				end
+		node.children.each do | move |
 
-			end #/.moves.each
+			create_moves( move )
 
-
-		end #/.while loop
+		end
 
 
 	end
@@ -67,9 +42,33 @@ binding.pry
 
 	def possible_moves( current_position )
 
+		moves = within_board?( current_position )
 
-		x = current_position.x
-		y = current_position.y
+		square = current_position
+
+		until square.parent.nil?
+
+			if [square.parent.x, square.parent.y] === moves
+
+				moves.delete( [ square.parent.x, square.parent.y ] )
+
+			end
+
+			square = square.parent
+
+		end
+
+		return moves
+
+	end
+
+
+	def within_board?( move )
+
+		x = move[ 0 ]
+		y = move[ 1 ]
+
+		moves = []
 
 		arr = [
 						[ x + 2, y - 1 ], [ x + 2, y + 1 ],
@@ -78,9 +77,17 @@ binding.pry
 						[ x - 1, y + 2 ], [ x + 1, y + 2 ]
 					]
 
-		return arr
+		arr.each do | coords |
+
+
+			moves << coords if valid_move?( coords )
+
+		end
+
+		moves
 
 	end
+
 
 
 	def valid_move?( coord )
@@ -104,5 +111,8 @@ binding.pry
 
 end
 
+tree = Tree.new( [3,5], 2)
+
+tree.print_tree
 
 
