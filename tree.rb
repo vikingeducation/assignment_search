@@ -7,6 +7,7 @@ class Tree
 	def initialize( coords, max_depth )
 
 		@root = Move.new( coords[0], coords[1], 0, [], nil )
+
 		@max_depth = max_depth
 
     @current_node = @root
@@ -110,67 +111,6 @@ class Tree
 
   end
 
-
-  def bfs(node)
-
-    queue = []
-
-    yield(node)
-
-    node.children.each do |child|
-
-      queue.push(child)
-
-      yield(child)
-
-    end
-
-    until queue.empty?
-
-      queue[0].children.each do |child|
-
-        queue.push(child)
-
-        yield(child)
-
-      end
-
-      queue.shift
-
-    end
-
-  end
-
-
-
-
-  def dfs(node)
-
-    stack = []
-
-    yield(node)
-
-    node.children.reverse.each do |child|
-
-    stack.push(child)
-
-    end
-
-    until stack.empty?
-
-      recent = stack.pop
-
-      yield(recent)
-
-      recent.children.reverse.each do |child|
-
-        stack.push(child)
-
-      end
-
-    end
-
-  end
 
 
 end

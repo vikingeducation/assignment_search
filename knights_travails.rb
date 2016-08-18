@@ -167,7 +167,7 @@ class KnightSearcher
 end
 
 
-#knight_dfs = KnightSearcher.new( Tree.new( [0,0], 5 ), [4,7] )
+#knight_dfs = KnightSearcher.new( Tree.new( [0,0], 5 ), [3,1] )
 #knight_dfs.dfs_benchmark
 
 #knight_dfs.dfs
@@ -175,8 +175,6 @@ end
 
 #knight_bfs = KnightSearcher.new( Tree.new( [0,0], 5 ), [4,7] )
 #knight_bfs.bfs_benchmark
-
-#knight_bfs = KnightSearcher.new( Tree.new( [0,0], 7 ), [4,7] )
 
 #knight_bfs.bfs
 
