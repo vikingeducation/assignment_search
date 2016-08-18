@@ -1,67 +1,81 @@
 require_relative 'tree'
 
+
 class KnightSearcher
+  attr_accessor :tree, :current_node
 
-  def initialize( coords, max_depth )
-
-    @tree = Tree.new( coords, max_depth )
-
+  def initialize(movetree)
+    @tree = movetree
+    @current_node = nil
   end
 
-
-  def bfs_for(x,y)
-
-    queue = []
-
-    current_node = @tree.start
-
-    until current_node.x == x && current_node.y == y 
-      queue += current_node.children unless current_node.children.nil?
-      current_node = queue.shift
-    end
-
-    path = find_path(current_node)
-    puts "#{path.length} Move(s)"
-    p path.reverse
-    current_node
-  end
-
-
-  def dfs_for(x,y)
-
-    stack = []
-
-    current_node = @tree.start
-
-    until current_node.x == x && current_node.y == y
-      stack += current_node.children unless current_node.children.nil?
-      current_node = stack.pop
-    end
-
-    path = find_path(current_node)
-    puts "#{path.length} Move(s)"
-    p path.reverse
-    current_node
-
-  end
-
-
-  def find_path(node)
-
-    path = []
-
-    current_node = node
-
-    until current_node.parent.nil?
-      path << [current_node.x, current_node.y]
-      current_node = current_node.parent
-    end
-
-    path
-  end
 
 
 end
 
 
-knight = KnightSearcher.new( [3,3], 5 )
+knight = KnightSearcher.new( Tree.new( [3,3], 5 ) )
+
+
+=begin
+
+class KnightSearcher
+  attr_accessor :tree, :current_node
+  def initialize(movetree)
+    @tree = movetree
+    @current_node = nil
+  end
+
+  def find_bfs(coords)
+    location = nil
+    @tree.bfs(@tree.root) do |node|
+      if node.x ==coords[0] && node.y ==coords[1]
+        location = node
+        break
+      end
+    end
+    location
+  end
+
+  def path_to_bfs(coords)
+    moves = []
+    node = find_bfs(coords)
+    until node.parent.nil?
+      moves << [node.x, node.y]
+      node = node.parent
+    end
+    moves << [@tree.root.x, @tree.root.y]
+    puts "bfs path:"
+    moves.reverse.each do |move|
+      puts "(#{move[0]}, #{move[1]})"
+    end
+  end
+
+  def find_dfs(coords)
+    location = nil
+    @tree.dfs(@tree.root) do |node|
+      if node.x ==coords[0] && node.y ==coords[1]
+        location = node
+        break
+      end
+    end
+    location
+  end
+
+  def path_to_dfs(coords)
+    moves = []
+    node = find_dfs(coords)
+    until node.parent.nil?
+      moves << [node.x, node.y]
+      node = node.parent
+    end
+    moves << [@tree.root.x, @tree.root.y]
+    puts "dfs path:"
+    moves.reverse.each do |move|
+      puts "(#{move[0]}, #{move[1]})"
+    end
+  end
+
+end
+
+=end
