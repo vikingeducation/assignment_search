@@ -51,7 +51,7 @@ Searching a graph (represented however you feel most comfortable -- Edge List, A
 	Otherwise, place the next Node into the stack
 	Check if that node by popping if off the stack and repeat
 		determine the best and worst nodes and prioritize in the stack
-	Once the first array's node is checked, proceed to the next element and repeat the process
+	Once the first array's node's depth is incremented, proceed to the next element and repeat the process
 
 
 	END
@@ -64,11 +64,10 @@ Searching the same graph using BFS.
 		ENQUEUE the first node in the array
 			check if solution and check if inspected, return if so
 		ENQUEUE the children
-		DEQUEU the child at front and check solution
+		DEQUEUE the child at front and check solution
 			return if solution
 		If not, check that node for children and move them to back of queue
-			each node inspected to be marked with indicator they were already checked
+			each node inspected to be incremented with depth they were already checked
 
 	END
 
-Do not move on until you can comfortably pseudocode those processes! You'll find that a lot of operations you do with trees will resemble either BFS or DFS and that should immediately tell you the best way to solve them.
