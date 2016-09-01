@@ -19,4 +19,4 @@ Marco?  Polo!
   BFS
 
 # What is the difference between a tree and a graph?  
-  Tree has one root and every, whereas in graph there is no root.  
+  Tree has one root, whereas in graph there is no root.  
