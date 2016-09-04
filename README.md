@@ -1,9 +1,9 @@
-# assignment_search
-Marco?  Polo!
+#Knights Travails, a deeper look at chess move trees
 
-[A data structures and algorithms Ruby challenge from the Viking Code School](http://www.vikingcodeschool.com)
+##Description
+This is a deep dive into the chess board to understand the most effecient way for a knight piece to traverse each tile of a chess board.
 
-
+##Depth First Search(DFS) and Breadth First Search (BFS)
 What data structure is used to implement DFS?
 Stack
 What data structure is typically used to implement BFS?
@@ -39,15 +39,9 @@ Searching a graph (represented however you feel most comfortable -- Edge List, A
 - If not found, move on to next vertex
 - Continue until match is found or you've exhausted the vertices
 
+[A data structures and algorithms Ruby challenge from the Viking Code School](http://www.vikingcodeschool.com)
 
 
 Searching the same graph using BFS.
 - You look at the first vertex, add it's children to queue, then pop off the front of the list and compare.
 - Keep repeating until you've found your match or gone through every possibility 
-
-
-
-
-
-
-
