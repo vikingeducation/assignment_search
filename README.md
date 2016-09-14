@@ -5,11 +5,11 @@ Marco?  Polo!
 
 Tamal Riedman
 
-1.  Graph, tree
-2.  Graph, tree
+1.  Stack
+2.  Queue
 3.  DFS
 4.  BFS
-5.  Tree would usually be much more organized, graph good for data that isn't easily organized
+5.  Tree would usually be much more organized, have direct relationship between parents and children, graph good for data that isn't easily organized, varying relationships, maybe no ROOT node
 
 1.  Start at first node
       if no children, or all children visited already, move up to parent
