@@ -25,6 +25,20 @@ class KnightSearcher
     end
   end
 
+  def dfs_for(target_coords)
+    stack = [@root]
+    until stack.empty?
+      current = stack.pop
+      if current.x == target_coords[0] && current.y == target_coords[1]
+        return list_moves(current)
+      else
+        current.children.each do |child|
+          stack << child
+        end
+      end
+    end
+  end
+
   def list_moves(move)
     moves = []
     until move.parent.nil?
@@ -46,5 +60,6 @@ class KnightSearcher
 
 end
 
-bfs = KnightSearcher.new(MoveTree.new([3, 3], 5))
-bfs.print_moves(bfs.bfs_for([1, 3]))
+search = KnightSearcher.new(MoveTree.new([0, 0], 5))
+search.print_moves(search.bfs_for([6, 0]))
+search.print_moves(search.dfs_for([6, 0]))
