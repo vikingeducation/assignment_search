@@ -2,15 +2,19 @@ Move = Struct.new(:x, :y, :depth, :children, :parent)
 
 class MoveTree
 
+  attr_reader :coords, :max_depth, :root, :depth
+
   def initialize(coords, max_depth=1)
-    @max_depth = max_depth
     @root = Move.new(coords[0], coords[1], 0, [], nil)
+    @max_depth = max_depth
     @current_node = @root
     @count = 1
+    create_moves
   end
 
   def create_moves
     queue = []
+    depth = @count - 1
     while @current_node.depth < @max_depth
       get_children(@current_node)
       @current_node.children.each do |n|
@@ -24,7 +28,7 @@ class MoveTree
   def get_children(parent)
     moves = within_board?([parent.x, parent.y])
     moves.each do |coords|
-      new_node = Move.new(coords[0], coords[1], parent.depth + 1, [], nil)
+      new_node = Move.new(coords[0], coords[1], parent.depth + 1, [], parent)
       add_parent(@current_node, new_node)
     end
     return parent
@@ -46,11 +50,11 @@ class MoveTree
     array.each do |coords|
       moves << coords if valid_move?(coords)
     end
-    moves
+    return moves
   end
 
   def valid_move?(coords)
-    return true if (0..7) == coord[0] && (0..7) == coord[1]
+    return true if coords[0].between?(0, 7) && coords[1].between?(0, 7)
   end
 
   def inspect
