@@ -58,8 +58,18 @@ class KnightSearcher
     puts
   end
 
+  def benchmark
+    t = Time.new
+    yield
+    puts "# It took #{Time.new - t} seconds."
+  end
+
 end
 
 search = KnightSearcher.new(MoveTree.new([0, 0], 5))
-search.print_moves(search.bfs_for([6, 0]))
-search.print_moves(search.dfs_for([6, 0]))
+search.benchmark do
+  search.print_moves(search.bfs_for([1, 3]))
+end
+search.benchmark do
+  search.print_moves(search.dfs_for([1, 3]))
+end
