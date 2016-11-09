@@ -1,0 +1,15 @@
+Searching a simple tree of nodes where each Node has an array of child nodes (some_node.children) using DFS.
+
+start at root node
+check if it's value == target value
+children.each do
+  check(child, target value), base case: root.left == nil or find value
+end
+
+Searching the same tree using BFS.
+
+
+Searching a graph (represented however you feel most comfortable -- Edge List, Adjacency List or Adjacency Matrix) using DFS.
+
+
+Searching the same graph using BFS.
