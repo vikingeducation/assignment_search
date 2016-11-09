@@ -16,6 +16,7 @@ class MoveTree
     @right_limit = 7
   end
 
+  #just for kit, we were tempted to use recursion, but we stayed strong
   def moves_from(coordinates = @coordinates, max_depth = @max_depth)
     # construct tree of nodes (moves) from a given position
     x, y = coordinates
@@ -26,7 +27,7 @@ class MoveTree
       move_posibilities.each do |delta|
         unless out_of_bounds([x, y], delta)
           new_node = make_move_node(x, y, delta, current_depth)
-          current_node.child = new_node
+          current_node.children << new_node
           new_node.parent = current_node
         end
       end
