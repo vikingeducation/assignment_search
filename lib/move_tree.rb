@@ -4,7 +4,7 @@
 require_relative 'move'
 
 class MoveTree
-  attr_reader :root 
+  attr_reader :max_depth, :root
 
   def initialize(coordinates, max_depth)
     #assumes input is valid, please please please. Thanks.
@@ -16,31 +16,24 @@ class MoveTree
     @right_limit = 7
   end
 
-  #just for kit, we were tempted to use recursion, but we stayed strong
-  def moves_from(coordinates = @coordinates, max_depth = @max_depth)
-    # construct tree of nodes (moves) from a given position
+  # recursion just for kit
+  def moves_from(coordinates = @coordinates, current_depth = 0, max_depth = @max_depth)
+    return if current_depth > max_depth
     x, y = coordinates
-    current_depth = 0
-    current_node = @root = Move.new(x, y, current_depth, [])
-    while current_depth < max_depth
-      x, y = current_node.x, current_node.y
-      move_posibilities.each do |delta|
-        unless out_of_bounds([x, y], delta)
-          new_node = make_move_node(x, y, delta, current_depth)
-          current_node.children << new_node
-          new_node.parent = current_node
-        end
+    current_node =  Move.new(x, y, current_depth, [])
+    @root = current_node if current_depth == 0
+    move_posibilities.each do |delta|
+      unless out_of_bounds([x, y], delta)
+        delta_x, delta_y = delta
+        new_node = Move.new(x + delta_x, y + delta_y, current_depth, [])
+        current_node.children << new_node
+        new_node.parent = current_node
+        moves_from([new_node.x, new_node.y], current_depth + 1, max_depth)
       end
-      current_depth += 1
     end
   end
 
-  def make_move_node(x, y, delta, depth)
-    delta_x, delta_y = delta
-    Move.new(x + delta_x, y + delta_y, depth, [])
-  end
-
-  def move_posibilites
+  def move_posibilities
     [[-1, 2], [1, 2], [2, 1], [2, -1],
      [1, -2], [-1, -2], [-2, 1], [-2, -1], ]
   end
@@ -49,9 +42,23 @@ class MoveTree
     x, y = start
     delta_x, delta_y = delta
     x + delta_x > @right_limit ||  x + delta_x < @left_limit ||
-    y + delta_y > @upper_limit || y + delta_y < @lower_limit
+      y + delta_y > @upper_limit || y + delta_y < @lower_limit
+  end
+
+  def inspect
+    "#{ max_depth } | "
   end
 
 end
-start = Move.new(0,0)
-p MoveTree.new([0,0],1).out_of_bounds([0,0],[1,2])
+
+#start = Move.new(0,0)
+#p MoveTree.new([0,0],1).out_of_bounds([0,0],[1,2])
+
+coordinates = [5, 5]
+
+tree = MoveTree.new(coordinates, 2)
+
+tree.moves_from
+
+p "ROOT: #{ tree.root }"
+
