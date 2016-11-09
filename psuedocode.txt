@@ -6,10 +6,73 @@ children.each do
   check(child, target value), base case: root.left == nil or find value
 end
 
+
+
 Searching the same tree using BFS.
+
+Using a queue.
+Start at the root.
+Check the root.
+Add it's children to the queue.
+Until queue is empty
+  dequeue and check node
+  enqueue node'children
+Foreverrrr
 
 
 Searching a graph (represented however you feel most comfortable -- Edge List, Adjacency List or Adjacency Matrix) using DFS.
 
+Go to first connection in list, and check it's first connect, and....
+Go to second connection, and check it's first connection.....
+
 
 Searching the same graph using BFS.
+
+Build Adjacenty Matrix from graph.
+Iterate over array of lists. For each list, check all possibilities.
+
+_______________________________________________________________________________________________
+
+
+
+MOVES = [ [-2,-1], [-2,1],
+          [-1,2] , [-1,-2],
+          [1,2]  , [1,-2],
+          [2,1]  , [2,-1], ]
+
+Cell Object ( * 64 )
+  x value
+  y value
+  
+Graph builder
+  generate moves graph (x, y, board_size=8)
+    @board_size = board_size
+    one set of branches at a time
+    check if out of bounds
+    set parents and depth 
+    search those branches
+    when correct move is found
+    return cell.
+    cell.parent.parent......reverse with stack
+
+
+Graph Searcher
+  find correct move (graph correct move)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
