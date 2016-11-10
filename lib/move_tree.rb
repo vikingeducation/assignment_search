@@ -14,13 +14,15 @@ class MoveTree
     @lower_limit = 0
     @left_limit  = 0
     @right_limit = 7
+    @node_count = 0
   end
 
   # recursion just for kit
-  def moves_from(coordinates = @coordinates, current_depth = 0, max_depth = @max_depth)
+  def generate_moves(coordinates = @coordinates, current_depth = 0, max_depth = @max_depth)
     return if current_depth > max_depth
     x, y = coordinates
     current_node =  Move.new(x, y, current_depth, [])
+    @node_count += 1
     @root = current_node if current_depth == 0
     move_posibilities.each do |delta|
       unless out_of_bounds([x, y], delta)
@@ -28,7 +30,7 @@ class MoveTree
         new_node = Move.new(x + delta_x, y + delta_y, current_depth, [])
         current_node.children << new_node
         new_node.parent = current_node
-        moves_from([new_node.x, new_node.y], current_depth + 1, max_depth)
+        generate_moves([new_node.x, new_node.y], current_depth + 1, max_depth)
       end
     end
   end
@@ -46,7 +48,7 @@ class MoveTree
   end
 
   def inspect
-    "#{ max_depth } | "
+    p "Max depth is #{ max_depth } | Number of nodes is #{@node_count}"
   end
 
 end
@@ -54,11 +56,11 @@ end
 #start = Move.new(0,0)
 #p MoveTree.new([0,0],1).out_of_bounds([0,0],[1,2])
 
-coordinates = [5, 5]
+# coordinates = [5, 5]
 
-tree = MoveTree.new(coordinates, 2)
+# tree = MoveTree.new(coordinates, 5)
 
-tree.moves_from
+# tree.moves_from
+# tree.inspect
 
-p "ROOT: #{ tree.root }"
 
