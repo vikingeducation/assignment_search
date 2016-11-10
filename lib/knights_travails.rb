@@ -1,4 +1,6 @@
+
 require_relative "move_tree"
+
 class Knight
 
   def initialize(args = {})
@@ -8,12 +10,15 @@ class Knight
   def move_to(destination)
     available_moves = generate_moves(@position)
     move = breadth_first_search(available_moves, destination)
-#p move
-    move_sequence = move_sequence(move)
-    format_move_sequence(move_sequence)
+    if move
+      move_sequence = move_sequence(move)
+      format_move_sequence(move_sequence)
+    else
+      "Path not found."
+    end
   end
 
-  def generate_moves(position, move_depth = 5)
+  def generate_moves(position, move_depth = 3)
     moves = MoveTree.new(position, move_depth)
     moves.generate_moves
     moves
@@ -23,11 +28,10 @@ class Knight
     queue = []
     queue.unshift(move_tree.root)
     until queue.empty?
-puts"#{queue}\n\n"
       current_node = queue.pop
       return current_node if target_square?(current_node, destination)
       current_node.children.each do |child|
-        queue.unshift(child) if child
+        queue.unshift(child)
       end
     end
     false
@@ -40,7 +44,7 @@ puts"#{queue}\n\n"
   def move_sequence(move)
     current_move = move
     move_list = []
-    while current_move.parent
+    while current_move
       move_list << current_move
       current_move = current_move.parent
     end
@@ -49,10 +53,12 @@ puts"#{queue}\n\n"
 
   def format_move_sequence(move_sequence)
     move_sequence = move_sequence.map { |node| "#{node.x}, #{node.y}" }
+    move_sequence.reverse!
     move_sequence.unshift("#{@position[0]}, #{@position[1]}")
     move_sequence.join(" -> ")
   end
 
 end
 
-puts Knight.new.move_to([3,4])
+puts Knight.new.move_to([5, 0])
+

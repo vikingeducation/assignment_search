@@ -18,11 +18,12 @@ class MoveTree
   end
 
   # recursion just for kit
-  def generate_moves(coordinates = @coordinates, current_depth = 0, max_depth = @max_depth)
+  def generate_moves(coordinates = @coordinates, current_depth = 0, max_depth = @max_depth, parent = nil)
     return if current_depth > max_depth
     x, y = coordinates
     current_node =  Move.new(x, y, current_depth, [])
     @node_count += 1
+    parent.children << current_node if parent
     @root = current_node if current_depth == 0
     move_posibilities.each do |delta|
       unless out_of_bounds([x, y], delta)
@@ -30,7 +31,7 @@ class MoveTree
         new_node = Move.new(x + delta_x, y + delta_y, current_depth, [])
         current_node.children << new_node
         new_node.parent = current_node
-        generate_moves([new_node.x, new_node.y], current_depth + 1, max_depth)
+        generate_moves([new_node.x, new_node.y], current_depth + 1, max_depth, new_node)
       end
     end
   end
