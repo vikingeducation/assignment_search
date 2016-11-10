@@ -14,13 +14,28 @@ class KnightSearcher
     @tree = tree
   end
 
-  def bfs_for(target_coords)
-    correct_square = bfs_crawl(target_coords)
-    if correct_square
-      puts "#{correct_square.depth} Moves:"
+  def bfs_for(target_coords, print_to_screen = true)
+    time = Time.now
+    found_move = bfs_crawl(target_coords)
+    time = Time.now - time
+    render(found_move, time) if print_to_screen
+    time
+  end
+
+  def dfs_for(target_coords, print_to_screen = true)
+    time = Time.now
+    found_move = dfs_crawl(target_coords)
+    time = Time.now - time
+    render(found_move, time) if print_to_screen
+    time
+  end
+
+  def render(target, time = nil)
+    if target
+      puts "#{target.depth} Moves:"
       puts "Started from: #{[tree.root.x, tree.root.y]}"
-      node = correct_square.parent
-      moves = [correct_square]
+      node = target.parent
+      moves = [target]
       begin
         moves << node
         node = node.parent
@@ -28,8 +43,9 @@ class KnightSearcher
       moves.reverse!
       moves.each { |move| p [move.x, move.y] }
     else
-      puts "Move not found at depth"
+      puts "Move not found at depth."
     end
+    puts "Searched for #{time} seconds."
   end
 
   private
@@ -46,11 +62,16 @@ class KnightSearcher
     false
   end
 
+  def dfs_crawl(target_coords)
+    stack = [tree.root]
+    until stack.length == 0
+      node = stack.pop
+      node.children.each do |child|
+        return child if [child.x, child.y] == target_coords
+        stack << child
+      end
+    end
+    false
+  end
+
 end
-
-tree = MoveTree.new([4, 4], 4)
-tree.build
-tree.inspect
-
-knight = KnightSearcher.new(tree)
-knight.bfs_for([0,0])

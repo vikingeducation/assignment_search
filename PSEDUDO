@@ -1,1 +1,16 @@
 ##PSEDUDO
+# use a tree
+# Move.new represents the current position on the game board
+#    - x
+#    - y
+#    - depth
+#    - children
+#    - parent
+
+# MoveTree - tree of potiential moves
+#    -coordinates
+#    -max depth
+#
+#    - #inspect
+#       - no recursion
+#
