@@ -7,7 +7,7 @@ class Knight
     @position = args[:start] || [1, 0]
   end
 
-  def move_to(destination)
+  def move_to_breadth(destination)
     available_moves = generate_moves(@position)
     move = breadth_first_search(available_moves, destination)
     if move
@@ -18,7 +18,18 @@ class Knight
     end
   end
 
-  def generate_moves(position, move_depth = 3)
+  def move_to_depth(destination)
+    available_moves = generate_moves(@position)
+    move = depth_first_search(available_moves, destination)
+    if move
+      move_sequence = move_sequence(move)
+      format_move_sequence(move_sequence)
+    else
+      "Path not found."
+    end
+  end
+
+  def generate_moves(position, move_depth = 7)
     moves = MoveTree.new(position, move_depth)
     moves.generate_moves
     moves
@@ -32,6 +43,19 @@ class Knight
       return current_node if target_square?(current_node, destination)
       current_node.children.each do |child|
         queue.unshift(child)
+      end
+    end
+    false
+  end
+
+  def depth_first_search(move_tree, destination = @position)
+    stack = []
+    stack.unshift(move_tree.root)
+    until stack.empty?
+      current_node = stack.shift
+      return current_node if target_square?(current_node, destination)
+      current_node.children.each do |child|
+        stack.unshift(child)
       end
     end
     false
@@ -59,5 +83,6 @@ class Knight
 
 end
 
-puts Knight.new.move_to([4, 6])
+puts Knight.new.move_to_breadth([2, 5])
+puts Knight.new.move_to_depth([2, 5])
 
