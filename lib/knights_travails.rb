@@ -5,6 +5,8 @@ class Knight
 
   def initialize(args = {})
     @position = args[:start] || [1, 0]
+    @nodes_traversed = 0
+    @start_time = Time.new
   end
 
   def move_to_breadth(destination)
@@ -36,10 +38,12 @@ class Knight
   end
 
   def breadth_first_search(move_tree, destination = @position)
+    move_tree.inspect
     queue = []
     queue.unshift(move_tree.root)
     until queue.empty?
       current_node = queue.pop
+      @nodes_traversed += 1
       return current_node if target_square?(current_node, destination)
       current_node.children.each do |child|
         queue.unshift(child)
@@ -49,10 +53,12 @@ class Knight
   end
 
   def depth_first_search(move_tree, destination = @position)
+    move_tree.inspect
     stack = []
     stack.unshift(move_tree.root)
     until stack.empty?
       current_node = stack.shift
+      @nodes_traversed += 1
       return current_node if target_square?(current_node, destination)
       current_node.children.each do |child|
         stack.unshift(child)
@@ -78,11 +84,13 @@ class Knight
   def format_move_sequence(move_sequence)
     move_sequence = move_sequence.map { |node| "#{node.x}, #{node.y}" }
     move_sequence.reverse!
-    move_sequence.join(" -> ")
+    puts move_sequence.join(" -> ")
+    puts "Number of nodes traversed is #{@nodes_traversed}"
+    puts "Total run time is #{Time.new - @start_time}"
   end
 
 end
 
-puts Knight.new.move_to_breadth([2, 5])
-puts Knight.new.move_to_depth([2, 5])
+puts Knight.new.move_to_breadth([2, 7])
+puts Knight.new.move_to_depth([2, 7])
 
