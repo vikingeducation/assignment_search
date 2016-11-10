@@ -46,10 +46,7 @@ class Knight
     move_list = []
     while current_move
       move_list << current_move
-p [current_move.x, current_move.y], [current_move.parent.x, current_move.parent.y]
       current_move = current_move.parent
-p [current_move.x, current_move.y]
-p current_move.parent
     end
     move_list
   end
@@ -63,5 +60,5 @@ p current_move.parent
 
 end
 
-puts Knight.new.move_to([5, 5])
+puts Knight.new.move_to([4, 6])
 
