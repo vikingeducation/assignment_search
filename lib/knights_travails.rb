@@ -24,7 +24,7 @@ class MoveTree
     return "Your target not found" if node.depth > max_depth
 
     # if root, make new node
-    node = Move.new(node.x, node.y, 0, [], nil) if depth_count == 0
+    # node = Move.new(node.x, node.y, 0, [], nil) if depth_count == 0
 
     possible_move_count += child_count
     possible_move_count
