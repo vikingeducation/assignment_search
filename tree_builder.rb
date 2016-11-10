@@ -1,29 +1,36 @@
-Node = Struct.new(:x, :y, :parent, :children, :depth)
 
-class TreeBuilder
+
+class Node
   MOVES = [ [-2,-1], [-2,1],
           [-1,2] , [-1,-2],
           [1,2]  , [1,-2],
-          [2,1]  , [2,-1] 
+          [2,1]  , [2,-1]
           ]
 
-  def initialize node
-    build(node)
+  RANGE = (0..7)
+
+  def initialize(x,y, depth, parent = nil, children = nil)
+    @x = x
+    @y = y
+    @depth = depth
+    @parent = parent
+    @children = children
+
   end
 
-  def build(node)
+  def expand
     children = []
     parent = node
     depth = node.depth + 1
 
     MOVES.each do |move|
-      x = node.x + move[0]
-      y = node.y + move[1]
+      x = @x + move[0]
+      y = @y + move[1]
 
-      children << Node.new(x, y, parent, nil, depth)
+      if RANGE.include? x && RANGE.include? y
+        @children << Node.new(x, y, @depth + 1, self, nil)
+      end
     end
-    node.children = children
-    node
   end
 
 end
