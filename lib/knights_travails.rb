@@ -54,7 +54,6 @@ class Knight
   def format_move_sequence(move_sequence)
     move_sequence = move_sequence.map { |node| "#{node.x}, #{node.y}" }
     move_sequence.reverse!
-    move_sequence.unshift("#{@position[0]}, #{@position[1]}")
     move_sequence.join(" -> ")
   end
 
