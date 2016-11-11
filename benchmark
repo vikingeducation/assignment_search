@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+require_relative 'knight_searcher'
+bfstime = 0
+dfstime = 0
+
+1000000.times do
+  start = [rand(7), rand(7)]
+  target = [rand(7), rand(7)]
+  tree = MoveTree.new(start, rand(5))
+  knight = KnightSearcher.new(tree)
+  bfstime += knight.bfs_for(target, false)
+
+
+  knight = KnightSearcher.new(tree)
+  dfstime += knight.dfs_for(target, false)
+end
+
+puts "\n\n\n\n\n\n"
+puts "BFS ran in #{bfstime}"
+puts "DFS ran in #{dfstime}"
