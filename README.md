@@ -19,34 +19,33 @@ In a tree nodes will not connect back to each other. Graphs do not have a hierar
 
 Searching a simple tree of nodes where each Node has an array of child nodes (some_node.children) using DFS.
 
-##stack.push(head)
-###unless stack.empty?
-###current node = stack.pop
-###return node if target_data == data
-###Add children to stack unless children.nil?
+stack.push(head)
+unless stack.empty?
+current node = stack.pop
+return node if target_data == data
+Add children to stack unless children.nil?
 
 Searching the same tree using BFS.
 
-##queue.enqueue(head)
-###unless queue.empty?
-###current node = queue.unqueue
-###return node if target_data == data
-###Add children to queue unless children.nil?
+queue.enqueue(head)
+unless queue.empty?
+current node = queue.unqueue
+return node if target_data == data
+Add children to queue unless children.nil?
 
 Searching a graph (represented however you feel most comfortable -- Edge List, Adjacency List or Adjacency Matrix) using DFS.
 
 Adjacency List
-###@head_list.each do |linked_list|
-####linked_list.search(data)
-####
+@head_list.each do |linked_list|
+linked_list.search(data)
+
 
 Searching the same graph using BFS.
 
-###@head_list.each_with_index do |linked_list, index|
-###counter = 0
-####while index <= counter
-####linked_list.crawl(index)
-####counter += 1
-####end
-###
+@head_list.each_with_index do |linked_list, index|
+counter = 0
+while index <= counter
+linked_list.crawl(index)
+counter += 1
+end
 
