@@ -1,0 +1,41 @@
+knight pseudo
+
+given a coordinate and depth, map all possible moves in a searchable tree
+
+coordinate = root node
+
+depth = number of iterations for mapping moves
+        distance(#steps) to finding node with no children
+
+Move = Struct.new(coordainte, depth, parent, child)
+
+class MoveTree
+  def init(coordinate, depth)
+    @coordinate = coordinate
+    @root = Move.new(coordinate, 0, false, false)
+    @depth = depth
+  end
+
+  def make_tree
+    depth.times
+      add_layer
+    end
+  end
+
+  def add_layer(depth)
+    @tree
+    find childless nodes in existing tree
+    add to parent array
+    make children nodes with depth attribute
+  end
+
+  def make_child_nodes
+    ensure moves stay within limits of board
+    every time move created, map to board
+  end
+
+  def board
+    when filled, halt child_node making process
+    prevents redundancy
+  end
+end
