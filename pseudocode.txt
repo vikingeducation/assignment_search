@@ -12,7 +12,7 @@ Move = Struct.new(coordainte, depth, parent, child)
 class MoveTree
   def init(coordinate, depth)
     @coordinate = coordinate
-    @root = Move.new(coordinate, 0, false, false)
+    @root = Move.new(coordinate, 0, nil, nil)
     @depth = depth
   end
 

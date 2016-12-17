@@ -29,6 +29,8 @@ Searching a simple tree of nodes where each Node has an array of child nodes (so
     break if curr_node.children.nil
   end
 
+  add root and branches to stack 
+
 
 Searching the same tree using BFS.
 
