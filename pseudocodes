@@ -1,0 +1,37 @@
+Searching a simple tree of nodes where each Node has an array of child nodes (some_node.children) using DFS.
+
+
+1 - push root to stack
+2 - pop from stack -> current node, if stack empty --> return
+3 - search the value. If success --> return
+4 - push children of current node to stack with worst option first
+5 - go to 2 
+
+
+Searching the same tree using BFS.
+
+1 - push root to queue
+2 - pop from queue -> current node, if queue empty --> return
+3 - search the value. If success --> return
+4 - push children of current node to queue with best option first
+5 - go to 2 
+
+Searching a graph (represented however you feel most comfortable -- Edge List, Adjacency List or Adjacency Matrix) using DFS.
+
+Graph is represented by adj list
+
+1 - set i = 0
+2 - push i to stack
+3 - node = adj_list[pop from stack].head, return if empty
+4 - search node and mark depth, return if found
+5 - traverse through the list and push all children to stack
+6 - go back to 3 
+
+Searching the same graph using BFS.
+
+1 - set i = 0
+2 - push i to queue
+3 - node = adj_list[pop from queue].head, return if empty
+4 - search node and mark depth, return if found
+5 - traverse through the list and push all children to queue
+6 - go back to 3 
