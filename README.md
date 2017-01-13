@@ -82,3 +82,18 @@ bfs(node)
 ```
 
 ## Warmup 2: Knight's Travails Pseudocode
+
+If current position of knight is represented as (x, y) position, there are 8 possible moves (assuming move is in range of board):
+
+(x+1, y+2)
+(x+2, y+1)
+(x+1, y-2)
+(x+2, y-1)
+(x-1, y+2)
+(x-2, y+1)
+(x-1, y-2)
+(x-2, y-1)
+
+
+
+
