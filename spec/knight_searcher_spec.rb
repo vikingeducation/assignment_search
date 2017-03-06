@@ -24,4 +24,17 @@ describe KnightSearcher do
     end
   end
 
+  describe "#dfs_for" do
+    it "takes a target_coords and returns the sequence of moves
+    to get there" do
+      result = searcher.dfs_for([2, 1])
+      expect(result).to eq({moves: 1, path: [[0, 0]]})
+    end
+
+    it "works with larger trees" do
+      res = KnightSearcher.new(MoveTree.new([0,0], 20)).dfs_for([6,0])
+      expect(res[:moves]).to eq(4)
+    end
+  end
+
 end
