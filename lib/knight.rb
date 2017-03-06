@@ -106,5 +106,4 @@ class MoveTree
     "Your tree has #{length} Move nodes and a maximum depth of #{depth}"
   end
 
-
 end
