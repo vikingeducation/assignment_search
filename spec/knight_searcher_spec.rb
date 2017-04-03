@@ -90,7 +90,6 @@ describe KnightSearcher do
     it "returns 3 if target is [3, 2]" do 
       expect(knight.dfs_path([3, 2])).to eq(3)
     end
-    
   end
 
 end

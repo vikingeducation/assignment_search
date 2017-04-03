@@ -23,7 +23,7 @@ class MoveTree
 
   def add_more_children(squares = @starting_square.children, depth = 1)
     return if depth == @max_depth
-
+   
     squares.each do |square|
       add_children(square, depth + 1)
       add_more_children(square.children, depth + 1)
@@ -31,4 +31,14 @@ class MoveTree
   end
 
 end
+
+
+
+
+
+
+
+
+
+
 
