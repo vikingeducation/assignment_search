@@ -36,7 +36,14 @@ PSEUDOCODE
 
 
 3)  Searching a graph (represented however you feel most comfortable -- Edge List, Adjacency List or Adjacency Matrix) using DFS.
-    a.  follow steps above
+    a.  choose one vertex and iterate through edges until you find target or move to next one.
 
 4)  Searching the same graph using BFS.
-    a. follow steps above but record depth of nodes checked to avoid loops
+    a. use nested loops to iterate through each path until target found or iteration complete.
+
+KNIGHT"S PSEUDOCODE
+a.  Establish the board as a 2D array of verticies
+b.  create method that takes two vertex args of where to start and target
+c.  define helper method of possible moves
+d.  add record to node of depth from root
+e.  iterate through possible moves until target hit
