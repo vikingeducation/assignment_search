@@ -20,5 +20,11 @@ module KnightsTravails
 
     def build_tree
     end
+
+    # we use array indices for x and y coordinates of the chessboard,
+    # so valid coordinates range from (0,0) to (7,7)
+    def valid_move?(x, y)
+      (0..7).include?(x) && (0..7).include?(y)
+    end
   end
 end
