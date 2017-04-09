@@ -76,6 +76,5 @@ end
 
 if $0 == __FILE__
   move_tree = KnightsTravails::MoveTree.new([0, 0], 1)
-  p move_tree.root
   move_tree.inspect
 end
