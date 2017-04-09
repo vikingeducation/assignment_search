@@ -15,6 +15,7 @@ module KnightsTravails
     end
 
     def inspect
+      puts "Your tree has #{num_nodes} Move nodes and a maximum depth of #{depth}."
     end
 
     private
@@ -45,7 +46,7 @@ module KnightsTravails
         end
         current_depth += 1
       end
-      
+
       @root
     end
 
@@ -76,6 +77,5 @@ end
 if $0 == __FILE__
   move_tree = KnightsTravails::MoveTree.new([0, 0], 1)
   p move_tree.root
-  p move_tree.num_nodes
-  p move_tree.depth
+  move_tree.inspect
 end
