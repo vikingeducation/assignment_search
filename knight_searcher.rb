@@ -24,6 +24,29 @@ module KnightsTravails
     end
 
     def dfs_for(target_coords)
+      x, y = target_coords[0], target_coords[1]
+      stack = []
+      stack.push(tree.root)
+      current_depth = 0
+
+      until stack.empty?
+        current_node = stack.pop
+        return current_node if current_node.x == x && current_node.y == y
+
+        current_node.depth = current_depth
+
+        # naive DFS method - simply select the first child of each node
+        current_node.children.each do |child|
+          if child.depth.nil?
+            stack.push(child)
+            break
+          end
+        end
+
+        current_depth += 1
+      end
+
+      nil
     end
 
     def moves_taken_to(target)
@@ -45,7 +68,15 @@ end
 if $0 == __FILE__
   include KnightsTravails
   tree = MoveTree.new([0, 0], 10)
+  tree.inspect
+
   searcher = KnightSearcher.new(tree)
-  result = searcher.bfs_for([7, 7])
+
+  puts "\nRunning BFS"
+  result = searcher.bfs_for([2, 1])
+  searcher.moves_taken_to(result)
+
+  puts "\nRunning DFS"
+  result = searcher.dfs_for([3, 3])
   searcher.moves_taken_to(result)
 end
