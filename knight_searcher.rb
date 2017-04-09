@@ -48,9 +48,15 @@ module KnightsTravails
     end
 
     def moves_taken_to(target)
+      if target.nil?
+        puts "Path to target square not found."
+        return nil
+      end
+
       stack = []
       num_moves = -1
       current_node = target
+
       while current_node
         stack.push("[#{current_node.x}, #{current_node.y}]")
         current_node = current_node.parent
