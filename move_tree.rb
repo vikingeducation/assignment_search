@@ -23,7 +23,7 @@ module KnightsTravails
 
     # we use array indices for x and y coordinates of the chessboard,
     # so valid coordinates range from (0,0) to (7,7)
-    def valid_move?(x, y)
+    def valid_position?(x, y)
       (0..7).include?(x) && (0..7).include?(y)
     end
 
@@ -36,7 +36,7 @@ module KnightsTravails
 
       move_offsets.each do |move_offset|
         new_x, new_y = x + move_offset[0], y + move_offset[1]
-        moves << [new_x, new_y] if valid_move?(new_x, new_y)
+        moves << [new_x, new_y] if valid_position?(new_x, new_y)
       end
 
       moves
