@@ -35,12 +35,10 @@ module KnightsTravails
 
         current_node.depth = current_depth
 
-        # naive DFS method - simply select the first child of each node
+        # naive DFS method - simply push the children of each node in order
+        # onto the stack
         current_node.children.each do |child|
-          if child.depth.nil?
-            stack.push(child)
-            break
-          end
+          stack.push(child) if child.depth.nil?
         end
 
         current_depth += 1
@@ -67,16 +65,16 @@ end
 
 if $0 == __FILE__
   include KnightsTravails
-  tree = MoveTree.new([0, 0], 10)
+  tree = MoveTree.new([0, 0], 5)
   tree.inspect
 
   searcher = KnightSearcher.new(tree)
 
   puts "\nRunning BFS"
-  result = searcher.bfs_for([2, 1])
+  result = searcher.bfs_for([4, 2])
   searcher.moves_taken_to(result)
 
   puts "\nRunning DFS"
-  result = searcher.dfs_for([3, 3])
+  result = searcher.dfs_for([4, 2])
   searcher.moves_taken_to(result)
 end
