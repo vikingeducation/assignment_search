@@ -25,6 +25,7 @@ module KnightsTravails
     def build_tree
       x, y = @starting_coords[0], @starting_coords[1]
       @root = Move.new(x, y, 0, [], nil)
+      @num_nodes += 1
 
       current_node = nil
       current_depth = 0
@@ -37,6 +38,7 @@ module KnightsTravails
 
           possible_moves(current_node.x, current_node.y).each do |possible_move|
             move_node = Move.new(possible_move[0], possible_move[1], nil, [], current_node)
+            @num_nodes += 1
 
             current_node.children << move_node
             queue << move_node
@@ -75,4 +77,5 @@ end
 if $0 == __FILE__
   move_tree = KnightsTravails::MoveTree.new([0, 0], 1)
   p move_tree.root
+  p move_tree.num_nodes
 end
