@@ -11,6 +11,8 @@ module KnightsTravails
       @max_depth = max_depth
       @num_nodes = 0
       @root = nil
+
+      build_tree
     end
 
     def inspect
@@ -18,7 +20,32 @@ module KnightsTravails
 
     private
 
+    # builds the MoveTree based on the starting coordinate provided,
+    # as well as the desired depth
     def build_tree
+      x, y = @starting_coords[0], @starting_coords[1]
+      @root = Move.new(x, y, 0, [], nil)
+
+      current_node = nil
+      current_depth = 0
+      queue = []
+      queue << @root
+
+      until current_depth == self.max_depth
+        queue.length.times do
+          current_node = queue.shift
+
+          possible_moves(current_node.x, current_node.y).each do |possible_move|
+            move_node = Move.new(possible_move[0], possible_move[1], nil, [], current_node)
+
+            current_node.children << move_node
+            queue << move_node
+          end
+        end
+        current_depth += 1
+      end
+
+      @root
     end
 
     # we use array indices for x and y coordinates of the chessboard,
@@ -42,4 +69,10 @@ module KnightsTravails
       moves
     end
   end
+end
+
+
+if $0 == __FILE__
+  move_tree = KnightsTravails::MoveTree.new([0, 0], 1)
+  p move_tree.root
 end
