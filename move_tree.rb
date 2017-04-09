@@ -26,5 +26,20 @@ module KnightsTravails
     def valid_move?(x, y)
       (0..7).include?(x) && (0..7).include?(y)
     end
+
+    # returns an array of possible moves for our Knight
+    # from a starting coordinate
+    def possible_moves(x, y)
+      moves = []
+      move_offsets = [[-2, 1], [-2, -1], [2, 1], [2, -1],
+                      [1, 2], [-1, 2], [1, -2], [-1, -2]]
+
+      move_offsets.each do |move_offset|
+        new_x, new_y = x + move_offset[0], y + move_offset[1]
+        moves << [new_x, new_y] if valid_move?(new_x, new_y)
+      end
+
+      moves
+    end
   end
 end
