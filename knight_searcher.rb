@@ -25,12 +25,27 @@ module KnightsTravails
 
     def dfs_for(target_coords)
     end
+
+    def moves_taken_to(target)
+      stack = []
+      num_moves = -1
+      current_node = target
+      while current_node
+        stack.push("[#{current_node.x}, #{current_node.y}]")
+        current_node = current_node.parent
+        num_moves += 1
+      end
+
+      puts "Number of Moves: #{num_moves}"
+      puts stack.pop until stack.empty?
+    end
   end
 end
 
 if $0 == __FILE__
   include KnightsTravails
-  tree = MoveTree.new([0, 0], 1)
+  tree = MoveTree.new([0, 0], 10)
   searcher = KnightSearcher.new(tree)
-  p searcher.bfs_for([2, 1])
+  result = searcher.bfs_for([7, 7])
+  searcher.moves_taken_to(result)
 end
