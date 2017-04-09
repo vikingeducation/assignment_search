@@ -2,17 +2,16 @@ module KnightsTravails
   class MoveTree
     Move = Struct.new(:x, :y, :depth, :children, :parent)
 
-    attr_reader :max_depth,
+    attr_reader :depth,
                 :num_nodes,
                 :root
 
     def initialize(starting_coords, max_depth)
-      @starting_coords = starting_coords
-      @max_depth = max_depth
+      @depth = max_depth
       @num_nodes = 0
       @root = nil
 
-      build_tree
+      build_tree(starting_coords, max_depth)
     end
 
     def inspect
@@ -22,8 +21,8 @@ module KnightsTravails
 
     # builds the MoveTree based on the starting coordinate provided,
     # as well as the desired depth
-    def build_tree
-      x, y = @starting_coords[0], @starting_coords[1]
+    def build_tree(starting_coords, max_depth)
+      x, y = starting_coords[0], starting_coords[1]
       @root = Move.new(x, y, 0, [], nil)
       @num_nodes += 1
 
@@ -32,7 +31,7 @@ module KnightsTravails
       queue = []
       queue << @root
 
-      until current_depth == self.max_depth
+      until current_depth == max_depth
         queue.length.times do
           current_node = queue.shift
 
@@ -46,7 +45,7 @@ module KnightsTravails
         end
         current_depth += 1
       end
-
+      
       @root
     end
 
@@ -78,4 +77,5 @@ if $0 == __FILE__
   move_tree = KnightsTravails::MoveTree.new([0, 0], 1)
   p move_tree.root
   p move_tree.num_nodes
+  p move_tree.depth
 end
