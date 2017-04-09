@@ -68,19 +68,3 @@ module KnightsTravails
     end
   end
 end
-
-if $0 == __FILE__
-  include KnightsTravails
-  tree = MoveTree.new([0, 0], 5)
-  tree.inspect
-
-  searcher = KnightSearcher.new(tree)
-
-  puts "\nRunning BFS"
-  result = searcher.bfs_for([4, 2])
-  searcher.moves_taken_to(result)
-
-  puts "\nRunning DFS"
-  result = searcher.dfs_for([4, 2])
-  searcher.moves_taken_to(result)
-end
