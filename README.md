@@ -17,7 +17,7 @@ Ann Allan
 -- BFS
 
 5)  What is the difference between a tree and a graph?
--- A tree is a type of graph having only one path between any to verticies so there can be no loops or cycles.
+-- A tree is a type of graph having only one path between any two verticies so there can be no loops or cycles.
 
 PSEUDOCODE
 1)  Searching a simple tree of nodes where each Node has an array of child nodes (some_node.children) using DFS

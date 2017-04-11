@@ -1,52 +1,46 @@
-some_move = Move.new(:x, :y, :depth, :children, :parent)
+  class MoveTree
+    include KnightsTravails
+    attr_accessor :start_node, :max_depth, :node_count
 
-class MoveTree
-  def initialize(coords, max_depth)
-    @x = coords[0]
-    @y = coords[1]
-    @max_depth = max_depth
-    @board = Array.new(8) {Array.new(8)}
+    def initialize(coords = nil, max_depth = nil)
+      @start_node = Move.new(coords[0], coords[1], nil, nil, []) || [0,0]
+      @max_depth = max_depth || 3
+      @board_size = 8
+      @node_count = 0
+      build_tree
+      puts inspect
+    end
+
+    def inspect
+      "Your tree starts with [#{start_node.x}, #{start_node.y}].  It has a maximum depth of #{max_depth}, and #{node_count} total nodes."
+    end
+
+    def build_tree
+      x = @start_node[0]
+      y = @start_node[1]
+      @tree = create_node(x, y)
+    end
+
+    def create_node(x, y, depth = 0, parent = nil)
+      @node_count += 1
+      node = Move.new(x, y, depth, [], parent)
+      unless depth == @depth
+        possible_moves(x, y) do |ex, why|
+          node.children << create_node(ex, why, depth + 1, node)
+        end
+        node
+      end
+    end
+
+    def possible_moves(x, y)
+      [[x + 2, y - 1], [x + 2, y + 1],
+       [x - 2, y + 1], [x - 2, y - 1],
+       [x + 1, y + 2], [x - 1, y + 2],
+       [x + 1, y - 2], [x - 1, y - 2]].select {|pos_move| legal?(pos_move)}
+    end
+
+    def legal?(move)
+      ((move[0]).between?(0, 7)) && ((move[1]).between?(0, 7))
+    end
+
   end
-
-  def potential_moves
-    valid_moves = []
-    if @board.include[@x - 2][@y + 1]
-      @top_left = @board[@x - 2][@y + 1]
-      valid_moves << @top_left
-    end
-    if @board.include[@x - 1][@y + 2]
-      @left_top = @board[@x - 1][@y + 2]
-      valid_moves << @left_top
-    end
-    if @board.include[@x + 1][@y + 2]
-      @left_bot = @board[@x + 1][@y + 2]
-      valid_moves << @left_bot
-    end
-    if @board.include[@x + 2][@y + 1]
-      @bot_left = @board[@x + 2][@y + 1]
-      valid_moves << @bot_left
-    end
-    if @board.include[@x + 2][@y - 1]
-      @bot_right = @board[@x + 2][@y - 1]
-      valid_moves << @bot_right
-    end
-    if @board.include[@x + 1][@y - 2]
-      @right_bot = @board[@x - 1][@y - 2]
-      valid_moves << @right_bot
-    end
-    if @board.include[@x - 1][@y - 2]
-      @right_top = @board[@x - 2][@y + 1]
-      valid_moves << @right_top
-    end
-    if @board.include[@x - 2][@y - 1]
-      @top_right = @board[@x - 2][@y - 1]
-      valid_moves << @top_right
-    end
-    @real_moves = valid_moves.length
-  end
-
-  def inspect
-    puts "Your tree has #{real_moves} move nodes and a depth of #{depth}."
-  end
-
-end
