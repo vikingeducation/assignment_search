@@ -1,8 +1,6 @@
 # This is just one way to represent a Move node
 # The `parent` attribute will come in handy later...
-some_move = Move.new(:x, :y, :depth, :children, :parent)
-
-
+Move = Struct.new(:x, :y, :depth, :children, :parent)
 
 class MoveTree
 
