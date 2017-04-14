@@ -63,19 +63,19 @@ Searching the same tree using BFS.
 
 Store the node to be found
 
- starting at root
+``` starting at root
    current_node = root and mark this as visited
     get the next node from the root and iterate through its nodes
       if the node hasn't been visited call the function again
       else go the the next level up
       break when there is no children
-
+```
 
 ** 4. Searching the same graph using BFS. **
 
 Store the node to be found
 
- starting at root
+``` starting at root
    current_node = root and mark this as visited
     put the root on the queue
     loop while the queue still elements
