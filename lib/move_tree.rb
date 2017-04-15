@@ -38,7 +38,7 @@ attr_accessor :starting_pos, :max_depth, :root, :moves, :total_nodes
   def create_child_nodes(current_node, depth)
     possible_moves(current_node.x, current_node.y)
     @moves.each do |coords|
-      if (0..4).include?(coords[0]) && (0..4).include?(coords[1]) 
+      if (0..7).include?(coords[0]) && (0..7).include?(coords[1]) 
         new_node = Move.new(coords[0], coords[1], depth+1, [], current_node)
         current_node.children << new_node
         @total_nodes += 1
