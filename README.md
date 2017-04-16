@@ -3,6 +3,17 @@ Andrea A
 
 [A data structures and algorithms Ruby challenge from the Viking Code School](http://www.vikingcodeschool.com)
 
+# Running the code 
+```
+load 'knight_searcher.rb'
+load 'benchmark.rb'
+
+tree = MoveTree.new([2,2],1)
+searcher = KnightSearcher.new( tree )
+bm = BenchmarkTest.new(searcher)
+```
+
+
 # What data structure is used to implement DFS?
 Stack
 
