@@ -64,3 +64,4 @@ class KnightSearcher
     end
   end
 end
+
