@@ -1,15 +1,16 @@
 
-# require_relative 'move_tree'
+require_relative 'move_tree'
 require_relative 'knight_searcher'
 
-class BenchmarkTest
+class Benchmarking
 
   attr_accessor :bfs_time, :dfs_time, :knight_searcher
 
   def initialize
      tree = MoveTree.new([1,2],1)
      @knight_searcher = KnightSearcher.new( tree )
-     @bfs_time, @dfs_time = 0, 0
+     @bfs_time = 0
+     @dfs_time = 0
   end
 
   def bfs_measure(coords)
@@ -34,3 +35,4 @@ class BenchmarkTest
   end
 
 end
+
