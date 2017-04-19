@@ -29,6 +29,7 @@ class KnightSearcher
     		move.depth = current.depth + 1
     	end
     end
+   end
   end
 
   def trace_path_to(move)
@@ -41,8 +42,4 @@ class KnightSearcher
   	end
   	path
   end
-
-
-
-
- end
+end
