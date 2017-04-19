@@ -1,37 +1,48 @@
 require_relative 'move_tree'
 
 class KnightSearcher
+ attr_reader :move_tree
 
-	def initialize(tree)
-		@tree = tree
+ def initialize(move_tree)
+ 	@move_tree = move_tree
+ end
 
-	end
+ def bfs_for(target_coords)
 
-	def bfs_for(target_coords)
-		@x,@y = target_coords[0],target_coords[1]
-		queue = []
-		until queue.empty?
-		@queue << @tree.root
-		if @tree.root.x && @tree.root.y == @x && @y
-			return true
-		else
-			queue.unshift
-			queue << @tree.root.children
-		end
-	end
+ 	start = move_tree.root
+ 	start.depth = 0
+ 	queue = [start]
 
-	def dfs_for(target_coords)
-		stack = []
-		@x = target_coords[0]
-		@y = targer_coords[1]
-		stack << @tree.root
-		until stack.empty?
-			current_node = stack.pop
-			if current_node.x == @x && current_node.y == y
-				return current_node
-			end
+ 	until queue.empty?
+ 		current = queue.pop
 
-	end
+ 		# either you have found the right node, 
+    # and you return the path you got there with
+    if targer_coords == [current.x, current.y]
+    	return trace_path_to(current)
+
+    #or you add all children you habe not yet visited to the queue
+    else
+    	current.children.each do |move|
+    		next if move.depth #skip if already visited
+    		queue.shift(move)
+    		move.depth = current.depth + 1
+    	end
+    end
+  end
+
+  def trace_path_to(move)
+  	path = []
+  	node = move
+
+  	until node.nil?
+  		path.unshift [node.x, node.y]
+  		node = node.parent
+  	end
+  	path
+  end
 
 
-end
+
+
+ end
