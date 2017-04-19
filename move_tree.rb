@@ -1,62 +1,67 @@
 require_relative 'knight_searcher'
 
-Move = Struct.new(:x, :y, :depth, :children, :parent)
+Move = Struct.new(:x, :y, :depth, :parent, :children)
 
 class MoveTree
-	attr_accessor :root, :max_depth, :total_nodes, :moves
+	attr_accessor :root, :max_depth, :node_count
 
-	def initialize(coords, max_depth)
-		@coords = coords
+	def initialize(start_coords, max_depth)
+		x, y = start_coords[0], start_coords[1]
+
+		@root = Move.new(x,y, nil, nil, [])
 		@max_depth = max_depth
-		@root = Move.new(@coords[0], @coords[1], 0, [], nil)
-		@total_nodes = 0
-		build_tree(@root)
+		@node_count = 1
+
+		build_tree
+		puts inspect
 	end
 
 	def inspect
-		puts "Your tree has #{@total_nodes} Move nodes and depth of #{@max_depth}"
+		"This move tree begins at [#{root.x}, #{root.y}], has a maximum depth of #{max_depth}, and has #{node_count} total nodes."
 	end
 
-	def moves(x, y)
-		@moves =[[x+1,y+2], 
-						 [x+2,y+1],
-						 [x+2,y-1],
-						 [x+1,y-2],
-						 [x-1,y-2],
-						 [x-2,y-1],
-						 [x-2,y+1], 
-						 [x-1,y+2]]
+	def build_tree(current_node = self.root, depth = 0)
 
-		
-	end
+		if depth < self.max_depth
+			append_next_moves(current_node)
 
-	def build_tree(head, depth=0)
-		until depth < max_depth
-
-			create_children(head, depth)
-			
-			head.children.each do |child|
-				build_tree(child, depth+1)
+			#build the tree again on each child
+			current_node.children.each do |child|
+				build_tree(child, depth + 1)
 			end
+		end
+	end	
+
+	#appends all possible moves to the current move
+	#properly updates the number of nodes
+	def append_next_moves(current_move)
+		return unless current_move.children.empty?
+
+		next_moves = possible_moves(current_move)
+		@node_count += next_moves.size
+
+		next_moves.each do |move|
+			new_move = Move.new(move[0], move[1]),nil, current_move, [])
+      current_move.children << new_move
+		end
 	end
 
-	def create_children(current_node, depth)
-		moves(current_node.x, current_node.y)
-			@moves.each do |x,y|
-				new_node = Move.new(x, y, depth+1, [], current_node)
-				current_node.children << new_node
-				@total_nodes +1
+	#takes a Move
+  #returns a 2D array of all legal moves for a knight 
+  #from one position, in the form of coordinate pairs
+  def possible_moves(move)
+  	x, y = move.x, move.y
 
-			end
-			end
-	end
+  	 [[x+2, y-1], [x+2, y+1],
+  	  [x-2, y+1], [x-2, y-1],
+  	  [x+1, y+2], [x-1, y+2],
+  	  [x+1, y-2], [x-1, y-2]]
 
-		
+  end
+
 	
 
 
-end
 
-tree = MoveTree.new([3,0], 1)
-tree.inspect
+end
 

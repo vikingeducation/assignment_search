@@ -18,23 +18,23 @@ Which one would you use to print a list of all the nodes in a tree or graph, sta
 BFS
 
 What is the difference between a tree and a graph?
-A tree has a strict hierarchical structure
+Graphs are fully unconstrained as to which vertices can connect to which ones. Trees have a strictly hierarchical structure where each node has a defined parent.
 
-Next, pseudocode the following processes with enough detail to be clear:
+Pseudocode the following processes:
 
 Searching a simple tree of nodes where each Node has an array of child nodes (some_node.children) using DFS.
 
+Push the root node onto the stack
+Pop a node off the stack
+Return if is the search value
+Else look at any unsearched children
+Push "worst" nodes onto the stack first
+Push "best" nodes onto the stack last
+Repeat from step 2 until search value is found or no nodes left
 Searching the same tree using BFS.
-put initial node in queue
-put root node in queue and retrurn if matches initial node
-if not add its children to the end of the queue
-dequeue node and check if match continue dequeue until queue is empty
 
-Searching a graph (represented however you feel most comfortable -- Edge List, Adjacency List or Adjacency Matrix) using DFS.
-Searching the same graph using BFS.
-Select first vertex enqueue vertex 
-dequeue first node and check to see if value is equal to search value 
-if so return vertex
-else enqueue all current vertex children and repeat.
-
+Starting at the root node
+Return if is the search value
+Else look at all the direct children of current node
+Repeat from step 2 until search value is found or no nodes left
 
