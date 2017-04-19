@@ -18,7 +18,18 @@ class KnightSearcher
 			queue.unshift
 			queue << @tree.root.children
 		end
+	end
 
+	def dfs_for(target_coords)
+		stack = []
+		@x = target_coords[0]
+		@y = targer_coords[1]
+		stack << @tree.root
+		until stack.empty?
+			current_node = stack.pop
+			if current_node.x == @x && current_node.y == y
+				return current_node
+			end
 
 	end
 
