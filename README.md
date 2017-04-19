@@ -32,3 +32,9 @@ dequeue node and check if match continue dequeue until queue is empty
 
 Searching a graph (represented however you feel most comfortable -- Edge List, Adjacency List or Adjacency Matrix) using DFS.
 Searching the same graph using BFS.
+Select first vertex enqueue vertex 
+dequeue first node and check to see if value is equal to search value 
+if so return vertex
+else enqueue all current vertex children and repeat.
+
+
