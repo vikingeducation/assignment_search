@@ -28,28 +28,28 @@ class MoveTree
   end
 
   def create_child_moves(parent)
+    candidate_moves(parent).select do |move|
+      board = (0..7)
+      board.include?(move.x) && board.include?(move.y)
+    end
+  end
+
+  def candidate_moves(parent)
     x = parent.x
     y = parent.y
     depth = parent.depth + 1
 
-    candidate_moves(x, y, depth).select { |move|
-      board = (0..7)
-      board.include?(move.x) && board.include?(move.y)
-    }
-  end
-
-  def candidate_moves(x, y, depth)
     [
-      Move.new(x + 1, y + 2, depth),
-      Move.new(x - 1, y + 2, depth),
-      Move.new(x + 1, y - 2, depth),
-      Move.new(x - 1, y - 2, depth),
-      Move.new(x + 2, y + 1, depth),
-      Move.new(x - 2, y + 1, depth),
-      Move.new(x + 2, y - 1, depth),
-      Move.new(x - 2, y - 1, depth)
+      Move.new(x + 1, y + 2, depth, parent),
+      Move.new(x - 1, y + 2, depth, parent),
+      Move.new(x + 1, y - 2, depth, parent),
+      Move.new(x - 1, y - 2, depth, parent),
+      Move.new(x + 2, y + 1, depth, parent),
+      Move.new(x - 2, y + 1, depth, parent),
+      Move.new(x + 2, y - 1, depth, parent),
+      Move.new(x - 2, y - 1, depth, parent)
     ]
   end
 end
 
-Move = Struct.new(:x, :y, :depth, :children, :parent)
+Move = Struct.new(:x, :y, :depth, :parent, :children)
