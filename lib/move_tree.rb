@@ -14,23 +14,12 @@ class MoveTree
 
   private
 
-  def create_moves_tree
-    moves_queue = [@starting_move]
-    @move_count = 1
-
-    until moves_queue.empty?
-      move = moves_queue.shift
-      move.children = create_child_moves(move)
-      @move_count += move.children.size
-
-      move.children.each { |c| moves_queue << c if c.depth < @max_depth }
-    end
-  end
-
-  def create_child_moves(parent)
-    candidate_moves(parent).select do |move|
-      board = (0..7)
-      board.include?(move.x) && board.include?(move.y)
+  def add_children(move, moves_queue)
+    move.children.each do |c|
+      if c.depth < @max_depth
+        moves_queue << c
+        @move_count += 1
+      end
     end
   end
 
@@ -50,6 +39,26 @@ class MoveTree
       Move.new(x - 2, y - 1, depth, parent)
     ]
   end
+
+  def create_child_moves(parent)
+    board = (0..7)
+
+    candidate_moves(parent).select do |move|
+      board.include?(move.x) && board.include?(move.y)
+    end
+  end
+
+  def create_moves_tree
+    moves_queue = [@starting_move]
+    @move_count = 1
+
+    until moves_queue.empty?
+      move = moves_queue.shift
+      move.children = create_child_moves(move)
+
+      add_children(move, moves_queue)
+    end
+  end
 end
 
-Move = Struct.new(:x, :y, :depth, :parent, :children)
+Move = Struct.new(:x, :y, :depth, :parent, :children, :visited)
