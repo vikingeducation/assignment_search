@@ -1,11 +1,31 @@
-Dariusz Biskupski
+#  Data Structures, searching algorithms & Knight in Chess movements
 
-# assignment_search
-Marco?  Polo!
+practice with representing data using Trees and Graphs.
 
-[A data structures and algorithms Ruby challenge from the Viking Code School](http://www.vikingcodeschool.com)
+* knight_tree.rb - 'MoveTree class (as in, "a tree of moves"). It should construct a tree of potential moves from a given position by using a series of Move objects. It should take two inputs -- a coordinate pair to represent the starting position and a maxDepth value which prevents the tree from continuing infinitely large.'
+* knight_searcher.rb - Breadth-First Search - bfsFor method which takes a targetCoords input and kicks off a breadth-first search of the nodes in the tree - and Depth-First Search - which depth-first search for the target coordinates
+* benchmark.rb - benchmark which runs a series of similar searches using each method thousands of times and compares them.
 
-Warmup 1: BFS and DFS Concepts
+## Getting Started
+
+If you want to quick run some the examples to see the code in action, run
+```
+$ ruby example.rb
+```
+from the project directory.
+
+## Authors
+
+* **Dariusz Biskupski** - *Initial work* - https://dariuszbiskupski.com
+
+
+## Acknowledgments
+
+It is part of the assignment created for [Viking Code School](https://www.vikingcodeschool.com/)
+
+
+
+## Appendix - BFS and DFS Concepts
 
 1. What data structure is used to implement DFS?
 --stack - which stacks following nodes on the previous one so he can gets deeper in search for particular node
@@ -76,7 +96,7 @@ Warmup 2: Knight's Travails Pseudocode
 How will you represent a particular move? Will you repeat nodes? How will you display the final output after searching? How will you prevent your tree from continuing on infinitely?
 
 *********Your mission here is to use your search skills to find the exact sequence of moves required to get from any given square to another square on the board.**********
-
+```
 --0-1-2-3-4-5-6-7
 0|X|_|_|_|X|_|_|_|
 1|_|_|F|_|_|_|_|_|
@@ -86,7 +106,7 @@ How will you represent a particular move? Will you repeat nodes? How will you di
 5|_|_|_|_|_|_|_|_|
 6|_|_|_|_|_|_|_|_|
 7|_|_|_|_|_|_|_|_|
-
+```
 from x, y
 from 2, 1
 to   3, 2
@@ -107,7 +127,7 @@ a. Create Adjacent matrix of moves
 2. Follow the Breadth First Search sequences
 a. record the target child to be found
 b. Loop starts
-  Take the node 
+  Take the node
   ba. Check if the node coordinates are on the board
   bb. Check if the node was visited comparing coords with the one in adjecent matrix (x, y and nil or 1)
     bba. if it wasn't, mark the adjacent matrix i special coord nil into 1
@@ -116,7 +136,7 @@ b. Loop starts
   bc. dequeue the first node
   bd. Check if it is the solution
     bda. if the vertex has a solution the search is ended
-      bdaa. solution is returned in form of new linked_list with sequence of movements 
+      bdaa. solution is returned in form of new linked_list with sequence of movements
               which goes from current child to the parent - loop
     bdb. if the vertex is not a solution
       bdba. add its children to the back of the queue and repeat the process
@@ -136,7 +156,3 @@ TURN 2 : from 1,2 to 3,4
 TURN 3 : from 1,2 to 3,4
 TURN 4 : from 1,2 to 3,4
 "
-
-
-
-
