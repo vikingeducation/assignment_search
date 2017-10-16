@@ -111,7 +111,9 @@ from x, y
 from 2, 1
 to   3, 2
 
-# Cheeseboard is 8x8
+### Pseudocode
+
+Cheeseboard is 8x8
 
 some_move = Move.new(:x, :y, :depth, :children, :parent)
 our_move(:x, :y)
